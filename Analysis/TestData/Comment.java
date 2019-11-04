@@ -1,3 +1,5 @@
+package TestData;
+
 /**
 * Comment.java is just a test data class until
 * we have real data from Extraction team.

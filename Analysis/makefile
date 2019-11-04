@@ -17,11 +17,13 @@ default:
 #Essential that command lines start with single TAB character
 
 compile: Analysis.java AnalysisTest.java $(JUNIT5_JAR)
+	javac TestData/*.java
 	javac Analysis.java
 	javac -cp .:$(JUNIT5_JAR) AnalysisTest.java
 
 clean:
 	rm -f *~
+	rm -f TestData/*.class
 	rm -f Analysis*.class
 
 test: $(JUNIT5_JAR)

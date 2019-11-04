@@ -1,3 +1,5 @@
+import TestData.*;
+
 /**
 * Analysis.java.
 * @author Brooke Tibbett, Courtney Dixon, Val Lapensee-Rankine, Ethan Hahn
