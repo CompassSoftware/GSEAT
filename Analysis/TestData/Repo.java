@@ -25,4 +25,13 @@ public class Repo
     {
         return issues;
     }
+
+    /**
+     * Mutator for issues just for testing purposes.
+     * @param issues arraylist
+     */
+    public void setIssues(ArrayList<Issue> issues)
+    {
+        this.issues = issues;
+    }
 }

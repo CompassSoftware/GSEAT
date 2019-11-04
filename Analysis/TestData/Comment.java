@@ -23,4 +23,13 @@ public class Comment
     {
         return text;
     }
+
+    /**
+     * Mutator for text just for testing purposes.
+     * @param text string
+     */
+    public void setText(String text)
+    {
+        this.text = text;
+    }
 }

@@ -25,4 +25,13 @@ public class Issue
     {
         return comments;
     }
+
+    /**
+     * Mutator for comments just for testing purposes.
+     * @param comments arraylist
+     */
+    public void setComments(ArrayList<Comment> comments)
+    {
+        this.comments = comments;
+    }
 }
