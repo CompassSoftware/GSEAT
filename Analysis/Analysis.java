@@ -1,4 +1,6 @@
-import TestData.*;
+import TestData.Comment;
+import TestData.Repo;
+import TestData.Issue;
 
 /**
 * Analysis.java.
