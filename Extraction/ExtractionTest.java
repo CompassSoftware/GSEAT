@@ -11,7 +11,8 @@ import java.io.ByteArrayOutputStream;
 // Stuff needed for JUnit testing.
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
-
+import org.junit.*;
+import static org.junit.Assert.*;
 
 public class ExtractionTest {
 
@@ -76,5 +77,6 @@ public class ExtractionTest {
 
 	assertEquals(testFailed, null);
     }
+
 
 }
