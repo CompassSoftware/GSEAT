@@ -39,6 +39,7 @@ compile:
 	make collab
 	make commit
 	make issue
+	make comment
 
 extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
@@ -55,6 +56,10 @@ commit:	Commit.java CommitTest.java $(JUNIT5_JAR)
 issue: Issue.java IssueTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) IssueTest.java
 	javac Issue.java
+    
+comment: Comment.java CommentTest.java $(JUNIT5_JAR)
+	javac -cp .:$(JUNIT5_JAR) CommentTest.java
+	javac Comment.java
 
 clean:
 	rm -f *~
