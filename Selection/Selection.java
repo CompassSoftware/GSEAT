@@ -36,8 +36,10 @@ public class Selection {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Please enter full repo name: ");
+        String reponame = sc.nextLine();
+        System.out.println("Please enter full username: ");
         String username = sc.nextLine();
-        System.out.println("Repo name: " + username);
+        System.out.println("Repo name: " + reponame + "\n" + "Username: " + username);
 
     }
 
