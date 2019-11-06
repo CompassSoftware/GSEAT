@@ -30,9 +30,22 @@ default:
 #etc.
 #Essential that command lines start with single TAB character
 
-compile: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
+run:
+	make compile
+	make test
+
+compile:
+	make extract
+	make collab
+
+extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
 	javac Extraction.java
+
+collab:	Collaborator.java CollaboratorTest.java $(JUNIT5_JAR)
+	javac -cp .:$(JUNIT5_JAR) CollaboratorTest.java
+	javac Collaborator.java
+
 
 clean:
 	rm -f *~
