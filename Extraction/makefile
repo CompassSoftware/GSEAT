@@ -37,6 +37,7 @@ run:
 compile:
 	make extract
 	make collab
+	make commit
 
 extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
@@ -46,6 +47,10 @@ collab:	Collaborator.java CollaboratorTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) CollaboratorTest.java
 	javac Collaborator.java
 
+
+commit:	Commit.java CommitTest.java $(JUNIT5_JAR)
+	javac -cp .:$(JUNIT5_JAR) CommitTest.java
+	javac Commit.java
 
 clean:
 	rm -f *~
