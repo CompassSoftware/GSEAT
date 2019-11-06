@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
-import TestData.Repo;
-import TestData.Comment;
-import TestData.Issue;
+import github.Repository;
+import github.Comment;
+import github.Issue;
+import github.Collaborator;
+import github.Commit;
 
 /**
 * AnalysisTest.java
@@ -39,7 +41,7 @@ public class AnalysisTest
      */
     @Test
     public void testConstructor() {
-        assertTrue((new Analysis(new Repo())) instanceof Analysis);
+        assertTrue((new Analysis(new Repository())) instanceof Analysis);
     }
 
     /**
@@ -47,25 +49,19 @@ public class AnalysisTest
      */
     @Test
     public void testCountIssuesComments1() {
-        ArrayList<Comment> c1 = new ArrayList<Comment>();
-        c1.add(new Comment());
-        c1.add(new Comment());
-        c1.add(new Comment());
+        Collaborator collab = new Collaborator("person","test","person","4");
 
-        ArrayList<Comment> c2 = new ArrayList<Comment>();
-        c2.add(new Comment());
-        c2.add(new Comment());
+        Issue i1 = new Issue("issue1", collab);
+        i1.addComment(new Comment("another thing", collab, "issue"));
+        i1.addComment(new Comment("a thing", collab, "issue"));
+        i1.addComment(new Comment("things", collab, "issue"));
+        Issue i2 = new Issue("issue2", collab);
+        i2.addComment(new Comment("more things", collab, "issue"));
+        i2.addComment(new Comment("more more things", collab, "issue"));
 
-        Issue i1 = new Issue();
-        i1.setComments(c1);
-        Issue i2 = new Issue();
-        i2.setComments(c2);
-        ArrayList<Issue> i = new ArrayList<Issue>();
-        i.add(i1);
-        i.add(i2);
-
-        Repo repo = new Repo();
-        repo.setIssues(i);
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
 
         Analysis analysis = new Analysis(repo);
 
@@ -80,28 +76,18 @@ public class AnalysisTest
      */
     @Test
     public void testCountIssuesComments2() {
-        ArrayList<Comment> c1 = new ArrayList<Comment>();
-        c1.add(new Comment());
-        c1.add(new Comment());
-        c1.add(new Comment());
-        c1.remove(2);
-        c1.remove(1);
-        c1.remove(0);
+        Collaborator collab1 = new Collaborator("test","test2","test22","9");
+        Collaborator collab2 = new Collaborator("test1","test3","test3434","934");
 
-        ArrayList<Comment> c2 = new ArrayList<Comment>();
-        c2.add(new Comment());
-        c2.add(new Comment());
+        Issue i1 = new Issue("issue1", collab1);
+        i1.addComment(new Comment("thing", collab1, "issue"));
 
-        Issue i1 = new Issue();
-        i1.setComments(c1);
-        Issue i2 = new Issue();
-        i2.setComments(c2);
-        ArrayList<Issue> i = new ArrayList<Issue>();
-        i.add(i1);
-        i.add(i2);
+        Issue i2 = new Issue("issue2", collab2);
+        i2.addComment(new Comment("thing2", collab2, "issue"));
 
-        Repo repo = new Repo();
-        repo.setIssues(i);
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
 
         Analysis analysis = new Analysis(repo);
 
@@ -116,27 +102,23 @@ public class AnalysisTest
      */
     @Test
     public void testCountIssuesComments3() {
-        ArrayList<Comment> c1 = new ArrayList<Comment>();
-        c1.add(new Comment());
-        c1.add(new Comment());
-        c1.add(new Comment());
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        Issue i1 = new Issue("issue1", collab1);
+        i1.addComment(new Comment("comment", collab1, "issue"));
+        i1.addComment(new Comment("comment2", collab2, "issue"));
+        i1.addComment(new Comment("comment3", collab1, "issue"));
 
-        ArrayList<Comment> c2 = new ArrayList<Comment>();
-        c2.add(new Comment());
-        c2.add(new Comment());
+        Issue i2 = new Issue("issue2", collab2);
+        i2.addComment(new Comment("comment1", collab2, "issue"));
+        i2.addComment(new Comment("comment2", collab1, "issue"));
 
-        Issue i1 = new Issue();
-        i1.setComments(c1);
-        Issue i2 = new Issue();
-        i2.setComments(c2);
-        Issue i3 = new Issue();
-        ArrayList<Issue> i = new ArrayList<Issue>();
-        i.add(i1);
-        i.add(i2);
-        i.add(i3);
+        Issue i3 = new Issue("issue3", collab2);
 
-        Repo repo = new Repo();
-        repo.setIssues(i);
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addIssue(i3);
 
         Analysis analysis = new Analysis(repo);
 
