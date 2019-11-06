@@ -4,17 +4,17 @@ import TestData.Issue;
 import java.util.ArrayList;
 
 /**
-* Analysis.java.
-* @author Brooke Tibbett, Courtney Dixon, Val Lapensee-Rankine, Ethan Hahn
-* @version 11/4/19
-*/
+ * Analysis.java.
+ * @author Brooke Tibbett, Courtney Dixon, Val Lapensee-Rankine, Ethan Hahn
+ * @version 11/4/19
+ */
 public class Analysis
 {
     Repo repo;
     ArrayList<Issue> issues;
 
-    /*
-     * Analysis constructor
+    /**
+     * Analysis constructor.
      *
      * @param r Repository object given by extraction
      */
@@ -24,7 +24,7 @@ public class Analysis
         issues = r.getIssues();
     }
 
-    /*
+    /**
      * countIssuesComments
      *
      * Counts the comments that each issue has for all
@@ -47,9 +47,9 @@ public class Analysis
     }
 
     /**
-    * Function to print something to the console screen.
-    * @param args command line
-    */
+     * Function to print something to the console screen.
+     * @param args command line
+     */
     public static void main(String[] args) 
     {
         // Creates 1 Repo with 2 issues, 1 issue with one
@@ -59,10 +59,10 @@ public class Analysis
         ArrayList<Comment> c1 = new ArrayList<Comment>();
         c1.add(new Comment());
         c1.add(new Comment());
-         
+
         ArrayList<Comment> c2 = new ArrayList<Comment>();
         c2.add(new Comment());
-        
+
         Issue i1 = new Issue();
         i1.setComments(c1);
         Issue i2 = new Issue();
@@ -70,7 +70,7 @@ public class Analysis
         ArrayList<Issue> i = new ArrayList<Issue>();
         i.add(i1);
         i.add(i2);
-        
+
         Repo repo = new Repo();
         repo.setIssues(i);
 
