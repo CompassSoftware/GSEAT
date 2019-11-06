@@ -20,7 +20,7 @@ default:
 	@echo "____________________ compile, test - builds JUnit5 tests, runs all (4 and 5)"
 	@echo "____________________ defchk, customchk - default or custom checkstyle"
 	@echo "Just starting with make? Try these 4 make commands successively:"
-	@echo "________ make clean ; make compile ; make test ; make defchk"
+	@echo "________ make clean ; make run (make compile ; make test) ; make defchk"
 
 # makefile syntax
 #target-name: files dependent on (can use multiple lines by ending
@@ -39,6 +39,9 @@ compile:
 	make collab
 	make commit
 	make repo
+	make issue
+	make comment
+
 
 extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
@@ -51,6 +54,14 @@ collab:	Collaborator.java CollaboratorTest.java $(JUNIT5_JAR)
 commit:	Commit.java CommitTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) CommitTest.java
 	javac Commit.java
+    
+issue: Issue.java IssueTest.java $(JUNIT5_JAR)
+	javac -cp .:$(JUNIT5_JAR) IssueTest.java
+	javac Issue.java
+    
+comment: Comment.java CommentTest.java $(JUNIT5_JAR)
+	javac -cp .:$(JUNIT5_JAR) CommentTest.java
+	javac Comment.java
 
 repo: Repository.java RepoTest.java $(JUNIT5_JAR)
 	javac -cp .:$(JUNIT5_JAR) RepoTest.java
