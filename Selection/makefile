@@ -26,10 +26,13 @@ help:
 compile: Selection.java SelectionTest.java $(JUNIT5_JAR)
 		javac -cp .:$(JUNIT5_JAR) SelectionTest.java
 		javac Selection.java
-
+		javac TestData/Comment.java
+		javac TestData/MakeshiftExtraction.java
+		javac TestData/Issue.java
 clean:
 		rm -f *~
 		rm -f Selection*.class
+		rm -f TestData *.class
 
 test: $(JUNIT5_JAR)
 		java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path

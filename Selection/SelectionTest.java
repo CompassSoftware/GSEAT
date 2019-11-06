@@ -22,6 +22,7 @@ public class SelectionTest {
         Scanner sc = new Scanner(System.in);
         String username = sc.nextLine(); 
         assertEquals("yuanboz",username);
+       
         
     }
-    
+}

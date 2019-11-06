@@ -13,32 +13,38 @@ public class Selection {
      * @para sc     get user's input
      */
 
-    private String userName;
-    private String passWord;
+    private static String userName;
+    private static String passWord;
+    private static String repo;
     static Scanner sc = new Scanner(System.in);
    // static Cllection<User> users = new ArrayList<User>();
 
-    public String getUserName() {
+    public static String getUserName() {
 
         return userName;
 
     }
 
-    public String getPassWord() {
+    public static String getPassWord() {
 
         return passWord;
 
     }
-
-
+    public static String getRepo() {
+        return repo;
+    }
+    
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-
+        
         System.out.println("Please enter full repo name: ");
-        String username = sc.nextLine();
-        System.out.println("Repo name: " + username);
-
+        String repo = sc.nextLine();
+        System.out.println("Repo name: " + repo);
+        MakeshiftExtraction ex = new MakeshiftExtraction(repo);
+        
+        System.out.println(ex.runCurl());
+        
     }
 
 }
