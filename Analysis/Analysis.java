@@ -1,6 +1,8 @@
-import TestData.Comment;
-import TestData.Repo;
-import TestData.Issue;
+import github.Comment;
+import github.Repository;
+import github.Issue;
+import github.Commit;
+import github.Collaborator;
 import java.util.ArrayList;
 
 /**
@@ -10,18 +12,16 @@ import java.util.ArrayList;
  */
 public class Analysis
 {
-    Repo repo;
-    ArrayList<Issue> issues;
+    Repository repo;
 
     /**
      * Analysis constructor.
      *
      * @param r Repository object given by extraction
      */
-    public Analysis(Repo r)
+    public Analysis(Repository r)
     {
         repo = r;
-        issues = r.getIssues();
     }
 
     /**
@@ -35,7 +35,7 @@ public class Analysis
     public int countIssuesComments()
     {
         int count = 0;
-        for (Issue i : issues)
+        for (Issue i : repo.getIssues())
         {
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
@@ -56,23 +56,19 @@ public class Analysis
         // comment and 1 with 2, then creates Analysis object
         // with that repo.
         // Calls countIssuesComments; should print '3'.
-        ArrayList<Comment> c1 = new ArrayList<Comment>();
-        c1.add(new Comment());
-        c1.add(new Comment());
+        Collaborator coll1 = new Collaborator("mister","test","tester1","2");
+        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
+        
+        Issue i1 = new Issue("issue 1", coll2);
+        i1.addComment(new Comment("this is good", coll1, "type1")); 
+        i1.addComment(new Comment("this is bad", coll1, "type1"));
 
-        ArrayList<Comment> c2 = new ArrayList<Comment>();
-        c2.add(new Comment());
+        Issue i2 = new Issue("issue 2", coll1);
+        i2.addComment(new Comment("this is okay", coll2, "type2"));
 
-        Issue i1 = new Issue();
-        i1.setComments(c1);
-        Issue i2 = new Issue();
-        i2.setComments(c2);
-        ArrayList<Issue> i = new ArrayList<Issue>();
-        i.add(i1);
-        i.add(i2);
-
-        Repo repo = new Repo();
-        repo.setIssues(i);
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
 
         Analysis analysis = new Analysis(repo);
         int x = analysis.countIssuesComments();
