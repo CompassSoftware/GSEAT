@@ -6,13 +6,14 @@
  *
  * @author Zack
  *
- * @version 1.a
+ * @version 1.b: realize get repo url function
  */
 
 import java.io.*;
 import java.util.*;
 import java.net.*;
-import org.json.*;
+import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 public class GitUser {
 
@@ -36,6 +37,7 @@ public class GitUser {
         String username = sc.nextLine();
         String Url = new String("https://api.github.com/users/" + username +"/repos") ;
         System.out.println("User_name: " + username + " " + Url);
+
         try {
             URL url = new URL(Url);
             URLConnection urlConnection = url.openConnection();
@@ -53,13 +55,24 @@ public class GitUser {
              while((current = in.readLine()) != null) {
                  urlString += current;
              }
-             String a = urlString;
-             String urlString1 = a.replaceAll("[\\[\\]]","");
-             JSONObject jo = new JSONObject(urlString1);
-             String url_name = jo.getString("html_url");
-             String repo_name = jo.getString("name");
-             System.out.println("Repo_name: " + repo_name + " " + url_name);
+
+             /** Handle file with json type and seach for the info with name and html_url
+              * @param repo_name        the name of user's each repo
+              * @param url_name         the url of user's each repo
+              */
+
+             JSONArray jsonarray = JSONArray.fromObject(urlString);
+             if (jsonarray.size() > 0) {
+                 for (int i = 0; i < jsonarray.size(); i++) {
+                     JSONObject jsonObject = JSONObject.fromObject(jsonarray.get(i).toString());
+                     String repo_name = jsonObject.getString("name");   //name of target of the first layer
+                     JSONObject owner = jsonObject.getJSONObject("owner");
+                     String url_name = owner.getString("html_url");     //html_url in the owner layer
+                     System.out.println("Repo_name: " + repo_name + "   " + url_name);
+                 }
+             }
         }
+
         catch(IOException e) {
             e.printStackTrace();
         }
