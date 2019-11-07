@@ -66,8 +66,8 @@ public class GitUser {
                  for (int i = 0; i < jsonarray.size(); i++) {
                      JSONObject jsonObject = JSONObject.fromObject(jsonarray.get(i).toString());
                      String repo_name = jsonObject.getString("name");   //name of target of the first layer
-                     JSONObject owner = jsonObject.getJSONObject("owner");
-                     String url_name = owner.getString("html_url");     //html_url in the owner layer
+                     // JSONObject owner = jsonObject.getJSONObject("owner"); not useful now
+                     String url_name = jsonObject.getString("html_url");     //html_url in the owner layer
                      System.out.println("Repo_name: " + repo_name + "   " + url_name);
                  }
              }
