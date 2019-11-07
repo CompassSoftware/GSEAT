@@ -9,6 +9,7 @@ JUNIT5_JAR = junit-platform-console-standalone-1.2.0.jar
 JUNIT5_RUNNER = org.junit.platform.console.ConsoleLauncher
 CKSTYLE_COMMAND =  -jar /usr/local/checkstyle-5.5/checkstyle-5.5-all.jar
 CKSTYLE_XML = cs_appstate_checks.xml
+JSON_JAR = json-20190722.jar
 
 default: 
 	@echo "usage: make target"
@@ -26,6 +27,10 @@ help:
 compile: Selection.java SelectionTest.java $(JUNIT5_JAR)
 		javac -cp .:$(JUNIT5_JAR) SelectionTest.java
 		javac Selection.java
+
+compile2: GitUser.java $(JSON_JAR)
+		javac -cp .:$(JSON_JAR) GitUser.java
+		java -cp .:$(JSON_JAR) GitUser
 
 clean:
 		rm -f *~
