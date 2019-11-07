@@ -37,7 +37,11 @@ public class Selection {
 
         System.out.println("Please enter full repo name: ");
         String reponame = sc.nextLine();
+<<<<<<< HEAD
         System.out.println("Please enter full username: ");
+=======
+        System.out.println("Please enter the username: ");
+>>>>>>> 3f1d691c6bf4c5f5ee55263e94da7a14db13a1d0
         String username = sc.nextLine();
         System.out.println("Repo name: " + reponame + "\n" + "Username: " + username);
 

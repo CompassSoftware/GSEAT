@@ -9,7 +9,6 @@
  * Selection team
  */
 
-package selection;
 import java.io.*;
 import java.util.*;
 import java.net.*;
