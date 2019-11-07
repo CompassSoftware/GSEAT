@@ -1,12 +1,12 @@
 /** GitUser.java
- *  
- *  Print a list of user's repo URL
+ * 
+ * Selection team
+ *
+ * Print a list of user's repo URL
  *
  * @author Zack
  *
- * @version 1.0
- *
- * Selection team
+ * @version 1.a
  */
 
 import java.io.*;
@@ -15,19 +15,21 @@ import java.net.*;
 import org.json.*;
 
 public class GitUser {
-    static String current;
+
     static String username;
     static String Url;
     static String full_name;
+    static String url_name;
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
 
         /** Prompt user for username
          * @username    user's input
-         * @Url         user's mainpage Url
+         * @Url         user's main page url
          * @urlString   user's full information
-         * @info        user's repo url
+         * @url_name    user's repo url
+         * @repo_name   user's repo name
          */
 
         System.out.println("Please input your username: ");
