@@ -35,7 +35,7 @@ public class GitUser {
         System.out.println("Please input your username: ");
         String username = sc.nextLine();
         String Url = new String("https://api.github.com/users/" + username +"/repos") ;
-        System.out.println("url address: " + Url);
+        System.out.println("User_name: " + username + " " + Url);
         try {
             URL url = new URL(Url);
             URLConnection urlConnection = url.openConnection();

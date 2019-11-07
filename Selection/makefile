@@ -34,7 +34,7 @@ compile: Selection.java SelectionTest.java $(JUNIT5_JAR)
 
 compile2: GitUser.java $(JSON_JAR)
 		javac -cp .:$(JSON_JAR) GitUser.java
-		java -cp .:$(JSON_JAR) GitUse
+		java -cp .:$(JSON_JAR) GitUser
 
 clean:
 		rm -f *~
