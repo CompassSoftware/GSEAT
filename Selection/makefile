@@ -9,7 +9,14 @@ JUNIT5_JAR = junit-platform-console-standalone-1.2.0.jar
 JUNIT5_RUNNER = org.junit.platform.console.ConsoleLauncher
 CKSTYLE_COMMAND =  -jar /usr/local/checkstyle-5.5/checkstyle-5.5-all.jar
 CKSTYLE_XML = cs_appstate_checks.xml
-JSON_JAR = json-20190722.jar
+# Package for json.jar running in GitUser.java
+JSON_JAR = json-lib-2.4-jdk15.jar
+EZMORPH_JAR = ezmorph-1.0.6.jar
+COMMONS_LOGGING_JAR = commons-logging-1.1.1.jar
+COMMONS_LANG_JAR = commons-lang-2.6.jar
+COMMONS_COLLECTION_JAR = commons-collections-3.2.1.jar
+COMMONS_BEANUTILS_JAR = commons-beanutils-1.8.3.jar
+
 
 default: 
 	@echo "usage: make target"
@@ -32,14 +39,14 @@ compile: Selection.java SelectionTest.java $(JUNIT5_JAR)
 		javac TestData/Issue.java
 						
 
-compile2: GitUser.java $(JSON_JAR)
-		javac -cp .:$(JSON_JAR) GitUser.java
-		java -cp .:$(JSON_JAR) GitUse
+compile2: GitUser.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR)
+		javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) GitUser.java
+		java -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) GitUser
 
 clean:
-		rm -f *~
 		rm -f Selection*.class
 		rm -f TestData *.class
+		rm -f GitUser*.class
 
 test: $(JUNIT5_JAR)
 		java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path
