@@ -27,14 +27,19 @@ help:
 compile: Selection.java SelectionTest.java $(JUNIT5_JAR)
 		javac -cp .:$(JUNIT5_JAR) SelectionTest.java
 		javac Selection.java
+		javac TestData/Comment.java     
+		javac TestData/MakeshiftExtraction.java
+		javac TestData/Issue.java
+						
 
 compile2: GitUser.java $(JSON_JAR)
 		javac -cp .:$(JSON_JAR) GitUser.java
-		java -cp .:$(JSON_JAR) GitUser
+		java -cp .:$(JSON_JAR) GitUse
 
 clean:
 		rm -f *~
 		rm -f Selection*.class
+		rm -f TestData *.class
 
 test: $(JUNIT5_JAR)
 		java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path
