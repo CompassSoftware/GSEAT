@@ -107,6 +107,27 @@ public class Analysis
     }
 
     /**
+     * countCollabIssues
+     *
+     * @param username of the Collaborator who's issues
+     *  are being counted
+     *
+     * @return number of issues that the collaborator has
+     */
+    public int countCollabIssues(String username)
+    {
+        int count = 0;
+        for (Issue i : repo.getIssues())
+        {
+            if((i.getUserName()).equals(username))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Function to print something to the console screen.
      * @param args command line
      */
