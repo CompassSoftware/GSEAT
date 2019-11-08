@@ -165,7 +165,9 @@ public class Analysis
         Analysis analysis = new Analysis(repo);
         int issueComments = analysis.countIssuesComments();
         int collab1Comments = analysis.countCommentsByCollaborator("tester1");
+        int collab1Issues = analysis.countIssuesByCollaborator("tester1");
         System.out.println("Number of issue comments: " + issueComments);
         System.out.println("Number of comments by collaborator 1: " + collab1Comments);
+        System.out.println("Number of isues by collaborator 1: " + collab1Issues);
     }
 }
