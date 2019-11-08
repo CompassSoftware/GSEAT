@@ -107,14 +107,14 @@ public class Analysis
     }
 
     /**
-     * countCollabIssues
+     * countIssuesByCollaborator
      *
      * @param username of the Collaborator who's issues
      *  are being counted
      *
      * @return number of issues that the collaborator has
      */
-    public int countCollabIssues(String username)
+    public int countIssuesByCollaborator(String username)
     {
         int count = 0;
         for (Issue i : repo.getIssues())
