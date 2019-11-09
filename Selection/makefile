@@ -43,6 +43,10 @@ compile2: GitUser.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMO
 		javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) GitUser.java
 		java -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) GitUser
 
+compile3: inter_face.java $(JUNIT5_JAR)
+		javac -cp .:$(JUNIT5_JAR) inter_face.java
+		java -cp .:$(JUNIT5_JAR) inter_face
+
 clean:
 		rm -f Selection*.class
 		rm -f TestData *.class
