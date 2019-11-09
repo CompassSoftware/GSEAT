@@ -6,7 +6,7 @@
  *
  * @author Zack
  *
- * @version 1.c: seperate the code in main to different methods
+ * @version 1.c: separate the code in main to different methods
  */
 
 import java.io.*;
