@@ -1,4 +1,5 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Issue
 {
@@ -6,12 +7,14 @@ public class Issue
     String userName;
     LocalDate dateCreated;
     LocalDate dateUpdated;
+    ArrayList<Comment> comments;
 
     /*
      * Constructor that takes a Collaborator object and a String for info about the issue. 
      */
     public Issue(String issueText, Collaborator C)
     {
+        this.comments = new ArrayList<Comment>();
         this.userName = C.getUserName();
         this.issueText = issueText;
         this.dateCreated = LocalDate.now();
