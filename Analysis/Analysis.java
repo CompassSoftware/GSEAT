@@ -130,6 +130,27 @@ public class Analysis
     }
 
     /**
+     * countIssuesByCollaborator
+     *
+     * @param username of the Collaborator who's issues
+     *  are being counted
+     *
+     * @return number of issues that the collaborator has
+     */
+    public int countIssuesByCollaborator(String username)
+    {
+        int count = 0;
+        for (Issue i : repo.getIssues())
+        {
+            if((i.getUserName()).equals(username))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Function to print something to the console screen.
      * @param args command line
      */
@@ -167,9 +188,11 @@ public class Analysis
         Analysis analysis = new Analysis(repo);
         int issueComments = analysis.countIssuesComments();
         int collab1Comments = analysis.countCommentsByCollaborator("tester1");
+        int collab1Issues = analysis.countIssuesByCollaborator("tester1");
         int commitComments = analysis.countCommitsComments();
         System.out.println("Number of issue comments: " + issueComments);
         System.out.println("Number of comments by collaborator 1: " + collab1Comments);
-        System.out.println("Number of commit comments: " + commitComments);
+        System.out.println("Number of isues by collaborator 1: " + collab1Issues);
+        System.out.println("Total number of commit comments: " + commitComments);
     }
 }
