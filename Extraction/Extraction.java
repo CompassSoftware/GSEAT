@@ -10,6 +10,8 @@ import org.eclipse.egit.github.core.service.CommitService;
 import org.eclipse.egit.github.core.client.GitHubClient;
 import java.io.*;
 
+
+
 /**
  * Extraction class.
  * @author Thomas Neumayr
@@ -47,8 +49,8 @@ public class Extraction
         RepositoryService service = new RepositoryService();
         service.getClient().setCredentials("jacobmacfarland", "");
         try {
-            for (Repository repo : service.getRepositories("jacobmacfarland"))
-                System.out.println(repo.getName() + " Watchers: " + repo.getWatchers());
+            Repository repo = service.getRepository("jacobmacfarland", "FinanceCalc");
+            System.out.println(repo.getDescription());
         }
         catch (IOException e) {
             e.printStackTrace();
