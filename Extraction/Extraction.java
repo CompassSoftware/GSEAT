@@ -56,23 +56,27 @@ public class Extraction
                  urlString += current;
              }
 
-             System.out.println(urlString);
-
              /** Handle file with json type and seach for the info with name and html_url
               * @param repo_name        the name of user's each repo
               * @param url_name         the url of user's each repo
               */
+             //System.out.println(urlString);
+             JSONObject jsonObject = JSONObject.fromObject(urlString);
+             String repoName = jsonObject.getString("description");
+             String repoCollaboratorsURL = jsonObject.getString("collaborators_url");
+             String repoCommitsURL = jsonObject.getString("commits_url");
+             String repoCommentsURL = jsonObject.getString("comments_url");
+             String repoIssuesURL = jsonObject.getString("issues_url");
+             String repoIssueCommentsURL = jsonObject.getString("issue_comment_url");
 
-             /*JSONArray jsonarray = JSONArray.fromObject(urlString);
-             if (jsonarray.size() > 0) {
-                 for (int i = 0; i < jsonarray.size(); i++) {
-                     JSONObject jsonObject = JSONObject.fromObject(jsonarray.get(i).toString());
-                     String repo_name = jsonObject.getString("name");   //name of target of the first layer
-                     JSONObject owner = jsonObject.getJSONObject("owner");
-                     String url_name = owner.getString("html_url");     //html_url in the owner layer
-                     System.out.println("Repo_name: " + repo_name + "   " + url_name);
-                 }
-             } */
+             System.out.println("\n\nRepository name: " + repoName);
+             System.out.println("\n\nRepository collaborators URL: " + repoCollaboratorsURL);
+             System.out.println("\n\nRepository commits URL: " + repoCommitsURL);
+             System.out.println("\n\nRepository comments URL: " + repoCommentsURL);
+             System.out.println("\n\nRepository issues URL: " + repoIssuesURL);
+             System.out.println("\n\nRepository issue comments URL: " + repoIssueCommentsURL);
+             
+             //JSONObject owner = jsonObject.getJSONObject("owner");
 
         }
         catch (IOException e) {
