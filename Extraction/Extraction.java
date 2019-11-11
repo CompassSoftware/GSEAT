@@ -39,22 +39,38 @@ public class Extraction
       Extraction extractor = new Extraction();
     
       //JSONObject jsonObject = extractor.getJsonFromUrl("https://api.github.com/repos/jacobmacfarland/FinanceCalc");
-      JSONObject jsonObject = extractor.getJsonFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
-      
-      String repoName = jsonObject.getString("description");
-      String repoCollaboratorsURL = jsonObject.getString("collaborators_url");
-      String repoCommitsURL = jsonObject.getString("commits_url");
-      String repoCommentsURL = jsonObject.getString("comments_url");
-      String repoIssuesURL = jsonObject.getString("issues_url");
-      String repoIssueCommentsURL = jsonObject.getString("issue_comment_url");
+      JSONObject repo = extractor.getJsonFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+            
+      String repoName = repo.getString("description");
+      String repoCollaboratorsURL = repo.getString("collaborators_url");
+      String repoCommitsURL = repo.getString("commits_url");
+      String repoCommentsURL = repo.getString("comments_url");
+      String repoIssuesURL = repo.getString("issues_url");
+      String repoIssueCommentsURL = repo.getString("issue_comment_url");
 
-      System.out.println("\n\nRepository name: " + repoName);
+      /*System.out.println("\n\nRepository name: " + repoName);
       System.out.println("\n\nRepository collaborators URL: " + repoCollaboratorsURL);
       System.out.println("\n\nRepository commits URL: " + repoCommitsURL);
       System.out.println("\n\nRepository comments URL: " + repoCommentsURL);
       System.out.println("\n\nRepository issues URL: " + repoIssuesURL);
-      System.out.println("\n\nRepository issue comments URL: " + repoIssueCommentsURL);
-             
+      System.out.println("\n\nRepository issue comments URL: " + repoIssueCommentsURL);*/
+      
+      JSONArray issues = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/issues", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+      
+      for (int i = 0; i < issues.size(); i++) {
+          JSONObject issue = JSONObject.fromObject(issues.get(i).toString());
+          System.out.println("Issue " + (i + 1) + ": ");
+          System.out.println("     Title: " + issue.getString("title"));
+          System.out.println("     Body: " + issue.getString("body")); 
+          System.out.println("     Created at: " + issue.getString("created_at"));
+          System.out.println("     Updated at : " + issue.getString("updated_at"));
+      }
+      
+      JSONArray comments = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+      
+      JSONArray commits = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/commits", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+      
+    
     }
     
     public JSONObject getJsonFromUrl(String repoUrl) {
@@ -106,7 +122,6 @@ public class Extraction
           return null;
         }
         
-        
         token = token + ":x-oauth-basic";
         String authString = "Basic " + Base64.getEncoder().encode(token.getBytes());
         connection.setRequestProperty("Authorization", authString); 
@@ -125,17 +140,45 @@ public class Extraction
       return jsonObject;
     }
     
-    /*String newUrl = "https://" + url;
-        System.out.println(newUrl);
-        try {
-          URL myURL = new URL(newUrl);
-          URLConnection connection = myURL.openConnection();
-          // token = token + ":x-oauth-basic";
-          // String authString = "Basic " + Base64.encodeBase64String(token.getBytes());
-          connection.setRequestProperty("Authorization", authString);
-          InputStream crunchifyInStream = connection.getInputStream();
-          System.out.println(crunchifyGetStringFromStream(crunchifyInStream));
-        } catch (Exception e) {
-          e.printStackTrace();
-        }*/
+    
+    
+    
+    
+    
+    
+    
+    public JSONArray getJsonArrayFromUrlWithAuth(String repoUrl, String token) {
+      JSONArray jsonObject = null;
+      try {
+        URL url = new URL(repoUrl);
+        URLConnection urlConnection = url.openConnection();
+        HttpURLConnection connection = null;
+        
+        if (urlConnection instanceof HttpURLConnection) {
+            connection = (HttpURLConnection) urlConnection;
+        }
+        else {
+          System.out.println("Please input the url address: ");
+          return null;
+        }
+        
+        token = "jacobmacfarland:" + token;
+        String authString = "Basic " + Base64.getEncoder().encode(token.getBytes());
+        connection.setRequestProperty("Authorization", authString); 
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String current;
+        String urlString = "";
+        while((current = in.readLine()) != null) {
+            urlString += current;
+        }
+        System.out.println("\n\n\n\n\n\n" + urlString + "\n\n\n\n\n\n\n");
+        jsonObject = JSONArray.fromObject(urlString);
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
+      return jsonObject;
+    }
+
 }
