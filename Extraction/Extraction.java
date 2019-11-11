@@ -1,15 +1,3 @@
-import java.util.ArrayList;
-
-import org.eclipse.egit.github.core.RepositoryCommit;
-import org.eclipse.egit.github.core.RepositoryId;
-
-import org.eclipse.egit.github.core.service.RepositoryService;
-import org.eclipse.egit.github.core.Repository;
-
-import org.eclipse.egit.github.core.service.CommitService;
-import org.eclipse.egit.github.core.client.GitHubClient;
-import java.io.*;
-
 
 
 /**
