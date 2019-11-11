@@ -38,7 +38,9 @@ public class Extraction
       
       Extraction extractor = new Extraction();
     
-      JSONObject jsonObject = extractor.getJsonFromUrl("https://api.github.com/repos/jacobmacfarland/FinanceCalc");
+      //JSONObject jsonObject = extractor.getJsonFromUrl("https://api.github.com/repos/jacobmacfarland/FinanceCalc");
+      JSONObject jsonObject = extractor.getJsonFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+      
       String repoName = jsonObject.getString("description");
       String repoCollaboratorsURL = jsonObject.getString("collaborators_url");
       String repoCommitsURL = jsonObject.getString("commits_url");
@@ -69,6 +71,7 @@ public class Extraction
           System.out.println("Please input the url address: ");
           return null;
         }
+        
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String current;
         String urlString = "";
@@ -83,4 +86,56 @@ public class Extraction
       return jsonObject;
       
     }
+    
+    
+    
+    
+    
+    public JSONObject getJsonFromUrlWithAuth(String repoUrl, String token) {
+      JSONObject jsonObject = null;
+      try {
+        URL url = new URL(repoUrl);
+        URLConnection urlConnection = url.openConnection();
+        HttpURLConnection connection = null;
+        
+        if (urlConnection instanceof HttpURLConnection) {
+            connection = (HttpURLConnection) urlConnection;
+        }
+        else {
+          System.out.println("Please input the url address: ");
+          return null;
+        }
+        
+        
+        token = token + ":x-oauth-basic";
+        String authString = "Basic " + Base64.getEncoder().encode(token.getBytes());
+        connection.setRequestProperty("Authorization", authString); 
+        
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String current;
+        String urlString = "";
+        while((current = in.readLine()) != null) {
+            urlString += current;
+        }
+        jsonObject = JSONObject.fromObject(urlString);
+      }
+      catch (IOException e) {
+        e.printStackTrace();
+      }
+      return jsonObject;
+    }
+    
+    /*String newUrl = "https://" + url;
+        System.out.println(newUrl);
+        try {
+          URL myURL = new URL(newUrl);
+          URLConnection connection = myURL.openConnection();
+          // token = token + ":x-oauth-basic";
+          // String authString = "Basic " + Base64.encodeBase64String(token.getBytes());
+          connection.setRequestProperty("Authorization", authString);
+          InputStream crunchifyInStream = connection.getInputStream();
+          System.out.println(crunchifyGetStringFromStream(crunchifyInStream));
+        } catch (Exception e) {
+          e.printStackTrace();
+        }*/
 }
