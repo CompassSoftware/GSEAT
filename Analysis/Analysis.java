@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import github.Comment;
 import github.Repository;
 import github.Issue;
@@ -73,6 +74,7 @@ public class Analysis
     * countCommentsByCollaborator
     * Counts the comments made by a collaborator.
     * 
+    * @param username of collaborator
     * @return count of comments
     */
     public int countCommentsByCollaborator(String username)
@@ -87,6 +89,7 @@ public class Analysis
     * countIssueCommentsByCollaborator
     * Counts issue comments made by colllaborator.
     *
+	* @param username of collaborator
     * @return count of comments
     */
     public int countIssueCommentsByCollaborator(String username)
@@ -97,7 +100,36 @@ public class Analysis
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if((c.getUserName()).equals(username))
+                if ((c.getUserName()).equals(username))
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+    * countIssueCommentsByCollaborator
+    * Counts issue comments made by colllaborator.
+    *
+	* @param username of collaborator
+	* @param start date
+	* @param end date
+    * @return count of comments
+    */
+    public int countIssueCommentsByCollaborator(String username, 
+		LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Issue i : repo.getIssues())
+        {
+            ArrayList<Comment> comments = i.getComments();
+            for (Comment c : comments)
+            {
+                if ((c.getUserName()).equals(username) 
+					&& (start.compareTo(c.getDateCreated()) <= 0) 
+					&& (end.compareTo(c.getDateCreated()) >= 0))
                 {
                     count++;
                 }
@@ -110,17 +142,18 @@ public class Analysis
     * countCommitCommentsByCollaborator
     * Counts commit comments made by collaborator.
     *
+	* @param username of collaborator
     * @return count of comments
     */
     public int countCommitCommentsByCollaborator(String username)
     {
         int count = 0;
-        for(Commit i : repo.getCommits())
+        for (Commit i : repo.getCommits())
         {
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if((c.getUserName()).equals(username))
+                if ((c.getUserName()).equals(username))
                 {
                     count++;
                 }
@@ -130,7 +163,54 @@ public class Analysis
     }
 
     /**
-     * countIssuesByCollaborator
+    * countCommitCommentsByCollaborator
+    * Counts commit comments made by collaborator.
+    *
+	* @param username of collaborator
+	* @param start date
+	* @param end date
+    * @return count of comments
+    */
+    public int countCommitCommentsByCollaborator(String username, 
+		LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Commit i : repo.getCommits())
+        {
+            ArrayList<Comment> comments = i.getComments();
+            for (Comment c : comments)
+            {
+                if ((c.getUserName()).equals(username) 
+					&& (start.compareTo(c.getDateCreated()) <= 0) 
+					&& (end.compareTo(c.getDateCreated()) >= 0))
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
+    * countCommentsByCollaborator
+    * Counts the comments made by a collaborator through dates.
+    * 
+	* @param username of collaborator
+	* @param start date
+	* @param end date
+    * @return count of comments
+    */
+    public int countCommentsByCollaborator(String username, 
+		LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        count += countIssueCommentsByCollaborator(username, start, end);
+        count += countCommitCommentsByCollaborator(username, start, end);
+        return count;
+    }
+
+    /**
+     * countIssuesByCollaborator.
      *
      * @param username of the Collaborator who's issues
      *  are being counted
@@ -142,7 +222,7 @@ public class Analysis
         int count = 0;
         for (Issue i : repo.getIssues())
         {
-            if((i.getUserName()).equals(username))
+            if ((i.getUserName()).equals(username))
             {
                 count++;
             }
@@ -157,18 +237,25 @@ public class Analysis
     public static void main(String[] args) 
     {
         // Creates 1 Repo with 2 issues and 2 commits.
-        // Issue 1 (by collaborator 2) has 2 comments (both made by collaborator 1).
-        // Issue 2 (by collaborator 1) has 1 comment (made by collaborator 2).
+        // Issue 1 (by collaborator 2) has 2 comments 
+		// (both made by collaborator 1).
+        // Issue 2 (by collaborator 1) has 1 comment 
+		// (made by collaborator 2).
         // Commit 1 is by collaborator 1 with one comment by collab 2
         // Commit 2 is by collaborator 2 with one comment by collab 1
         // Calls countIssuesComments; should print '3'.
         // Calls countCommentsByCollaborator for collaborator 1; should print 2
-        Collaborator coll1 = new Collaborator("mister","test","tester1","2");
-        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
+
+        Collaborator coll1 = new Collaborator("mister", "test", "tester1", "2");
+        Collaborator coll2 = new Collaborator("misses", "test", "tester2", "3");
         
         Issue i1 = new Issue("issue 1", coll2);
-        i1.addComment(new Comment("this is good", coll1, "type1")); 
-        i1.addComment(new Comment("this is bad", coll1, "type1"));
+        Comment comm1 = new Comment("this is good", coll1, "type1");
+        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        i1.addComment(comm1); 
+        Comment comm2 = new Comment("this is bad", coll1, "type1");
+        comm2.setdateCreated(LocalDate.now());
+        i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
         i2.addComment(new Comment("this is okay", coll2, "type2"));
@@ -176,8 +263,10 @@ public class Analysis
         Commit com1 = new Commit("commit 1", coll1);
         com1.addComment(new Comment("cool", coll2, "type2"));
 
-        Commit com2 = new Commit ("commit 2", coll2);
-        com2.addComment(new Comment("cool2", coll1, "type2"));
+        Commit com2 = new Commit("commit 2", coll2);
+        Comment comm3 = new Comment("cool2", coll1, "type2");
+        comm3.setdateCreated(LocalDate.now().minusDays(10));
+        com2.addComment(comm3);
 
         Repository repo = new Repository();
         repo.addIssue(i1);
@@ -188,11 +277,18 @@ public class Analysis
         Analysis analysis = new Analysis(repo);
         int issueComments = analysis.countIssuesComments();
         int collab1Comments = analysis.countCommentsByCollaborator("tester1");
+        int collab1CommentsByDate = analysis
+			.countCommentsByCollaborator("tester1",
+			LocalDate.now().minusDays(5), LocalDate.now());
         int collab1Issues = analysis.countIssuesByCollaborator("tester1");
         int commitComments = analysis.countCommitsComments();
         System.out.println("Number of issue comments: " + issueComments);
-        System.out.println("Number of comments by collaborator 1: " + collab1Comments);
-        System.out.println("Number of isues by collaborator 1: " + collab1Issues);
-        System.out.println("Total number of commit comments: " + commitComments);
+        System.out.println("Number of comments by collaborator 1: " 
+			+ collab1Comments);
+        System.out.println("Number of comments by collaborator 1 " 
+			+ "in the last 5 days: " + collab1CommentsByDate);
+        System.out.println("Number of isues by collaborator 1: " 
+			+ collab1Issues);
+        System.out.println("Number of commit comments: " + commitComments);
     }
 }
