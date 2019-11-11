@@ -128,6 +128,37 @@ public class AnalysisTest
         assertEquals(expected, actual);
     }
 
+    /**
+     * Tests countCommitsComments.
+     */
+    @Test
+    public void testCountCommitsComments() {
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        Commit cmt1 = new Commit("commit1", collab1);
+        cmt1.addComment(new Comment("comment1", collab1, "commit"));
+        cmt1.addComment(new Comment("comment2", collab2, "commit"));
+        cmt1.addComment(new Comment("comment3", collab1, "commit"));
+
+        Commit cmt2 = new Commit("commit2", collab2);
+        cmt2.addComment(new Comment("comment1", collab2, "commit"));
+        cmt2.addComment(new Comment("comment2", collab1, "commit"));
+
+        Commit cmt3 = new Commit("commit3", collab2);
+
+        Repository repo = new Repository();
+        repo.addCommit(cmt1);
+        repo.addCommit(cmt2);
+        repo.addCommit(cmt3);
+
+        Analysis analysis = new Analysis(repo);
+
+        int expected = 5;
+        int actual = analysis.countCommitsComments();
+
+        assertEquals(expected, actual);
+    }
+
 	/**
 	* Tests countCommentsByCollaborator.
 	*/
