@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 import github.Repository;
 import github.Comment;
@@ -225,5 +226,72 @@ public class AnalysisTest
 		assertEquals(expected, actual);
 	}
 
+    /**
+	* Tests countIssuesByCollaborator with dates in wrong order.
+	*/
+	@Test
+	public void testCountIssuesByCollaboratorDatesWrong() {
+		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
+        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
+        
+        Issue i1 = new Issue("issue 1", coll2);
+        i1.addComment(new Comment("this is good", coll1, "type1")); 
+        i1.addComment(new Comment("this is bad", coll1, "type1"));
+
+        Issue i2 = new Issue("issue 2", coll1);
+        i2.addComment(new Comment("this is okay", coll2, "type2"));
+        
+        Commit com1 = new Commit("commit 1", coll1);
+        com1.addComment(new Comment("cool", coll2, "type2"));
+
+        Commit com2 = new Commit ("commit 2", coll2);
+        com2.addComment(new Comment("cool2", coll1, "type2"));
+
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addCommit(com1);
+        repo.addCommit(com2);
+
+        Analysis analysis = new Analysis(repo);        
+        int actual = analysis.countIssuesByCollaborator("tester1",
+            LocalDate.now().plusDays(1), i2.getDateCreated());
+		int expected = -1;
+		assertEquals(expected, actual);
+	}
+    
+    /**
+	* Tests countIssuesByCollaborator with dates in correct order.
+	*/
+	@Test
+	public void testCountIssuesByCollaboratorDates() {
+		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
+        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
+        
+        Issue i1 = new Issue("issue 1", coll2);
+        i1.addComment(new Comment("this is good", coll1, "type1")); 
+        i1.addComment(new Comment("this is bad", coll1, "type1"));
+
+        Issue i2 = new Issue("issue 2", coll1);
+        i2.addComment(new Comment("this is okay", coll2, "type2"));
+        
+        Commit com1 = new Commit("commit 1", coll1);
+        com1.addComment(new Comment("cool", coll2, "type2"));
+
+        Commit com2 = new Commit ("commit 2", coll2);
+        com2.addComment(new Comment("cool2", coll1, "type2"));
+
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addCommit(com1);
+        repo.addCommit(com2);
+
+        Analysis analysis = new Analysis(repo);        
+        int actual = analysis.countIssuesByCollaborator("tester1",
+            i2.getDateCreated(), LocalDate.now());
+		int expected = 1;
+		assertEquals(expected, actual);
+	}
 }
 

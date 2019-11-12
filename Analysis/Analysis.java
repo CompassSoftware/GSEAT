@@ -4,6 +4,7 @@ import github.Issue;
 import github.Commit;
 import github.Collaborator;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 /**
  * Analysis.java.
@@ -132,6 +133,9 @@ public class Analysis
     /**
      * countIssuesByCollaborator
      *
+     * Count the number of issues each collaborator has
+     * created in the whole time of the project.
+     *
      * @param username of the Collaborator who's issues
      *  are being counted
      *
@@ -143,6 +147,38 @@ public class Analysis
         for (Issue i : repo.getIssues())
         {
             if((i.getUserName()).equals(username))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    /**
+     * countIssuesByCollaborator
+     *
+     * Count the number of issues each collaborator has
+     * created within the dates.
+     * 
+     * @param username of the Collaborator who's issues
+     *  are being counted
+     *
+     * @return : number of issues that the collaborator has
+     *  within the dates
+     *         : -1 if start > end
+     */
+    public int countIssuesByCollaborator(String username, LocalDate start, LocalDate end)
+    {
+        if (start.isAfter(end))
+        {
+            return -1;
+        }
+        int count = 0;
+        for (Issue i : repo.getIssues())
+        {
+            if((i.getUserName()).equals(username)
+                && i.getDateCreated().compareTo(start) >= 0
+                && i.getDateCreated().compareTo(end) <= 0)
             {
                 count++;
             }
@@ -190,9 +226,20 @@ public class Analysis
         int collab1Comments = analysis.countCommentsByCollaborator("tester1");
         int collab1Issues = analysis.countIssuesByCollaborator("tester1");
         int commitComments = analysis.countCommitsComments();
+        int collab1IssuesDatesWrong = analysis.countIssuesByCollaborator("tester1",
+                LocalDate.now().plusDays(1), i2.getDateCreated());        
+        int collab1IssuesDates = analysis.countIssuesByCollaborator("tester1",
+                i2.getDateCreated(), LocalDate.now());        
+        
         System.out.println("Number of issue comments: " + issueComments);
         System.out.println("Number of comments by collaborator 1: " + collab1Comments);
         System.out.println("Number of isues by collaborator 1: " + collab1Issues);
         System.out.println("Total number of commit comments: " + commitComments);
+    
+        System.out.println("Total number of issues by collaborator 1 with wrong "
+            + "start and end dates: " + collab1IssuesDatesWrong);
+        System.out.println("Total number of issues by collaborator 1 with correct "
+            + "start and end dates: " + collab1IssuesDates);
+         
     }
 }
