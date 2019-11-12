@@ -239,7 +239,7 @@ public class Analysis
         System.out.println("Total number of issues by collaborator 1 with wrong "
             + "start and end dates: " + collab1IssuesDatesWrong);
         System.out.println("Total number of issues by collaborator 1 with correct "
-            + "state and end dates: " + collab1IssuesDates);
+            + "start and end dates: " + collab1IssuesDates);
          
     }
 }
