@@ -267,6 +267,30 @@ public class Analysis
     }
 
     /**
+     * countCollaboratorCommits
+     *
+     * Count the number of commits made by certain
+     * collaborator.
+     * 
+     * @param username of the Collaborator who's issues
+     *  are being counted
+     *
+     * @return : number of commits made by a collaborator
+     */
+    public int countCollaboratorCommits(String username)
+    {
+        int count = 0;
+        for (Commit i : repo.getCommits())
+        {
+            if (i.getUserName().equals(username)) 
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Function to print something to the console screen.
      * @param args command line
      */
