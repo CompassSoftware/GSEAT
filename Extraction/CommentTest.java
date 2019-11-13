@@ -25,8 +25,8 @@ public class CommentTest
             Assert.assertEquals(comment.getUserName(), "Nischinth-bot");
             Assert.assertEquals(comment.getCommentText(), "Initial Comment");
             Assert.assertEquals(comment.getCommentType(), "issue");
-            Assert.assertEquals(comment.getDateCreated(), LocalDate.now());
-            Assert.assertEquals(comment.getDateUpdated(), LocalDate.now());
+            Assert.assertEquals(comment.getDateCreated(), null);
+            Assert.assertEquals(comment.getDateUpdated(), null);
         }
 
     @Test 

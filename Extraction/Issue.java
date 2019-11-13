@@ -1,13 +1,13 @@
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Issue
 {
     String issueText;
     String userName;
-    LocalDate dateCreated;
-    LocalDate dateUpdated;
     ArrayList<Comment> comments;
+    Date dateCreated;
+    Date dateUpdated;
 
     /*
      * Constructor that takes a Collaborator object and a String for info about the issue. 
@@ -17,8 +17,8 @@ public class Issue
         this.comments = new ArrayList<Comment>();
         this.userName = C.getUserName();
         this.issueText = issueText;
-        this.dateCreated = LocalDate.now();
-        this.dateUpdated = LocalDate.now();
+        this.dateCreated = null;
+        this.dateUpdated = null;
     }
 
     public void setIssueText(String issueText)
@@ -31,12 +31,12 @@ public class Issue
         this.userName = userName;
     }
 
-    public void setdateCreated(LocalDate d)
+    public void setdateCreated(Date d)
     {
         this.dateCreated = d;
     }
 
-    public void setDateUpdated(LocalDate d)
+    public void setDateUpdated(Date d)
     {
         this.dateUpdated = d;
     }
@@ -51,12 +51,12 @@ public class Issue
         return this.userName;
     }
 
-    public LocalDate getDateCreated()
+    public Date getDateCreated()
     {
         return this.dateCreated;
     }
 
-    public LocalDate getDateUpdated()
+    public Date getDateUpdated()
     {
         return this.dateUpdated;
     }
