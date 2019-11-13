@@ -293,6 +293,41 @@ public class Analysis
     }
 
     /**
+     * countCollaboratorCommits
+     *
+     * Count the number of commits each collaborator has
+     * made within the dates.
+     * 
+     * @param username of the Collaborator whose commits
+     *  are being counted
+     *
+     * @return : number of commits that the collaborator has
+     *  within the dates
+     *         : -1 if start > end
+     * @param start - The start date.
+     * @param end - The end date.
+     */
+    public int countCollaboratorCommits(String username, LocalDate start, 
+            LocalDate end)
+    {
+        if (start.isAfter(end))
+        {
+            return -1;
+        }
+        int count = 0;
+        for (Commit i : repo.getCommits())
+        {
+            if ((i.getUserName()).equals(username)
+                && i.getDateCreated().compareTo(start) >= 0
+                && i.getDateCreated().compareTo(end) <= 0)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * Function to print something to the console screen.
      * @param args command line
      */
@@ -350,7 +385,14 @@ public class Analysis
         int collab1IssuesDates = analysis.countIssuesByCollaborator("tester1",
                 i2.getDateCreated(), LocalDate.now());     
         int collaborator1Commits = analysis.countCollaboratorCommits("tester1");
-        
+        int collab1CommitsDatesWrong = 
+            analysis.countCollaboratorCommits("tester1", 
+                    LocalDate.now().plusDays(1),
+                    com2.getDateCreated());
+        int collab1CommitsDates = analysis.countCollaboratorCommits("tester1", 
+                com2.getDateCreated(), LocalDate.now());
+
+
         System.out.println("Number of issue comments: " + issueComments);
 
         System.out.println("Number of comments by collaborator 1: " 
@@ -367,6 +409,10 @@ public class Analysis
                 + "wrong start and end dates: " + collab1IssuesDatesWrong);
         System.out.println("Total number of issues by collaborator 1 with "
                 + "correct start and end dates: " + collab1IssuesDates);
-
+        
+        System.out.println("Total number of commits by collaborator 1 with"
+                + " wrong start and end dates: " + collab1CommitsDatesWrong);
+        System.out.println("Total number of issues by collaborator 1 with "
+                + "correct start and end dates: " + collab1CommitsDates);
     }
 }
