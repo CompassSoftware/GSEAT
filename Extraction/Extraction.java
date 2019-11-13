@@ -36,8 +36,7 @@ public class Extraction
       ArrayList<Issue> issues = new ArrayList<Issue>();
       
     
-      JSONObject repo = extractor.getJsonObjectFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "640ad6f855705e36988a125ebe79a123dc213136");
-      JSONArray comments = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "640ad6f855705e36988a125ebe79a123dc213136");
+      // JSONObject repo = extractor.getJsonObjectFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "640ad6f855705e36988a125ebe79a123dc213136");
       // JSONArray collaborators = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/collaborators", "640ad6f855705e36988a125ebe79a123dc213136");
             
       /*String repoName = repo.getString("description");
@@ -125,6 +124,34 @@ public class Extraction
         
         repo.addCommit(commit);
         
+      }
+
+    }
+    
+    public void AddCommentsToRepo() {
+      JSONArray comments = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "640ad6f855705e36988a125ebe79a123dc213136");
+      ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+      
+      for (int i = 0; i < comments.size(); i++) {
+        JSONObject jsonComment = JSONObject.fromObject(comments.get(i).toString());
+        JSONObject user = jsonComment.getJSONObject("user");
+        String userName = user.getString("login");
+        String body = jsonComment.getString("body");
+        String dateCreatedString = jsonComment.getString("created_at");
+        String dateUpdatedString = jsonComment.getString("updated_at");
+        
+        Date dateCreated = githubDateStringToDate(dateCreatedString);
+        Date dateUpdated = githubDateStringToDate(dateUpdatedString);
+        
+        Comment comment = new Comment("", new Collaborator(), "");
+        
+        comment.setCommentText(body);
+        comment.setUserName(userName);
+        comment.setdateCreated(dateCreated);
+        comment.setDateUpdated(dateUpdated);
+        
+        repo.addComment(comment);
+
       }
 
     }
