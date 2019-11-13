@@ -101,7 +101,7 @@ public class GitUser {
                     }
                     break;
                 case 2:
-                    System.out.println("Under construction...");
+                    System.out.println("(Organization Part)Still Under construction...");
                     break;
             }
         }
