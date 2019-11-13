@@ -37,7 +37,6 @@ public class Extraction
       
     
       JSONObject repo = extractor.getJsonObjectFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "640ad6f855705e36988a125ebe79a123dc213136");
-      JSONArray commits = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/commits", "640ad6f855705e36988a125ebe79a123dc213136");
       JSONArray comments = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "640ad6f855705e36988a125ebe79a123dc213136");
       // JSONArray collaborators = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/collaborators", "640ad6f855705e36988a125ebe79a123dc213136");
             
@@ -68,7 +67,7 @@ public class Extraction
       
     }
     
-    public ArrayList<Issue> addIssuesToRepo() {
+    public void addIssuesToRepo() {
       
       JSONArray issues = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/issues", "640ad6f855705e36988a125ebe79a123dc213136");
       ArrayList<Issue> issuesArrayList = new ArrayList<Issue>();
@@ -91,10 +90,43 @@ public class Extraction
           issue.setdateCreated(dateCreated);
           issue.setDateUpdated(dateUpdated);
           
-          
-          issuesArrayList.add(issue);
+          repo.addIssue(issue);
       }
-      return issuesArrayList;
+    }
+    
+    public void addCommitsToRepo() {
+      
+      JSONArray commits = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/commits", "640ad6f855705e36988a125ebe79a123dc213136");
+      ArrayList<Commit> commitsArrayList = new ArrayList<Commit>();
+      
+      for (int i = 0; i < commits.size(); i++) {
+        
+        JSONObject jsonCommitInfo = JSONObject.fromObject(commits.get(i).toString());
+        JSONObject jsonCommit = jsonCommitInfo.getJSONObject("commit");
+        String message = jsonCommit.getString("message");
+        // The github API has two "committer" dictionary keys. 
+        // The first committer will be called innerCommitter, 
+        // which is a "committer" key inside of a "commit" dictionary
+        JSONObject innerCommitter = jsonCommit.getJSONObject("committer");
+        String dateCreatedString = innerCommitter.getString("date");
+        Date dateCreated = githubDateStringToDate(dateCreatedString);
+        
+        // The github API has two "committer" dictionary keys. 
+        // The second committer will be called outerCommitter, 
+        // which is a "committer" key not nested in any dictionaries.
+        JSONObject outerCommitter = jsonCommitInfo.getJSONObject("committer");
+        String userName = outerCommitter.getString("login");
+        
+        Commit commit = new Commit("", new Collaborator());
+        
+        commit.setInfo(message);
+        commit.setUserName(userName);
+        commit.setdateCreated(dateCreated);
+        
+        repo.addCommit(commit);
+        
+      }
+
     }
     
     public JSONObject getJsonFromUrl(String repoUrl) {
