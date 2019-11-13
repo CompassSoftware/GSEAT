@@ -17,18 +17,24 @@ default:
 #Essential that command lines start with single TAB character
 
 compile: Analysis.java AnalysisTest.java $(JUNIT5_JAR)
-	javac TestData/*.java
+	javac github/*.java
 	javac Analysis.java
+	javac Demo.java
 	javac -cp .:$(JUNIT5_JAR) AnalysisTest.java
 
 clean:
 	rm -f *~
 	rm -f TestData/*.class
 	rm -f Analysis*.class
+	rm -f Demo.class
 
 test: $(JUNIT5_JAR)
 	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
 
 chk: Analysis.java style.xml
 	java $(CKSTYLE_COMMAND) -c style.xml Analysis.java
+	java $(CKSTYLE_COMMAND) -c style.xml Demo.java
+
+demo: Demo.java
+	java Demo
 

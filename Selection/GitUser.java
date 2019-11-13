@@ -6,7 +6,7 @@
  *
  * @author Zack
  *
- * @version 2.0: add greeting, selection for show which Info
+ * @version 2.0: add greeting and selection.
  */
 
 import java.io.*;
