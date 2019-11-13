@@ -17,37 +17,39 @@ import net.sf.json.JSONArray;
 
 public class GitUser {
 
-    static String username;
     static String Url;
     static String repo_name;
     static String repo_url;
     static Scanner sc = new Scanner(System.in);
+    static String input;
+    private static GitUser gu;
 
-    /** Promopt user for full username. Scan user's input.
-     * @username        user's input
-     * @Url             user's url
-     * @return url      api for connecion
+    /** Scan user's input.
+     * @input           user's input
+     * @return input    user's input
      */
 
     public static String scan_input() {
 
-        System.out.println("Please input your username: ");
-        username = sc.nextLine(); 
-        Url = ("https://api.github.com/users/" + username + "/repos");
-        System.out.println("URL address: " + Url + "\n");
-        return Url;
+        input = sc.nextLine(); 
+        return input;
 
     }
 
-    /** Set URL connection with the user's input.
+    /** Prompt user;s for full username. Call scan_input method to get user's input. Set URL connection with the user's input.
      *  Store the information in the urlstring.
+     *  @Url            user's git url address
      *  @current        param to make sure read all the api file           
      *  @urlstring      store repo_name and repo_url with Json type
      */
 
     public static String url_connection() throws IOException {
 
-        URL url = new URL(scan_input());
+        System.out.println("Please input your username: ");
+        //GitUser gu = new GitUser();
+        gu.scan_input();
+        Url = ("https://api.github.com/users/" + input + "/repos");
+        URL url = new URL(Url);
         URLConnection urlConnection = url.openConnection();
         HttpURLConnection connection = null;
         if (urlConnection instanceof HttpURLConnection) {
@@ -80,8 +82,10 @@ public class GitUser {
 
                 JSONObject jsonObject = JSONObject.fromObject(jsonarray.get(i).toString());
                 repo_name = jsonObject.getString("name");
-              //JSONObject owner = jsonObject.getJSONObject("owner"); not available for now
-                repo_url = jsonObject.getString("html_url");
+                //JSONObject owner = jsonObject.getJSONObject("owner"); not available for now
+                repo_url = jsonObject.getString("url");
+                //System.out.println("Which Info do you want to display?" + "\n" + "Press 1 to show more about Repository" + "   " + "Press 2 to show more about owner" ); not available for now
+
                 System.out.println("Repository: " + repo_name + "   " + repo_url);
             }
         }
@@ -90,7 +94,7 @@ public class GitUser {
 
     public static void main(String[] args) throws IOException {
 
-        GitUser gu = new GitUser();
+        //GitUser gu = new GitUser();
         gu.json_analysis();
 
     }
