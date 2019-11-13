@@ -19,18 +19,25 @@ public class Extraction
   	private Repository repo;
     static String baseUrl;
     static Scanner sc = new Scanner(System.in);
-    static String token;
+    static String TOKEN;
 
   	/**
-  	* Constructor for extraction
-  	* Sets repo arraylist
+  	* Constructor for extraction object.
+  	* @param userName - a user name to include in the URL
+    * @param userRepository - a user's repository to include in the URL
+    @ @param tok - a token to authorize URL requests to github API.
   	*/
-  	public Extraction()
+  	public Extraction(String userName, String userRepository, String tok)
   	{
-      baseUrl = "https://api.github.com/repos/";
+      baseUrl = "https://api.github.com/repos/" + userName + "/" + userRepository;
+      TOKEN = tok;
   		repo = new Repository();
   	}
     
+    /**
+    * Aggregate method to add issues, commits, comments, and return a repository object.
+    * @return a repository object that contains data for specified repository
+    */
     public Repository extract() {
       addIssuesToRepo();
       addCommitsToRepo();
@@ -38,6 +45,11 @@ public class Extraction
       return repo;
     }
     
+    /**
+    * Converts a github date string to a Java date object.
+    * @param dateString - a github date string to be converted
+    * @return a Date java object
+    */
     public static Date githubDateStringToDate(String dateString) {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       Date date;
@@ -54,9 +66,12 @@ public class Extraction
       
     }
     
+    /**
+    * Adds all issues found in the repository API call to the issues arraylist in a repository object.
+    */
     public void addIssuesToRepo() {
 
-      JSONArray issues = getJsonArrayFromUrlWithAuth(baseUrl + "/issues", token);
+      JSONArray issues = getJsonArrayFromUrlWithAuth(baseUrl + "/issues");
       ArrayList<Issue> issuesArrayList = new ArrayList<Issue>();
       
       for (int i = 0; i < issues.size(); i++) {
@@ -81,9 +96,12 @@ public class Extraction
       }
     }
     
+    /**
+    * Adds all commits found in the repository API call to the commits arraylist in a repository object.
+    */
     public void addCommitsToRepo() {
       
-      JSONArray commits = getJsonArrayFromUrlWithAuth(baseUrl + "/commits", token);
+      JSONArray commits = getJsonArrayFromUrlWithAuth(baseUrl + "/commits");
       ArrayList<Commit> commitsArrayList = new ArrayList<Commit>();
       
       for (int i = 0; i < commits.size(); i++) {
@@ -116,8 +134,11 @@ public class Extraction
 
     }
     
+    /**
+    * Adds all comments found in the repository API call to the comments arraylist in a repository object.
+    */
     public void addCommentsToRepo() {
-      JSONArray comments = getJsonArrayFromUrlWithAuth(baseUrl + "/comments", token);
+      JSONArray comments = getJsonArrayFromUrlWithAuth(baseUrl + "/comments");
       ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
       
       for (int i = 0; i < comments.size(); i++) {
@@ -144,7 +165,12 @@ public class Extraction
 
     }
     
-    public JSONObject getJsonObjectFromUrlWithAuth(String repoUrl, String token) {
+    /**
+    * Get a single json object from a specified URL. 
+    * @param repoUrl - a URL to retrieve github API data from
+    * @return a json object representing the data retrieved from the URL 
+    */
+    public JSONObject getJsonObjectFromUrlWithAuth(String repoUrl) {
       JSONObject jsonObject = null;
       try {
         URL url = new URL(repoUrl);
@@ -159,8 +185,8 @@ public class Extraction
           return null;
         }
         
-        token = token + ":x-oauth-basic";
-        String authString = "Basic " + Base64.getEncoder().encode(token.getBytes());
+        String tempToken = TOKEN + ":x-oauth-basic";
+        String authString = "Basic " + Base64.getEncoder().encode(tempToken.getBytes());
         connection.setRequestProperty("Authorization", authString); 
         
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
@@ -177,7 +203,12 @@ public class Extraction
       return jsonObject;
     }
     
-    public static JSONArray getJsonArrayFromUrlWithAuth(String repoUrl, String token) {
+    /**
+    * Get an array of JSON objects from the specified URL.
+    * @param repoUrl - a URL to retrieve github API data from
+    * @return a json array representing the data retrieved from the URL
+    */
+    public static JSONArray getJsonArrayFromUrlWithAuth(String repoUrl) {
       JSONArray jsonObject = null;
       try {
         URL url = new URL(repoUrl);
@@ -192,8 +223,8 @@ public class Extraction
           return null;
         }
         
-        token = "jacobmacfarland:" + token;
-        String authString = "Basic " + Base64.getEncoder().encode(token.getBytes());
+        String tempToken = "jacobmacfarland:" + TOKEN;
+        String authString = "Basic " + Base64.getEncoder().encode(tempToken.getBytes());
         connection.setRequestProperty("Authorization", authString); 
         
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
