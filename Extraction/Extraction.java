@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONArray;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.awt.*;
 
 /**
  * Extraction class.
@@ -16,32 +17,24 @@ public class Extraction
 {
 
   	private Repository repo;
+    static String baseUrl;
+    static Scanner sc = new Scanner(System.in);
+    static String token;
+
   	/**
   	* Constructor for extraction
   	* Sets repo arraylist
   	*/
   	public Extraction()
   	{
+      baseUrl = "https://api.github.com/repos/";
   		repo = new Repository();
   	}
-
-    /**
-    * Function to print the string "Hello, world!" to the console screen.
-    * @param args Unused arguments.
-    */
-    public static void main(String[] args) 
-    {
-
-      Extraction extractor = new Extraction();
-      Repository repository = extractor.extract();
-    }
     
     public Repository extract() {
       addIssuesToRepo();
       addCommitsToRepo();
-      // TODO: Uncomment to add comments to repo object. Currently, this will throw an authorization exception. 
-      // TODO: This authorization exception can be fixed by calling getJsonArrayFromUrlWithAuth(...comments...) from the main method rather than the addCommentsToRepo() method.
-      // addCommentsToRepo();
+      addCommentsToRepo();
       return repo;
     }
     
@@ -63,7 +56,7 @@ public class Extraction
     
     public void addIssuesToRepo() {
 
-      JSONArray issues = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/issues", "640ad6f855705e36988a125ebe79a123dc213136");
+      JSONArray issues = getJsonArrayFromUrlWithAuth(baseUrl + "/issues", token);
       ArrayList<Issue> issuesArrayList = new ArrayList<Issue>();
       
       for (int i = 0; i < issues.size(); i++) {
@@ -90,7 +83,7 @@ public class Extraction
     
     public void addCommitsToRepo() {
       
-      JSONArray commits = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/commits", "640ad6f855705e36988a125ebe79a123dc213136");
+      JSONArray commits = getJsonArrayFromUrlWithAuth(baseUrl + "/commits", token);
       ArrayList<Commit> commitsArrayList = new ArrayList<Commit>();
       
       for (int i = 0; i < commits.size(); i++) {
@@ -124,7 +117,7 @@ public class Extraction
     }
     
     public void addCommentsToRepo() {
-      JSONArray comments = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "640ad6f855705e36988a125ebe79a123dc213136");
+      JSONArray comments = getJsonArrayFromUrlWithAuth(baseUrl + "/comments", token);
       ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
       
       for (int i = 0; i < comments.size(); i++) {
@@ -150,40 +143,6 @@ public class Extraction
       }
 
     }
-    
-    public JSONObject getJsonFromUrl(String repoUrl) {
-      JSONObject jsonObject = null;
-      try {
-        URL url = new URL(repoUrl);
-        URLConnection urlConnection = url.openConnection();
-        HttpURLConnection connection = null;
-        
-        if (urlConnection instanceof HttpURLConnection) {
-            connection = (HttpURLConnection) urlConnection;
-        }
-        else {
-          System.out.println("Please input the url address: ");
-          return null;
-        }
-        
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String current;
-        String urlString = "";
-        while((current = in.readLine()) != null) {
-            urlString += current;
-        }
-        jsonObject = JSONObject.fromObject(urlString);
-      }
-      catch (IOException e) {
-        e.printStackTrace();
-      }
-      return jsonObject;
-      
-    }
-    
-    
-    
-    
     
     public JSONObject getJsonObjectFromUrlWithAuth(String repoUrl, String token) {
       JSONObject jsonObject = null;
@@ -243,7 +202,6 @@ public class Extraction
         while((current = in.readLine()) != null) {
             urlString += current;
         }
-        //System.out.println("\n\n\n\n\n\n" + urlString + "\n\n\n\n\n\n\n");
         jsonObject = JSONArray.fromObject(urlString);
       }
       catch (IOException e) {
