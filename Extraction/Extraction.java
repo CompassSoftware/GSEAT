@@ -31,22 +31,18 @@ public class Extraction
     */
     public static void main(String[] args) 
     {
-      
+
       Extraction extractor = new Extraction();
-      ArrayList<Issue> issues = new ArrayList<Issue>();
-      
+      Repository repository = extractor.extract();
+    }
     
-      // JSONObject repo = extractor.getJsonObjectFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "640ad6f855705e36988a125ebe79a123dc213136");
-      // JSONArray collaborators = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/collaborators", "640ad6f855705e36988a125ebe79a123dc213136");
-            
-      /*String repoName = repo.getString("description");
-      String repoCollaboratorsURL = repo.getString("collaborators_url");
-      String repoCommitsURL = repo.getString("commits_url");
-      String repoCommentsURL = repo.getString("comments_url");
-      String repoIssuesURL = repo.getString("issues_url");
-      String repoIssueCommentsURL = repo.getString("issue_comment_url");*/
-      
-    
+    public Repository extract() {
+      addIssuesToRepo();
+      addCommitsToRepo();
+      // TODO: Uncomment to add comments to repo object. Currently, this will throw an authorization exception. 
+      // TODO: This authorization exception can be fixed by calling getJsonArrayFromUrlWithAuth(...comments...) from the main method rather than the addCommentsToRepo() method.
+      // addCommentsToRepo();
+      return repo;
     }
     
     public static Date githubDateStringToDate(String dateString) {
@@ -56,7 +52,6 @@ public class Extraction
         dateString = dateString.replace('T', ' ');
         dateString = dateString.replace('Z', ' ');
         date = formatter.parse(dateString);
-        System.out.println(date);
       }
       catch (ParseException e) {
         e.printStackTrace();
@@ -67,7 +62,7 @@ public class Extraction
     }
     
     public void addIssuesToRepo() {
-      
+
       JSONArray issues = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/issues", "640ad6f855705e36988a125ebe79a123dc213136");
       ArrayList<Issue> issuesArrayList = new ArrayList<Issue>();
       
@@ -128,7 +123,7 @@ public class Extraction
 
     }
     
-    public void AddCommentsToRepo() {
+    public void addCommentsToRepo() {
       JSONArray comments = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "640ad6f855705e36988a125ebe79a123dc213136");
       ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
       
