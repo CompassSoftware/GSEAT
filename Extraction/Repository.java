@@ -11,17 +11,17 @@ public class Repository
 {
 
 	private ArrayList<Collaborator> collaborators;
-	//private ArrayList<Issues> issues;
+	private ArrayList<Issue> issues;
 	private ArrayList<Commit> commits;
-	//private ArrayList<Comment> comments; 
+	private ArrayList<Comment> comments; 
 
 
 	public Repository()
 	{
 		collaborators = new ArrayList<>();
-		//issues = new ArrayList<>();
+		issues = new ArrayList<>();
 		commits = new ArrayList<>();
-		//comments = new ArrayList<>();
+		comments = new ArrayList<>();
 	}
 
 	/**
@@ -37,10 +37,10 @@ public class Repository
 	 * Adds new issue.
 	 * @param issue is a new issue
 	 */
-	// public void addIssue(Issue issue)
-	// {
-	// 	issues.add(issue);
-	// }
+	public void addIssue(Issue issue)
+	{
+		issues.add(issue);
+	}
 
 	/**
 	 * Adds new commit.
@@ -55,10 +55,10 @@ public class Repository
 	 * Adds new comment.
 	 * @param 
 	 */
-	// public void addComment(Comment comment)
-	// {
-	// 	comments.add(comment);
-	// }
+	public void addComment(Comment comment)
+	{
+	 	comments.add(comment);
+	}
 
 	/**
 	 * Accesses collab field	
@@ -73,10 +73,10 @@ public class Repository
 	 * Accesses issues field
 	 * @return issues field
 	 */
-	// public ArrayList<Issues> getIssues()
-	// {
-	// 	return issues;
-	// }
+	public ArrayList<Issue> getIssues()
+	{
+	 	return issues;
+	}
 
 	/**
 	 * Accesses commits field
@@ -91,8 +91,8 @@ public class Repository
 	 * Accesses comments field
 	 * @return comments field
 	 */
-	// public ArrayList<Comments> getComments()
-	// {
-	// 	return comments;
-	// } 
+	public ArrayList<Comment> getComments()
+	{
+	 	return comments;
+	} 
 }

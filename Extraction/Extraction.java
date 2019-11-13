@@ -15,21 +15,15 @@ import java.text.ParseException;
 public class Extraction
 {
 
-	private ArrayList<Repository> repositories;
-	/**
-	* Constructor for extraction
-	* Sets repo arraylist
-	*/
-	public Extraction()
-	{
-		repositories = new ArrayList<>();
-	}
-
-
-	public void addRepo(Repository repo)
-	{
-		repositories.add(repo);
-	}
+  	private Repository repo;
+  	/**
+  	* Constructor for extraction
+  	* Sets repo arraylist
+  	*/
+  	public Extraction()
+  	{
+  		repo = new Repository();
+  	}
 
     /**
     * Function to print the string "Hello, world!" to the console screen.
@@ -39,55 +33,25 @@ public class Extraction
     {
       
       Extraction extractor = new Extraction();
+      ArrayList<Issue> issues = new ArrayList<Issue>();
+      
     
-      JSONObject repo = extractor.getJsonObjectFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
-      JSONArray issues = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/issues", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+      JSONObject repo = extractor.getJsonObjectFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc", "640ad6f855705e36988a125ebe79a123dc213136");
+      JSONArray commits = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/commits", "640ad6f855705e36988a125ebe79a123dc213136");
+      JSONArray comments = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "640ad6f855705e36988a125ebe79a123dc213136");
+      // JSONArray collaborators = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/collaborators", "640ad6f855705e36988a125ebe79a123dc213136");
             
-      String repoName = repo.getString("description");
+      /*String repoName = repo.getString("description");
       String repoCollaboratorsURL = repo.getString("collaborators_url");
       String repoCommitsURL = repo.getString("commits_url");
       String repoCommentsURL = repo.getString("comments_url");
       String repoIssuesURL = repo.getString("issues_url");
-      String repoIssueCommentsURL = repo.getString("issue_comment_url");
-
-      /*System.out.println("\n\nRepository name: " + repoName);
-      System.out.println("\n\nRepository collaborators URL: " + repoCollaboratorsURL);
-      System.out.println("\n\nRepository commits URL: " + repoCommitsURL);
-      System.out.println("\n\nRepository comments URL: " + repoCommentsURL);
-      System.out.println("\n\nRepository issues URL: " + repoIssuesURL);
-      System.out.println("\n\nRepository issue comments URL: " + repoIssueCommentsURL);*/
-      
-      
-      for (int i = 0; i < issues.size(); i++) {
-          JSONObject jsonIssue = JSONObject.fromObject(issues.get(i).toString());
-          Issue issue = new Issue("", new Collaborator());
-          
-          JSONObject assignee = jsonIssue.getJSONObject("assignee");
-          String userName = assignee.getString("login");
-          String issueText = jsonIssue.getString("title");
-          String dateCreatedString = jsonIssue.getString("created_at");
-          String dateUpdatedString = jsonIssue.getString("updated_at");
-          
-          Date dateCreated = extractor.githubDateStringToDate(dateCreatedString);
-          Date dateUpdated = extractor.githubDateStringToDate(dateUpdatedString);
-
-          
-          issue.setUserName(userName);
-          issue.setIssueText(issueText);
-          //issue.setdateCreated();
-          //issue.setDateUpdated();
-          System.out.println("     Created at: " + jsonIssue.getString("created_at"));
-          System.out.println("     Updated at : " + jsonIssue.getString("updated_at"));
-      }
-      
-      JSONArray comments = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/comments", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
-      
-      JSONArray commits = extractor.getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/commits", "9b944e41c18ee7783a83270dc65f5f2a8b20a826");
+      String repoIssueCommentsURL = repo.getString("issue_comment_url");*/
       
     
     }
     
-    public Date githubDateStringToDate(String dateString) {
+    public static Date githubDateStringToDate(String dateString) {
       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       Date date;
       try {
@@ -102,6 +66,35 @@ public class Extraction
       }
       return date;
       
+    }
+    
+    public ArrayList<Issue> addIssuesToRepo() {
+      
+      JSONArray issues = getJsonArrayFromUrlWithAuth("https://api.github.com/repos/jacobmacfarland/FinanceCalc/issues", "640ad6f855705e36988a125ebe79a123dc213136");
+      ArrayList<Issue> issuesArrayList = new ArrayList<Issue>();
+      
+      for (int i = 0; i < issues.size(); i++) {
+          JSONObject jsonIssue = JSONObject.fromObject(issues.get(i).toString());
+          Issue issue = new Issue("", new Collaborator());
+          
+          JSONObject assignee = jsonIssue.getJSONObject("assignee");
+          String userName = assignee.getString("login");
+          String issueText = jsonIssue.getString("title");
+          String dateCreatedString = jsonIssue.getString("created_at");
+          String dateUpdatedString = jsonIssue.getString("updated_at");
+          
+          Date dateCreated = githubDateStringToDate(dateCreatedString);
+          Date dateUpdated = githubDateStringToDate(dateUpdatedString);
+
+          issue.setUserName(userName);
+          issue.setIssueText(issueText);
+          issue.setdateCreated(dateCreated);
+          issue.setDateUpdated(dateUpdated);
+          
+          
+          issuesArrayList.add(issue);
+      }
+      return issuesArrayList;
     }
     
     public JSONObject getJsonFromUrl(String repoUrl) {
@@ -171,14 +164,7 @@ public class Extraction
       return jsonObject;
     }
     
-    
-    
-    
-    
-    
-    
-    
-    public JSONArray getJsonArrayFromUrlWithAuth(String repoUrl, String token) {
+    public static JSONArray getJsonArrayFromUrlWithAuth(String repoUrl, String token) {
       JSONArray jsonObject = null;
       try {
         URL url = new URL(repoUrl);
@@ -203,7 +189,7 @@ public class Extraction
         while((current = in.readLine()) != null) {
             urlString += current;
         }
-        System.out.println("\n\n\n\n\n\n" + urlString + "\n\n\n\n\n\n\n");
+        //System.out.println("\n\n\n\n\n\n" + urlString + "\n\n\n\n\n\n\n");
         jsonObject = JSONArray.fromObject(urlString);
       }
       catch (IOException e) {
