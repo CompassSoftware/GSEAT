@@ -46,7 +46,6 @@ public class GitUser {
     public static String url_connection() throws IOException {
 
         System.out.println("Please input your username: ");
-        //GitUser gu = new GitUser();
         gu.scan_input();
         Url = ("https://api.github.com/users/" + input + "/repos");
         URL url = new URL(Url);
@@ -94,7 +93,6 @@ public class GitUser {
 
     public static void main(String[] args) throws IOException {
 
-        //GitUser gu = new GitUser();
         gu.json_analysis();
 
     }
