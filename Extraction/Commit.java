@@ -1,11 +1,11 @@
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Commit
 {
     String info;
     String userName;
-    LocalDate dateCreated;
-    LocalDate dateUpdated;
+    Date dateCreated;
+    Date dateUpdated;
 
     /*
      * Constructor that take a Collaborator object and a String for info about the inital commit. 
@@ -14,8 +14,8 @@ public class Commit
     {
         this.userName = C.getUserName();
         this.info = info;
-        this.dateCreated = LocalDate.now();
-        this.dateUpdated = LocalDate.now();
+        this.dateCreated = null;
+        this.dateUpdated = null;
     }
 
     public void setInfo(String info)
@@ -28,12 +28,12 @@ public class Commit
         this.userName = userName;
     }
 
-    public void setdateCreated(LocalDate d)
+    public void setdateCreated(Date d)
     {
         this.dateCreated = d;
     }
 
-    public void setDateUpdated(LocalDate d)
+    public void setDateUpdated(Date d)
     {
         this.dateUpdated = d;
     }
@@ -48,12 +48,12 @@ public class Commit
         return this.userName;
     }
 
-    public LocalDate getDateCreated()
+    public Date getDateCreated()
     {
         return this.dateCreated;
     }
 
-    public LocalDate getDateUpdated()
+    public Date getDateUpdated()
     {
         return this.dateUpdated;
     }
