@@ -25,9 +25,10 @@ public class Extraction
   	* Constructor for extraction
   	* Sets repo arraylist
   	*/
-  	public Extraction()
+  	public Extraction(String userName, String userRepository, String tok)
   	{
-      baseUrl = "https://api.github.com/repos/";
+      baseUrl = "https://api.github.com/repos/" + userName + "/" + userRepository;
+      token = tok;
   		repo = new Repository();
   	}
     
