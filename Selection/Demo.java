@@ -6,6 +6,7 @@
  *
  * @version: 1.0
  *
+ * Greeting_UI. Get user's input and greet to user.
  */
 
 public class Demo {
