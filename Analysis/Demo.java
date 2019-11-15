@@ -59,47 +59,46 @@ public class Demo
         repo.addCommit(com2);
 
         Analysis analysis = new Analysis(repo);
+
         int issueComments = analysis.countIssuesComments();
+        
+        int commitComments = analysis.countCommitsComments();
+        int commitCommentsByDate = analysis.countCommitsComments(
+            LocalDate.now().minusDays(5), LocalDate.now());
+
         int collab1Comments = analysis.countCommentsByCollaborator("tester1");
         int collab1CommentsByDate = analysis
             .countCommentsByCollaborator("tester1",
             LocalDate.now().minusDays(5), LocalDate.now());
-        int collab1Issues = analysis.countIssuesByCollaborator("tester1");
-        int commitComments = analysis.countCommitsComments();
-        int collab1IssuesDatesWrong = 
-            analysis.countIssuesByCollaborator("tester1",
-                LocalDate.now().plusDays(1), i2.getDateCreated());        
-        int collab1IssuesDates = analysis.countIssuesByCollaborator("tester1",
-                i2.getDateCreated(), LocalDate.now());     
-        int collaborator1Commits = analysis.countCollaboratorCommits("tester1");
-        int collab1CommitsDatesWrong = 
-            analysis.countCollaboratorCommits("tester1", 
-                    LocalDate.now().plusDays(1),
-                    com2.getDateCreated());
-        int collab1CommitsDates = analysis.countCollaboratorCommits("tester1", 
-                com2.getDateCreated(), LocalDate.now());
+        
+        int collab1Issues = analysis.countIssuesByCollaborator("tester1");      
+        int collab1IssuesByDate = analysis.countIssuesByCollaborator("tester1",
+            LocalDate.now().minusDays(5), LocalDate.now());     
+        
+        int collab1Commits = analysis.countCollaboratorCommits("tester1");
+        int collab1CommitsByDate = analysis.countCollaboratorCommits("tester1", 
+            LocalDate.now().minusDays(5), LocalDate.now());
 
 
         System.out.println("Number of issue comments: " + issueComments);
+
+        System.out.println("Number of commit comments: " + commitComments);
+        System.out.println("Number of commit comments in the last 5 days: "
+            + commitCommentsByDate);
 
         System.out.println("Number of comments by collaborator 1: " 
             + collab1Comments);
         System.out.println("Number of comments by collaborator 1 " 
             + "in the last 5 days: " + collab1CommentsByDate);
+        
         System.out.println("Number of isues by collaborator 1: " 
             + collab1Issues);
-        System.out.println("Number of commits by collaborator 1: "
-                + collaborator1Commits);
-        System.out.println("Number of commit comments: " + commitComments);
-
-        System.out.println("Total number of issues by collaborator 1 with "
-                + "wrong start and end dates: " + collab1IssuesDatesWrong);
-        System.out.println("Total number of issues by collaborator 1 with "
-                + "correct start and end dates: " + collab1IssuesDates);
+        System.out.println("Number of issues by collaborator 1 with "
+            + "in the last 5 days: " + collab1IssuesByDate);
         
-        System.out.println("Total number of commits by collaborator 1 with"
-                + " wrong start and end dates: " + collab1CommitsDatesWrong);
-        System.out.println("Total number of issues by collaborator 1 with "
-                + "correct start and end dates: " + collab1CommitsDates);
+        System.out.println("Number of commits by collaborator 1: "
+            + collab1Commits);
+        System.out.println("Number of commits by collaborator 1 with "
+            + "in the last 5 days: " + collab1CommitsByDate);
     }
 }
