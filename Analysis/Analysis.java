@@ -44,7 +44,7 @@ public class Analysis
                 count++;
             }
         }
-        return countvyvpi
+        return count;
         
     /**
      * countIssuesComments
