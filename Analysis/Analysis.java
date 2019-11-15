@@ -46,6 +46,7 @@ public class Analysis
      * countIssues.
      *
      * Counts repo issues
+     * @return count of issues
      */
     public int countIssues()
     {
@@ -57,6 +58,52 @@ public class Analysis
         return count;
     }
 
+     /**
+     * countCommitsWithDates.
+     *
+     * Counts repo commits
+     *
+     * @param start start date
+     * @param end end date
+     * @return count of commits
+     */
+    public int countCommits(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Commit c : repo.getCommits())
+        {
+            if ((start.compareTo(c.getDateCreated()) <= 0) 
+					&& (end.compareTo(c.getDateCreated()) >= 0))
+            {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+    /**
+     * countIssuesWithDates.
+     *
+     * Counts repo issues
+     *
+     * @param start start date
+     * @param end end date
+     * @return count of issues
+     */
+    public int countIssues(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for(Issue i : repo.getIssues())
+        {
+            if ((start.compareTo(i.getDateCreated()) <= 0) 
+					&& (end.compareTo(i.getDateCreated()) >= 0))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
     /**
      * countIssuesComments
      *

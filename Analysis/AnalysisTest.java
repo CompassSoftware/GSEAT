@@ -82,7 +82,97 @@ public class AnalysisTest
 
         assertEquals(expected, actual);
     }
+    /**
+	* Tests countCommits with Dates.
+	*/
+	@Test
+	public void testCountCommitsDate() {
+		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
+        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
+        
+        Issue i1 = new Issue("issue 1", coll2);
+        Comment comm1 = new Comment("this is good", coll1, "type1");
+        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        i1.addComment(comm1);
+        Comment comm2 = new Comment("this is bad", coll1, "type1");
+        comm2.setdateCreated(LocalDate.now().minusDays(13));
+        i1.addComment(comm2);
 
+        Issue i2 = new Issue("issue 2", coll1);
+        Comment comm3 = new Comment("this is okay", coll2, "type2");
+        comm3.setdateCreated(LocalDate.now().minusDays(2));
+        i2.addComment(comm3);
+        
+        Commit com1 = new Commit("commit 1", coll1);
+        com1.setdateCreated(LocalDate.now().minusDays(3));
+        Comment comm4 = new Comment("cool", coll2, "type2");
+        comm4.setdateCreated(LocalDate.now().minusDays(1));
+        com1.addComment(comm4);
+
+        Commit com2 = new Commit ("commit 2", coll2);
+        com2.setdateCreated(LocalDate.now().minusDays(10));
+        Comment comm5 = new Comment("cool2", coll1, "type2");
+        comm5.setdateCreated(LocalDate.now().minusDays(3));
+        com2.addComment(comm5);
+
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addCommit(com1);
+        repo.addCommit(com2);
+
+        Analysis analysis = new Analysis(repo);        
+        int actual = analysis.countCommits(LocalDate.now().minusDays(5), LocalDate.now());
+		int expected = 1;
+		assertEquals(expected, actual);
+	}
+
+    /**
+	* Tests countIssues with Dates.
+	*/
+	@Test
+	public void testCountIssuesDate() {
+		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
+        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
+        
+        Issue i1 = new Issue("issue 1", coll2);
+        i1.setdateCreated(LocalDate.now().minusDays(2));
+        Comment comm1 = new Comment("this is good", coll1, "type1");
+        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        i1.addComment(comm1);
+        Comment comm2 = new Comment("this is bad", coll1, "type1");
+        comm2.setdateCreated(LocalDate.now().minusDays(13));
+        i1.addComment(comm2);
+
+        Issue i2 = new Issue("issue 2", coll1);
+        i2.setdateCreated(LocalDate.now().minusDays(6));
+        Comment comm3 = new Comment("this is okay", coll2, "type2");
+        comm3.setdateCreated(LocalDate.now().minusDays(2));
+        i2.addComment(comm3);
+        
+        Commit com1 = new Commit("commit 1", coll1);
+        com1.setdateCreated(LocalDate.now().minusDays(3));
+        Comment comm4 = new Comment("cool", coll2, "type2");
+        comm4.setdateCreated(LocalDate.now().minusDays(1));
+        com1.addComment(comm4);
+
+        Commit com2 = new Commit ("commit 2", coll2);
+        com2.setdateCreated(LocalDate.now().minusDays(10));
+        Comment comm5 = new Comment("cool2", coll1, "type2");
+        comm5.setdateCreated(LocalDate.now().minusDays(3));
+        com2.addComment(comm5);
+
+        Repository repo = new Repository();
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addCommit(com1);
+        repo.addCommit(com2);
+
+        Analysis analysis = new Analysis(repo);        
+        int actual = analysis.countIssues(LocalDate.now().minusDays(5), LocalDate.now());
+		int expected = 1;
+		assertEquals(expected, actual);
+	}
     /**
      * Tests countIssuesComments.
      */
