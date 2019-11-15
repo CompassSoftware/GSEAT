@@ -24,6 +24,38 @@ public class Analysis
     {
         repo = r;
     }
+    
+    /**
+     * countCommits.
+     *
+     * Counts repo commits
+     *
+     * @return count of commits
+     */
+    public int countCommits()
+    {
+        int count = 0;
+        for (Commit c : repo.getCommits())
+        {
+            count++;
+        }
+        return count;
+    }
+
+    /**
+     * countIssues.
+     *
+     * Counts repo issues
+     */
+    public int countIssues()
+    {
+        int count = 0;
+        for(Issue i : repo.getIssues())
+        {
+            count++;
+        }
+        return count;
+    }
 
     /**
      * countIssuesComments
