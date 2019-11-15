@@ -34,12 +34,7 @@ public class Analysis
      */
     public int countCommits()
     {
-        int count = 0;
-        for (Commit c : repo.getCommits())
-        {
-            count++;
-        }
-        return count;
+        return repo.getCommits().size();
     }
 
     /**
@@ -49,12 +44,7 @@ public class Analysis
      */
     public int countIssues()
     {
-        int count = 0;
-        for(Issue i : repo.getIssues())
-        {
-            count++;
-        }
-        return count;
+        return repo.getIssues().size();
     }
 
     /**
@@ -70,11 +60,7 @@ public class Analysis
         int count = 0;
         for (Issue i : repo.getIssues())
         {
-            ArrayList<Comment> comments = i.getComments();
-            for (Comment c : comments)
-            {
-                count++;
-            }
+            count += i.getComments().size();
         }
         return count;
     }
@@ -92,11 +78,7 @@ public class Analysis
         int count = 0;
         for (Commit j : repo.getCommits())
         {
-            ArrayList<Comment> comments = j.getComments();
-            for (Comment w : comments)
-            {
-                count++;
-            }
+            count += j.getComments().size();
         }
         return count;
     }
