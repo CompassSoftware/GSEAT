@@ -45,6 +45,44 @@ public class AnalysisTest
         assertTrue((new Analysis(new Repository())) instanceof Analysis);
     }
 
+
+    /**
+     * Tests countCommits.
+     */
+    @Test
+    public void countCommits() {
+        Collaborator collab = new Collaborator("person", "test", "person", "4");
+        Repository repo = new Repository();
+        repo.addCommit(new Commit("comm 1", collab));
+        repo.addCommit(new Commit("comm 2", collab));
+        repo.addCommit(new Commit("comm 3", collab));
+
+        Analysis analysis = new Analysis(repo);
+        int actual = analysis.countCommits();
+        int expected = 3;
+
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests countIssues.
+     */
+    @Test
+    public void countIssues() {
+        Collaborator collab = new Collaborator("person", "test", "person", "4");
+        Repository repo = new Repository();
+        repo.addIssue(new Issue("iss 1", collab));
+        repo.addIssue(new Issue("iss 2", collab));
+        repo.addIssue(new Issue("iss 3", collab));
+        repo.addIssue(new Issue("iss 3", collab));
+
+        Analysis analysis = new Analysis(repo);
+        int actual = analysis.countIssues();
+        int expected = 4;
+
+        assertEquals(expected, actual);
+    }
+
     /**
      * Tests countIssuesComments.
      */
