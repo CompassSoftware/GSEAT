@@ -24,6 +24,7 @@ public class GitUser {
     static String input;
     static String username;
     static String selection;
+    static String TOKEN;
     private static GitUser gu = new GitUser();
 
     /** Scan user's input.
@@ -41,7 +42,7 @@ public class GitUser {
      */
 
     public void greeting() {
-        System.out.println("First, tell me who  you are. (Please input your username.)");
+        System.out.println("Authorization: (Please input your username)");
         username = gu.scan_input();
         System.out.println("Welcome, " + username + "!");
     }
@@ -53,21 +54,28 @@ public class GitUser {
      *  @urlstring      store repo_name and repo_url with Json type
      */
 
-    public static String url_connection() throws IOException {
-        Url = ("https://api.github.com/users/" + input + "/repos");
-        URL url = new URL(Url);
-        URLConnection urlConnection = url.openConnection();
-        HttpURLConnection connection = null;
-        if (urlConnection instanceof HttpURLConnection) {
-            connection = (HttpURLConnection) urlConnection;            
+    public static JSONArray url_connection() throws IOException {
+        JSONArray jsonObject = null;
+        try{
+            Url = ("https://api.github.com/users/" + input + "/repos");
+            URL url = new URL(Url);
+            URLConnection urlConnection = url.openConnection();
+            HttpURLConnection connection = null;
+            if (urlConnection instanceof HttpURLConnection) {
+                connection = (HttpURLConnection) urlConnection;            
+                }
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String current;
+            String urlstring = "";
+            while ((current = in.readLine()) != null) {
+                urlstring += current;
+            }
+            jsonObject = JSONArray.fromObject(urlstring);
         }
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String current;
-        String urlstring = "";
-        while ((current = in.readLine()) != null) {
-            urlstring += current;
+        catch (IOException e) {
+            e.printStackTrace();
         }
-        return urlstring;
+        return jsonObject;
     }
 
     /** Analysis the json type file to fetch repo_name and repo_url.
@@ -79,10 +87,10 @@ public class GitUser {
     public static void json_analysis() throws IOException {
         List<String> list_repo_name = new ArrayList<String>();
         List<String> list_repo_url = new ArrayList<String>();
-        JSONArray jsonarray = JSONArray.fromObject(url_connection());
-        if(jsonarray.size() > 0) {
-            for(int i = 0; i < jsonarray.size(); i++) {
-                JSONObject jsonObject = JSONObject.fromObject(jsonarray.get(i).toString());
+        JSONArray jsonarray_1 = JSONArray.fromObject(url_connection());
+        if(jsonarray_1.size() > 0) {
+            for(int i = 0; i < jsonarray_1.size(); i++) {
+                JSONObject jsonObject = JSONObject.fromObject(jsonarray_1.get(i).toString());
                 repo_name = jsonObject.getString("name");
                 JSONObject owner = jsonObject.getJSONObject("owner");
                 repo_url = jsonObject.getString("url");
@@ -101,12 +109,51 @@ public class GitUser {
                     }
                     break;
                 case 2:
-                    System.out.println("(Organization Part)Still Under construction...");
+                    System.out.println("Please input TOKEN: ");
+                    TOKEN = sc.nextLine();
+                    JSONArray jsonObject1 = null;
+                    Url = ("https://api.github.com/orgs/JaysGitLab/members");
+                    try {
+                        URL url = new URL(Url);
+                        URLConnection urlConnection = url.openConnection();
+                        HttpURLConnection connection = null;
+
+                        if (urlConnection instanceof HttpURLConnection) {
+                            connection = (HttpURLConnection) urlConnection;
+                        }
+
+                        String tempToken = "yuanboz" + TOKEN;
+                        String authString = "Basic " + Base64.getEncoder().encode(tempToken.getBytes());
+                        connection.setRequestProperty("Authorization", authString);
+
+                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        String current;
+                        String urlString = "";
+                        while ((current = in.readLine()) != null) {
+                            urlString += current;
+                        }
+                        System.out.println(urlString);
+                        jsonObject1 = JSONArray.fromObject(urlString);
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    JSONArray jsonarray_2 = JSONArray.fromObject(jsonObject1);
+                    if (jsonarray_2.size() > 0) {
+                        for (int i = 0; i < jsonarray_2.size(); i++) {
+                            JSONObject jsonObject = JSONObject.fromObject(jsonarray_2.get(i).toString());
+                            repo_name = jsonObject.getString("status");
+                            JSONObject owner = jsonObject.getJSONObject("owner");
+                            repo_url = jsonObject.getString("url");
+                            list_repo_name.add(repo_name);
+                            list_repo_url.add(repo_url);
+                        }
+                        System.out.println(repo_name);
+                    }
                     break;
-            }
         }
     }
-
+}
     public static void main(String[] args) throws IOException {
         gu.greeting();
         gu.json_analysis();
