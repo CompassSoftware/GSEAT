@@ -20,7 +20,7 @@ public class DisplayAnalysis {
         }
         System.out.println();
     }
-    
+
     public void displayCommitsComments() {
         System.out.println("Commit Comments: ");
         for (int i = 0; i < analysis.countCommitsComments(); i++) {
@@ -29,10 +29,19 @@ public class DisplayAnalysis {
         System.out.println();
     }
 
-    public void displayIssueCommentsByCollaborator(String user) {
-        for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
-            
+    public void displayCommentsByCollaborator(String user) {
+        System.out.printf("Comments by user: %s", user);
+        for (int i = 0; i < analysis.countCommentsByCollaborator(user) ; i++) {
+            System.out.print("*");
         }
-        
+        System.out.println();
+    }
+
+    public void displayIssueCommentsByCollaborator(String user) {
+        System.out.printf("Issue comments by: %s\n", user);
+        for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
+            System.out.print("*");
+        }
+        System.out.println();
     }
 }
