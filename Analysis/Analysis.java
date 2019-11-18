@@ -130,6 +130,31 @@ public class Analysis
         return count;
     }
    
+    /**
+     * countCommitsComments
+     *
+     * Counts the comments that each commit has for all
+     * issues in the repo.
+     *
+     * @return count of comments
+     */
+    public int countCommitsComments(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Commit j : repo.getCommits())
+        {
+            ArrayList<Comment> comments = j.getComments();
+            for (Comment w : comments)
+            {
+                if (w.getDateCreated().compareTo(start) >= 0
+                    && w.getDateCreated().compareTo(end) <= 0)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
     
     /**
     * countCommentsByCollaborator
@@ -143,6 +168,24 @@ public class Analysis
         int count = 0;
         count += countIssueCommentsByCollaborator(username);
         count += countCommitCommentsByCollaborator(username);
+        return count;
+    }
+
+    /**
+    * countCommentsByCollaborator
+    * Counts the comments made by a collaborator through dates.
+    * 
+	* @param username of collaborator
+	* @param start date
+	* @param end date
+    * @return count of comments
+    */
+    public int countCommentsByCollaborator(String username, 
+		LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        count += countIssueCommentsByCollaborator(username, start, end);
+        count += countCommitCommentsByCollaborator(username, start, end);
         return count;
     }
 
@@ -249,24 +292,6 @@ public class Analysis
                 }
             }
         }
-        return count;
-    }
-
-    /**
-    * countCommentsByCollaborator
-    * Counts the comments made by a collaborator through dates.
-    * 
-	* @param username of collaborator
-	* @param start date
-	* @param end date
-    * @return count of comments
-    */
-    public int countCommentsByCollaborator(String username, 
-		LocalDate start, LocalDate end)
-    {
-        int count = 0;
-        count += countIssueCommentsByCollaborator(username, start, end);
-        count += countCommitCommentsByCollaborator(username, start, end);
         return count;
     }
 
