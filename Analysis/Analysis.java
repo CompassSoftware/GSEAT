@@ -52,9 +52,10 @@ public class Analysis
      * Counts the comments that each issue has for all
      * issues in the repo for the desired dates.
      *
+     * @author Courtney Dixon
      * @return count of comments
      */
-    public int countIssuesComments(String username, LocalDate start, LocalDate end)
+    public int countIssuesComments(LocalDate start, LocalDate end)
     {
         int count = 0;
         for (Issue i : repo.getIssues())
@@ -62,8 +63,7 @@ public class Analysis
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if ((c.getUserName()).equals(username) 
-					&& (start.compareTo(c.getDateCreated()) <= 0) 
+                if ((start.compareTo(c.getDateCreated()) <= 0) 
 					&& (end.compareTo(c.getDateCreated()) >= 0))
                 {
                     count++;
