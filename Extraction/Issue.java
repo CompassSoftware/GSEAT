@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Issue
 {
     String issueText;
     String userName;
+    ArrayList<Comment> comments;
     Date dateCreated;
     Date dateUpdated;
 
@@ -12,6 +14,7 @@ public class Issue
      */
     public Issue(String issueText, Collaborator C)
     {
+        this.comments = new ArrayList<Comment>();
         this.userName = C.getUserName();
         this.issueText = issueText;
         this.dateCreated = null;
