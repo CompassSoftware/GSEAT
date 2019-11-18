@@ -31,6 +31,9 @@ default:
 #Essential that command lines start with single TAB character
 
 run:
+	make extraction_package
+
+extraction_package:
 	make compile
 	make test
 
@@ -42,44 +45,43 @@ compile:
 	make issue
 	make comment
 
+extract: extraction/Extraction.java extraction/ExtractionTest.java $(JUNIT5_JAR)
+	javac extraction/Extraction.java
+	javac -cp .:$(JUNIT5_JAR) extraction/ExtractionTest.java
 
-extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
-	javac Extraction.java
+collab:	extraction/Collaborator.java extraction/CollaboratorTest.java $(JUNIT5_JAR)
+	javac extraction/Collaborator.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CollaboratorTest.java
 
-collab:	Collaborator.java CollaboratorTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CollaboratorTest.java
-	javac Collaborator.java
-
-commit:	Commit.java CommitTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CommitTest.java
-	javac Commit.java
+commit:	extraction/Commit.java extraction/CommitTest.java $(JUNIT5_JAR)
+	javac extraction/Commit.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CommitTest.java
     
-issue: Issue.java IssueTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) IssueTest.java
-	javac Issue.java
-    
-comment: Comment.java CommentTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CommentTest.java
-	javac Comment.java
+issue: extraction/Issue.java extraction/IssueTest.java $(JUNIT5_JAR)
+	javac extraction/Issue.java
+	javac -cp .:$(JUNIT5_JAR) extraction/IssueTest.java
 
-repo: Repository.java RepoTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) RepoTest.java
-	javac Repository.java
+comment: extraction/Comment.java extraction/CommentTest.java $(JUNIT5_JAR)
+	javac extraction/Comment.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CommentTest.java
+
+repo: extraction/Repository.java extraction/RepoTest.java $(JUNIT5_JAR)
+	javac extraction/Repository.java
+	javac -cp .:$(JUNIT5_JAR) extraction/RepoTest.java
 
 clean:
 	rm -f *~
-	rm -f Extraction*.class
+	rm -f extraction/*.class
 
 test: $(JUNIT5_JAR)
 	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
 
-defchk: Extraction.java $(CKSTYLE_XML)
+defchk: extraction/*.java $(CKSTYLE_XML)
 #	checkstyle Calculator.java
-	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) Extraction.java
+	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) extraction/Extraction.java extraction/Collaborator.java extraction/Commit.java extraction/Issue.java extraction/Comment.java extraction/Repository.java
 
-customchk: Extraction.java style.xml
-	java $(CKSTYLE_COMMAND) -c style.xml Extraction.java
+customchk: extraction/*.java style.xml
+	java $(CKSTYLE_COMMAND) -c style.xml extraction/Extraction.java extraction/Collaborator.java extraction/Commit.java extraction/Issue.java extraction/Comment.java extraction/Repository.java
 
 style.xml:
 	@echo "Custom checkstyle needs a local style.xml file."

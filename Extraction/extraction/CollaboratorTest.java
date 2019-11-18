@@ -1,8 +1,8 @@
+package extraction;
 /**
  * Collaborator Test
  *
  */
-package extraction;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
