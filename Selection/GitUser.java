@@ -102,10 +102,7 @@ public class GitUser {
             switch (Integer.parseInt(selection)) {
                 case 1:
                     for (int i = 0; i < list_repo_name.size(); i++) {
-                        for (int j = 0; j < list_repo_url.size(); j++) {
-                            System.out.println("Repository: " + list_repo_name.get(i) + "    " + list_repo_url.get(j));
-                            break;
-                        }
+                        System.out.println(i+1+ "." +  "Repository: " + list_repo_name.get(i) + "    " + list_repo_url.get(i));
                     }
                     break;
                 case 2:
