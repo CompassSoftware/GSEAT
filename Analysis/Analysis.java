@@ -181,6 +181,37 @@ public class Analysis
         }
         return count;
     }
+
+    /*
+     * countComments
+     * Counts the total number of comments in the repository.
+     *
+     * @return number of comments in the repository.
+     */
+    public int countComments()
+    {
+        int total = countIssuesComments();
+        total += countCommitsComments();
+        return total;
+    }
+    
+    /*
+     * countComments
+     * Counts the total number of comments in the repository.
+     *
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
+     *
+     * @return number of comments in the repository between
+     *  certain dates.
+     */
+    public int countComments(LocalDate start, LocalDate end)
+    {
+        int total = countIssuesComments(start, end);
+        total += countCommitsComments(start, end);
+        return total;
+    }
     
     /**
     * countCommentsByCollaborator
@@ -437,6 +468,25 @@ public class Analysis
             }
         }
         return count;
+    }
+
+    /*
+     * countContributions
+     * Counts the total number of contributions(comments, issues,
+     *  etc) in the repository added during certain dates.
+     *
+     * @param start - the earliest date to count contributions from
+     * @param end - the latest date to count contributions to
+     *
+     * @return sum of issues, comments, commits, etc in the whole
+     *  repository
+     */
+    public int countContributions(LocalDate start, LocalDate end)
+    {
+        int total = countIssues(start, end);
+        total += countCommits(start, end);
+        total += countComments(start, end);
+        return total;
     }
 }
 
