@@ -24,7 +24,76 @@ public class Analysis
     {
         repo = r;
     }
+    
+    /**
+     * countCommits.
+     *
+     * Counts repo commits
+     *
+     * @return count of commits
+     */
+    public int countCommits()
+    {
+        return repo.getCommits().size();
+    }
 
+    /**
+     * countIssues.
+     *
+     * Counts repo issues
+     * @return count of issues
+     */
+    public int countIssues()
+    {
+        return repo.getIssues().size();
+    }
+
+     /**
+     * countCommitsWithDates.
+     *
+     * Counts repo commits
+     *
+     * @param start start date
+     * @param end end date
+     * @return count of commits
+     */
+    public int countCommits(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Commit c : repo.getCommits())
+        {
+            if ((start.compareTo(c.getDateCreated()) <= 0) 
+					&& (end.compareTo(c.getDateCreated()) >= 0))
+            {
+                count++;
+            }
+
+        }
+        return count;
+    }
+
+    /**
+     * countIssuesWithDates.
+     *
+     * Counts repo issues
+     *
+     * @param start start date
+     * @param end end date
+     * @return count of issues
+     */
+    public int countIssues(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for(Issue i : repo.getIssues())
+        {
+            if ((start.compareTo(i.getDateCreated()) <= 0) 
+					&& (end.compareTo(i.getDateCreated()) >= 0))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
     /**
      * countIssuesComments
      *
@@ -38,11 +107,7 @@ public class Analysis
         int count = 0;
         for (Issue i : repo.getIssues())
         {
-            ArrayList<Comment> comments = i.getComments();
-            for (Comment c : comments)
-            {
-                count++;
-            }
+            count += i.getComments().size();
         }
         return count;
         
@@ -86,15 +151,36 @@ public class Analysis
         int count = 0;
         for (Commit j : repo.getCommits())
         {
-            ArrayList<Comment> comments = j.getComments();
-            for (Comment w : comments)
-            {
-                count++;
-            }
+            count += j.getComments().size();
         }
         return count;
     }
    
+    /**
+     * countCommitsComments
+     *
+     * Counts the comments that each commit has for all
+     * issues in the repo.
+     *
+     * @return count of comments
+     */
+    public int countCommitsComments(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Commit j : repo.getCommits())
+        {
+            ArrayList<Comment> comments = j.getComments();
+            for (Comment w : comments)
+            {
+                if (w.getDateCreated().compareTo(start) >= 0
+                    && w.getDateCreated().compareTo(end) <= 0)
+                {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
     
     /**
     * countCommentsByCollaborator
@@ -108,6 +194,24 @@ public class Analysis
         int count = 0;
         count += countIssueCommentsByCollaborator(username);
         count += countCommitCommentsByCollaborator(username);
+        return count;
+    }
+
+    /**
+    * countCommentsByCollaborator
+    * Counts the comments made by a collaborator through dates.
+    * 
+	* @param username of collaborator
+	* @param start date
+	* @param end date
+    * @return count of comments
+    */
+    public int countCommentsByCollaborator(String username, 
+		LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        count += countIssueCommentsByCollaborator(username, start, end);
+        count += countCommitCommentsByCollaborator(username, start, end);
         return count;
     }
 
@@ -214,24 +318,6 @@ public class Analysis
                 }
             }
         }
-        return count;
-    }
-
-    /**
-    * countCommentsByCollaborator
-    * Counts the comments made by a collaborator through dates.
-    * 
-	* @param username of collaborator
-	* @param start date
-	* @param end date
-    * @return count of comments
-    */
-    public int countCommentsByCollaborator(String username, 
-		LocalDate start, LocalDate end)
-    {
-        int count = 0;
-        count += countIssueCommentsByCollaborator(username, start, end);
-        count += countCommitCommentsByCollaborator(username, start, end);
         return count;
     }
 
