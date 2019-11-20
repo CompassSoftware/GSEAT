@@ -322,6 +322,103 @@ public class AnalysisTest
     }
 
     /**
+     * Tests countComments.
+     */
+    @Test
+    public void testCountComments() {
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        Commit cmt1 = new Commit("commit1", collab1);
+        cmt1.addComment(new Comment("comment1", collab1, "commit"));
+        cmt1.addComment(new Comment("comment2", collab2, "commit"));
+        cmt1.addComment(new Comment("comment3", collab1, "commit"));
+
+        Commit cmt2 = new Commit("commit2", collab2);
+        cmt2.addComment(new Comment("comment1", collab2, "commit"));
+        cmt2.addComment(new Comment("comment2", collab1, "commit"));
+
+        Commit cmt3 = new Commit("commit3", collab2);
+        
+        Issue i1 = new Issue("issue1", collab1);
+        i1.addComment(new Comment("comment", collab1, "issue"));
+        i1.addComment(new Comment("comment2", collab2, "issue"));
+        i1.addComment(new Comment("comment3", collab1, "issue"));
+
+        Issue i2 = new Issue("issue2", collab2);
+        i2.addComment(new Comment("comment1", collab2, "issue"));
+        i2.addComment(new Comment("comment2", collab1, "issue"));
+
+        Issue i3 = new Issue("issue3", collab2);
+
+        Repository repo = new Repository();
+        repo.addCommit(cmt1);
+        repo.addCommit(cmt2);
+        repo.addCommit(cmt3);
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addIssue(i3);
+
+        Analysis analysis = new Analysis(repo);
+
+        int expected = 10;
+        int actual = analysis.countComments();
+
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests countComments by date.
+     */
+    @Test
+    public void testCountCommentsByDate() {
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        Commit cmt1 = new Commit("commit1", collab1);
+        cmt1.addComment(new Comment("comment1", collab1, "commit"));
+        cmt1.addComment(new Comment("comment2", collab2, "commit"));
+        cmt1.addComment(new Comment("comment3", collab1, "commit"));
+
+        Commit cmt2 = new Commit("commit2", collab2);
+        cmt2.addComment(new Comment("comment1", collab2, "commit"));
+        cmt2.addComment(new Comment("comment2", collab1, "commit"));
+
+        Commit cmt3 = new Commit("commit3", collab2);
+        
+        Issue i1 = new Issue("issue1", collab1);
+        Comment c1 = new Comment("comment", collab1, "issue");
+        Comment c2 = new Comment("comment2", collab2, "issue");
+        Comment c3 = new Comment("comment3", collab1, "issue");
+        c1.setdateCreated(LocalDate.now().minusDays(10));
+        c2.setdateCreated(LocalDate.now().minusDays(10));
+        c3.setdateCreated(LocalDate.now().minusDays(10));
+        
+        i1.addComment(c1);
+        i1.addComment(c2);
+        i1.addComment(c3);
+
+        Issue i2 = new Issue("issue2", collab2);
+        i2.addComment(new Comment("comment1", collab2, "issue"));
+        i2.addComment(new Comment("comment2", collab1, "issue"));
+
+        Issue i3 = new Issue("issue3", collab2);
+
+        Repository repo = new Repository();
+        repo.addCommit(cmt1);
+        repo.addCommit(cmt2);
+        repo.addCommit(cmt3);
+        repo.addIssue(i1);
+        repo.addIssue(i2);
+        repo.addIssue(i3);
+
+        Analysis analysis = new Analysis(repo);
+
+        int expected = 7;
+        int actual = analysis.countComments(LocalDate.now().minusDays(5), LocalDate.now());
+
+        assertEquals(expected, actual);
+    }
+
+    /**
      * Tests countIssuesComments(LocalDate, LocalDate) method.
      * @author Courtney Dixon
      */
