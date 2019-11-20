@@ -479,21 +479,24 @@ public class Analysis
     }
 
     /**
-     * countContributions
+     * countContributionsByCollaborator
      * Counts the total number of contributions(comments, issues,
-     *  etc) in the repository added during certain dates.
+     *  etc) in the repository by a specific collaborator, added
+     *  during certain dates.
      *
+     * @param username - the username of the collaborator
      * @param start - the earliest date to count contributions from
      * @param end - the latest date to count contributions to
      *
-     * @return sum of issues, comments, commits, etc in the whole
-     *  repository
+     * @return sum of issues, comments, commits, etc by specific
+     *  collaborator during certain date range.
      */
-    public int countContributions(LocalDate start, LocalDate end)
+    public int countContributionsByCollaborator(String username,
+        LocalDate start, LocalDate end)
     {
-        int total = countIssues(start, end);
-        total += countCommits(start, end);
-        total += countComments(start, end);
+        int total = countIssuesByCollaborator(username, start, end);
+        total += countCollaboratorCommits(username, start, end);
+        total += countCommentsByCollaborator(username, start, end);
         return total;
     }
 }

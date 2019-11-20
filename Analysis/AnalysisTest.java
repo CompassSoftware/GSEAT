@@ -747,10 +747,10 @@ public class AnalysisTest
 	}
 
     /**
-     * Tests countContributions by date.
+     * Tests countContributionsByCollaborator by date.
      */
     @Test
-    public void testCountContributionsByDate() {
+    public void testCountContributionsByCollaboratorByDate() {
         Collaborator collab1 = new Collaborator("test","test","tester","343");
         Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
         Commit cmt1 = new Commit("commit1", collab1);
@@ -792,8 +792,9 @@ public class AnalysisTest
 
         Analysis analysis = new Analysis(repo);
 
-        int expected = 13;
-        int actual = analysis.countContributions(LocalDate.now().minusDays(5), LocalDate.now());
+        int expected = 6;
+        int actual = analysis.countContributionsByCollaborator(
+            "tester", LocalDate.now().minusDays(5), LocalDate.now());
 
         assertEquals(expected, actual);
     }
