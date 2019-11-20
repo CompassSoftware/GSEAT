@@ -67,7 +67,6 @@ public class Analysis
             {
                 count++;
             }
-
         }
         return count;
     }
@@ -94,6 +93,7 @@ public class Analysis
         }
         return count;
     }
+
     /**
      * countIssuesComments
      *
@@ -110,14 +110,14 @@ public class Analysis
             count += i.getComments().size();
         }
         return count;
+    }
         
     /**
-     * countIssuesComments
+     * countIssuesComments.
      *
      * Counts the comments that each issue has for all
      * issues in the repo for the desired dates.
      *
-     * @author Courtney Dixon
      * @return count of comments
      */
     public int countIssuesComments(LocalDate start, LocalDate end)
