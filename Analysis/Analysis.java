@@ -83,7 +83,7 @@ public class Analysis
     public int countIssues(LocalDate start, LocalDate end)
     {
         int count = 0;
-        for(Issue i : repo.getIssues())
+        for (Issue i : repo.getIssues())
         {
             if ((start.compareTo(i.getDateCreated()) <= 0) 
 					&& (end.compareTo(i.getDateCreated()) >= 0))
@@ -117,6 +117,10 @@ public class Analysis
      *
      * Counts the comments that each issue has for all
      * issues in the repo for the desired dates.
+     * 
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
      *
      * @return count of comments
      */
@@ -162,6 +166,10 @@ public class Analysis
      * Counts the comments that each commit has for all
      * issues in the repo.
      *
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
+     *
      * @return count of comments
      */
     public int countCommitsComments(LocalDate start, LocalDate end)
@@ -180,6 +188,37 @@ public class Analysis
             }
         }
         return count;
+    }
+
+    /**
+     * countComments
+     * Counts the total number of comments in the repository.
+     *
+     * @return number of comments in the repository.
+     */
+    public int countComments()
+    {
+        int total = countIssuesComments();
+        total += countCommitsComments();
+        return total;
+    }
+    
+    /**
+     * countComments
+     * Counts the total number of comments in the repository.
+     *
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
+     *
+     * @return number of comments in the repository between
+     *  certain dates.
+     */
+    public int countComments(LocalDate start, LocalDate end)
+    {
+        int total = countIssuesComments(start, end);
+        total += countCommitsComments(start, end);
+        return total;
     }
     
     /**
@@ -437,6 +476,28 @@ public class Analysis
             }
         }
         return count;
+    }
+
+    /**
+     * countContributionsByCollaborator
+     * Counts the total number of contributions(comments, issues,
+     *  etc) in the repository by a specific collaborator, added
+     *  during certain dates.
+     *
+     * @param username - the username of the collaborator
+     * @param start - the earliest date to count contributions from
+     * @param end - the latest date to count contributions to
+     *
+     * @return sum of issues, comments, commits, etc by specific
+     *  collaborator during certain date range.
+     */
+    public int countContributionsByCollaborator(String username,
+        LocalDate start, LocalDate end)
+    {
+        int total = countIssuesByCollaborator(username, start, end);
+        total += countCollaboratorCommits(username, start, end);
+        total += countCommentsByCollaborator(username, start, end);
+        return total;
     }
 }
 
