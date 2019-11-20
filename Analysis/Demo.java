@@ -61,6 +61,8 @@ public class Demo
         Analysis analysis = new Analysis(repo);
 
         int issueComments = analysis.countIssuesComments();
+        int issueCommentsInLast5Days = analysis.countIssueComments(
+            LocalDate.now().minusDays(5), LocalDate.now());    
         
         int commitComments = analysis.countCommitsComments();
         int commitCommentsByDate = analysis.countCommitsComments(
@@ -79,8 +81,19 @@ public class Demo
         int collab1CommitsByDate = analysis.countCollaboratorCommits("tester1", 
             LocalDate.now().minusDays(5), LocalDate.now());
 
+        int commits = analysis.countCommits();
+        int issues = analysis.countIssues();
+        int commitsInLast5Days = analysis.countCommits(
+                LocalDate.now().minusDays(5), LocalDate.now());
+        int issuesInLast5Days = analysis.countIssues(
+                LocalDate.now().minusDays(5), LocalDate.now());
+
+
+
 
         System.out.println("Number of issue comments: " + issueComments);
+        System.out.println("Number of issue comments in the last 5 days: "
+            + issueCommentsInLast5Days);
 
         System.out.println("Number of commit comments: " + commitComments);
         System.out.println("Number of commit comments in the last 5 days: "
@@ -93,12 +106,12 @@ public class Demo
         
         System.out.println("Number of isues by collaborator 1: " 
             + collab1Issues);
-        System.out.println("Number of issues by collaborator 1 with "
+        System.out.println("Number of issues by collaborator 1 "
             + "in the last 5 days: " + collab1IssuesByDate);
         
         System.out.println("Number of commits by collaborator 1: "
             + collab1Commits);
-        System.out.println("Number of commits by collaborator 1 with "
+        System.out.println("Number of commits by collaborator 1 "
             + "in the last 5 days: " + collab1CommitsByDate);
     }
 }
