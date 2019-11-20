@@ -12,7 +12,7 @@ public class DisplayAnalysis {
         this.analysis = new Analysis(repo);
     }
 
-    public void displayIsssueComments() {
+    public void displayIssueComments() {
         int i = 0;
         System.out.println("Issue Comments: ");
         while (i < analysis.countIssueComments()) {
