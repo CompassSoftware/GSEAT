@@ -67,7 +67,6 @@ public class Analysis
             {
                 count++;
             }
-
         }
         return count;
     }
@@ -94,6 +93,7 @@ public class Analysis
         }
         return count;
     }
+
     /**
      * countIssuesComments
      *
@@ -108,6 +108,32 @@ public class Analysis
         for (Issue i : repo.getIssues())
         {
             count += i.getComments().size();
+        }
+        return count;
+    }
+        
+    /**
+     * countIssuesComments.
+     *
+     * Counts the comments that each issue has for all
+     * issues in the repo for the desired dates.
+     *
+     * @return count of comments
+     */
+    public int countIssuesComments(LocalDate start, LocalDate end)
+    {
+        int count = 0;
+        for (Issue i : repo.getIssues())
+        {
+            ArrayList<Comment> comments = i.getComments();
+            for (Comment c : comments)
+            {
+                if ((start.compareTo(c.getDateCreated()) <= 0) 
+					&& (end.compareTo(c.getDateCreated()) >= 0))
+                {
+                    count++;
+                } 
+            }
         }
         return count;
     }

@@ -328,32 +328,32 @@ public class AnalysisTest
     @Test
     public void testCountIssuesCommentsWithDates()
     {
-        /*Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
         Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
-        Commit cmt1 = new Commit("commit1", collab1);
-        cmt1.addComment(new Comment("comment1", collab1, "commit"));
-        cmt1.addComment(new Comment("comment2", collab2, "commit"));
-        cmt1.addComment(new Comment("comment3", collab1, "commit"));
+        Issue issue1 = new Issue("issue1", collab1);
+        issue1.addComment(new Comment("comment1", collab1, "I have an issue"));
+        issue1.addComment(new Comment("comment2", collab2, "I have an issue"));
+        issue1.addComment(new Comment("comment3", collab1, "I have an issue"));
 
-        Commit cmt2 = new Commit("commit2", collab2);
-        cmt2.addComment(new Comment("comment1", collab2, "commit"));
-        cmt2.addComment(new Comment("comment2", collab1, "commit"));
+        Issue issue2 = new Issue("commit2", collab2);
+        issue2.addComment(new Comment("comment1", collab2, "I have a bigger issue"));
+        issue2.addComment(new Comment("comment2", collab1, "I have a bigger issue"));
 
-        Commit cmt3 = new Commit("commit3", collab2);
+        Issue issue3 = new Issue("commit3", collab2);
 
         Repository repo = new Repository();
-        repo.addCommit(cmt1);
-        repo.addCommit(cmt2);
-        repo.addCommit(cmt3);
+        repo.addIssue(issue1);
+        repo.addIssue(issue2);
+        repo.addIssue(issue3);
 
         Analysis analysis = new Analysis(repo);
 
         int expected = 5;
-        int actual = analysis.countCommitsComments(
+        int actual = analysis.countIssuesComments(
             LocalDate.now().minusDays(1),
             LocalDate.now());
 
-        assertEquals(expected, actual);*/ 
+        assertEquals(expected, actual); 
     }
 
 	/**
