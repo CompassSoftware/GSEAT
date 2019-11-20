@@ -83,7 +83,7 @@ public class Analysis
     public int countIssues(LocalDate start, LocalDate end)
     {
         int count = 0;
-        for(Issue i : repo.getIssues())
+        for (Issue i : repo.getIssues())
         {
             if ((start.compareTo(i.getDateCreated()) <= 0) 
 					&& (end.compareTo(i.getDateCreated()) >= 0))
@@ -117,6 +117,10 @@ public class Analysis
      *
      * Counts the comments that each issue has for all
      * issues in the repo for the desired dates.
+     * 
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
      *
      * @return count of comments
      */
@@ -162,6 +166,10 @@ public class Analysis
      * Counts the comments that each commit has for all
      * issues in the repo.
      *
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
+     *
      * @return count of comments
      */
     public int countCommitsComments(LocalDate start, LocalDate end)
@@ -182,7 +190,7 @@ public class Analysis
         return count;
     }
 
-    /*
+    /**
      * countComments
      * Counts the total number of comments in the repository.
      *
@@ -195,7 +203,7 @@ public class Analysis
         return total;
     }
     
-    /*
+    /**
      * countComments
      * Counts the total number of comments in the repository.
      *
@@ -470,7 +478,7 @@ public class Analysis
         return count;
     }
 
-    /*
+    /**
      * countContributions
      * Counts the total number of contributions(comments, issues,
      *  etc) in the repository added during certain dates.
