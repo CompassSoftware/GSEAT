@@ -2,63 +2,92 @@ package extraction;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Issue
-{
+ /**
+ * Issue class.
+ * @author Thomas Neumayr
+ * @version 1.0
+ */
+public class Issue {
     String issueText;
     String userName;
     ArrayList<Comment> comments;
     Date dateCreated;
     Date dateUpdated;
 
-    /*
-     * Constructor that takes a Collaborator object and a String for info about the issue. 
-     */
-    public Issue(String issueText, Collaborator C)
-    {
+    /**
+    * Constructor for issue object.
+    * @param issueText - Text of the issue.
+    * @param c - Collaborator/Creator of the issue.
+    */
+    public Issue(String issueText, Collaborator c) {
         this.comments = new ArrayList<Comment>();
-        this.userName = C.getUserName();
+        this.userName = c.getUserName();
         this.issueText = issueText;
         this.dateCreated = null;
         this.dateUpdated = null;
     }
 
-    public void setIssueText(String issueText)
-    {
+    /**
+     * Setter for issue text.
+     * @param issueText - Text of the issue.
+     */
+    public void setIssueText(String issueText) {
         this.issueText = issueText;
     }
 
-    public void setUserName(String userName)
-    {
+    /**
+     * Setter for userName.
+     * @param userName - User name of the issue creator.
+     */
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public void setdateCreated(Date d)
-    {
-        this.dateCreated = d;
+    /**
+     * Setter for dateCreated.
+     * @param dateCreated - Date of the creation of the issue.
+     */
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public void setDateUpdated(Date d)
-    {
-        this.dateUpdated = d;
+    /**
+     * Setter for dateUpdated.
+     * @param dateUpdated - Date of the update of the issue.
+     */
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 
-    public String getIssueText()
-    {
+    /**
+     * Getter for issue text.
+     * @return Text of the issue.
+     */
+    public String getIssueText() {
         return this.issueText;
     }
 
-    public String getUserName()
-    {
+    /**
+     * Getter for userName.
+     * @return User name of the issue creator.
+     */
+    public String getUserName() {
         return this.userName;
     }
 
-    public Date getDateCreated()
-    {
+    /**
+     * Getter for dateCreated.
+     * @return Date of the creation of the issue.
+     */
+    public Date getDateCreated() {
         return this.dateCreated;
     }
 
-    public Date getDateUpdated()
-    {
+    /**
+     * Getter for dateUpdated.
+     * @return Date of the update of the issue.
+     */
+    public Date getDateUpdated() {
         return this.dateUpdated;
     }
 }
