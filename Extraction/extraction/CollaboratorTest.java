@@ -38,15 +38,4 @@ public class CollaboratorTest
             Assert.assertEquals(c1.getUserName(), "HariGeorgeTheFirst");
         }
 
-        @Test
-    public void testRepository()
-    {
-        Extraction extract = new Extraction();
-        Repository repo = new Repository();
-        repo.addCommit(new Commit("henry", new Collaborator()));
-        repo.addCollaborator(new Collaborator());
-        extract.addRepo(repo);
-        System.err.println("Result: PASSED\n");
-    }
-
 }

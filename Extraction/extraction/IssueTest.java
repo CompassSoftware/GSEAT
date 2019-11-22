@@ -24,8 +24,8 @@ public class IssueTest
         {
             Assert.assertEquals(issue.getUserName(), "Nischinth-bot");
             Assert.assertEquals(issue.getIssueText(), "Initial Issue");
-            Assert.assertEquals(issue.getDateCreated(), LocalDate.now());
-            Assert.assertEquals(issue.getDateUpdated(), LocalDate.now());
+            Assert.assertEquals(issue.getDateCreated(), null);
+            Assert.assertEquals(issue.getDateUpdated(), null);
         }
 
     @Test 
