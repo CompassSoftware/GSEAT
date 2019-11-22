@@ -1,8 +1,8 @@
+package extraction;
 /**
  * Collaborator Test
  *
  */
-
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,10 @@ public class CommitTest
     @BeforeEach//Initialize two Collaborator objects for testing.
         public void init()
         {
-             
             c1 = new Collaborator("Nischinth", "Murari", "Nischinth-bot", "i12849");
             cc = new Commit("Initial Commit", c1);
         }
+        
     @Test
         public void testGetters()
         {

@@ -1,3 +1,5 @@
+package extraction;
+import java.util.ArrayList;
 
 import java.io.*;
 import java.util.*;
@@ -15,7 +17,6 @@ import java.awt.*;
  */
 public class Extraction
 {
-
   	private Repository repo;
     static String baseUrl;
     static Scanner sc = new Scanner(System.in);
@@ -25,13 +26,13 @@ public class Extraction
   	* Constructor for extraction object.
   	* @param userName - a user name to include in the URL
     * @param userRepository - a user's repository to include in the URL
-    @ @param tok - a token to authorize URL requests to github API.
+    * @param tok - a token to authorize URL requests to github API.
   	*/
   	public Extraction(String userName, String userRepository, String tok)
   	{
       baseUrl = "https://api.github.com/repos/" + userName + "/" + userRepository;
       TOKEN = tok;
-  		repo = new Repository();
+  	  repo = new Repository();
   	}
     
     /**
