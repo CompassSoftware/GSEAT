@@ -60,45 +60,58 @@ compile:
 	make repo
 	make issue
 	make comment
+	make analysis
+	
+github:
+	make collab
+	make commit
+	make repo
+	make issue
+	make comment
+
+analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)
+	javac analysis/Analysis.java
+	javac -cp .:$(JUNIT5_JAR) analysis/AnalysisTest.java
+
+extract: extraction/Extraction.java extraction/ExtractionTest.java $(JUNIT5_JAR)
+	javac extraction/Extraction.java
+	javac -cp .:$(JUNIT5_JAR) extraction/ExtractionTest.java
 
 
-extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
-	javac Extraction.java
+collab:	github/Collaborator.java extraction/CollaboratorTest.java $(JUNIT5_JAR)
+	javac github/Collaborator.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CollaboratorTest.java
 
-collab:	Collaborator.java CollaboratorTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CollaboratorTest.java
-	javac Collaborator.java
-
-commit:	Commit.java CommitTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CommitTest.java
-	javac Commit.java
+commit:	github/Commit.java extraction/CommitTest.java $(JUNIT5_JAR)
+	javac github/Commit.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CommitTest.java
     
-issue: Issue.java IssueTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) IssueTest.java
-	javac Issue.java
+issue: github/Issue.java extraction/IssueTest.java $(JUNIT5_JAR)
+	javac github/Issue.java
+	javac -cp .:$(JUNIT5_JAR) extraction/IssueTest.java
     
-comment: Comment.java CommentTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CommentTest.java
-	javac Comment.java
+comment: github/Comment.java extraction/CommentTest.java $(JUNIT5_JAR)
+	javac github/Comment.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CommentTest.java
 
-repo: Repository.java RepoTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) RepoTest.java
-	javac Repository.java
+repo: github/Repository.java extraction/RepoTest.java $(JUNIT5_JAR)
+	javac github/Repository.java
+	javac -cp .:$(JUNIT5_JAR) extraction/RepoTest.java
 
 clean:
 	rm -f *~
-	rm -f Extraction*.class
+	rm -f extraction/Extraction*.class
+	rm -f analysis/*.class
+	rm -f github/*.class
 
 test: $(JUNIT5_JAR)
 	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
 
-defchk: Extraction.java $(CKSTYLE_XML)
-#	checkstyle Calculator.java
-	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) Extraction.java
+defchk: extraction/Extraction.java $(CKSTYLE_XML)
+	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) extraction/Extraction.java
 
-customchk: Extraction.java style.xml
-	java $(CKSTYLE_COMMAND) -c style.xml Extraction.java
+customchk: extraction/Extraction.java style.xml
+	java $(CKSTYLE_COMMAND) -c style.xml extraction/Extraction.java
 
 style.xml:
 	@echo "Custom checkstyle needs a local style.xml file."
