@@ -13,6 +13,13 @@ JUNIT5_JAR = junit-platform-console-standalone-1.2.0.jar
 JUNIT5_RUNNER = org.junit.platform.console.ConsoleLauncher
 CKSTYLE_COMMAND =  -jar /usr/local/checkstyle-5.5/checkstyle-5.5-all.jar
 CKSTYLE_XML = cs_appstate_checks.xml
+# Package for json.jar running in GitUser.java
+JSON_JAR = json-lib-2.4-jdk15.jar
+EZMORPH_JAR = ezmorph-1.0.6.jar
+COMMONS_LOGGING_JAR = commons-logging-1.1.1.jar
+COMMONS_LANG_JAR = commons-lang-2.6.jar
+COMMONS_COLLECTION_JAR = commons-collections-3.2.1.jar
+COMMONS_BEANUTILS_JAR = commons-beanutils-1.8.3.jar
 
 default: 
 	@echo "usage: make target"
@@ -31,6 +38,9 @@ default:
 #Essential that command lines start with single TAB character
 
 run:
+	make ext
+
+ext:
 	make compile
 	make test
 
@@ -42,44 +52,48 @@ compile:
 	make issue
 	make comment
 
+extract: extraction/Extraction.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR) $(JUNIT5_JAR)
+	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java
+	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR):$(JUNIT5_JAR) extraction/ExtractionTest.java
 
-extract: Extraction.java ExtractionTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) ExtractionTest.java
-	javac Extraction.java
+compile2: extraction/Extraction.java Demo.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR)
+	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java Demo.java
+	java -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) Demo
 
-collab:	Collaborator.java CollaboratorTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CollaboratorTest.java
-	javac Collaborator.java
+collab:	extraction/Collaborator.java extraction/CollaboratorTest.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR) $(JUNIT5_JAR)
+	javac extraction/Collaborator.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CollaboratorTest.java
 
-commit:	Commit.java CommitTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CommitTest.java
-	javac Commit.java
+commit:	extraction/Commit.java extraction/CommitTest.java $(JUNIT5_JAR)
+	javac extraction/Commit.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CommitTest.java
     
-issue: Issue.java IssueTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) IssueTest.java
-	javac Issue.java
-    
-comment: Comment.java CommentTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) CommentTest.java
-	javac Comment.java
+issue: extraction/Issue.java extraction/IssueTest.java $(JUNIT5_JAR)
+	javac extraction/Issue.java
+	javac -cp .:$(JUNIT5_JAR) extraction/IssueTest.java
 
-repo: Repository.java RepoTest.java $(JUNIT5_JAR)
-	javac -cp .:$(JUNIT5_JAR) RepoTest.java
-	javac Repository.java
+comment: extraction/Comment.java extraction/CommentTest.java $(JUNIT5_JAR)
+	javac extraction/Comment.java
+	javac -cp .:$(JUNIT5_JAR) extraction/CommentTest.java
+
+repo: extraction/Repository.java extraction/RepositoryTest.java $(JUNIT5_JAR)
+	javac extraction/Repository.java
+	javac -cp .:$(JUNIT5_JAR) extraction/RepositoryTest.java
 
 clean:
 	rm -f *~
-	rm -f Extraction*.class
+	rm -f *.class
+	rm -f extraction/*.class
 
 test: $(JUNIT5_JAR)
 	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
 
-defchk: Extraction.java $(CKSTYLE_XML)
+defchk: extraction/*.java $(CKSTYLE_XML)
 #	checkstyle Calculator.java
-	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) Extraction.java
+	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) extraction/Extraction.java extraction/Collaborator.java extraction/Commit.java extraction/Issue.java extraction/Comment.java extraction/Repository.java
 
-customchk: Extraction.java style.xml
-	java $(CKSTYLE_COMMAND) -c style.xml Extraction.java
+customchk: extraction/*.java style.xml
+	java $(CKSTYLE_COMMAND) -c style.xml extraction/Extraction.java extraction/Collaborator.java extraction/Commit.java extraction/Issue.java extraction/Comment.java extraction/Repository.java
 
 style.xml:
 	@echo "Custom checkstyle needs a local style.xml file."
