@@ -42,17 +42,17 @@ run_ext:
 	make -f makefile_ext test_ext
 
 compile_ext:
-	make -f makefile_ext github_ext
-	make -f makefile_ext extract
+	make -f makefile_ext compile_github
+	make -f makefile_ext compile_extract
 
-github_ext:
+compile_github:
 	make -f makefile_ext collab
 	make -f makefile_ext commit
 	make -f makefile_ext repo
 	make -f makefile_ext issue
 	make -f makefile_ext comment
 
-extract: extraction/Extraction.java extraction/ExtractionTest.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR) $(JUNIT5_JAR)
+compile_extract: extraction/Extraction.java extraction/ExtractionTest.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR) $(JUNIT5_JAR)
 	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java
 	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR):$(JUNIT5_JAR) extraction/ExtractionTest.java
 
