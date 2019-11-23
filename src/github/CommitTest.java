@@ -1,4 +1,4 @@
-package extraction;
+package github;
 /**
  * Collaborator Test
  *
