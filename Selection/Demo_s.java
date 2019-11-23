@@ -10,7 +10,7 @@
 
 import selection.*;
 
-public class Demo {
+public class Demo_s {
     public static void main(String[] args) {
         Greeting g =new Greeting();
         g.greeting();
