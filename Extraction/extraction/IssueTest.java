@@ -1,8 +1,8 @@
+package extraction;
 /**
  * Issue Test
  *
  */
-
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

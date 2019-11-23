@@ -2,7 +2,10 @@
  * Repo Test
  *
  */
-
+package extraction;
+import github.Repository;
+import github.Commit;
+import github.Collaborator;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
