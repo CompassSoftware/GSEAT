@@ -1,6 +1,11 @@
 package extraction;
 
-import github.*;
+//import github.*;
+import github.Repository;
+import github.Commit;
+import github.Comment;
+import github.Collaborator;
+import github.Issue;
 
 import java.util.ArrayList;
 import java.io.*;
