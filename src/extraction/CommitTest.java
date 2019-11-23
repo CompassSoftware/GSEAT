@@ -2,7 +2,9 @@
  * Collaborator Test
  *
  */
-
+package extraction;
+import github.Commit;
+import github.Collaborator;
 import java.time.LocalDate;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;

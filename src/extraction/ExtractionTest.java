@@ -2,7 +2,7 @@
  * ExtractionTest
  *
  */
-
+package extraction;
 // Stuff to redirect System.out for testing purposes.
 import java.lang.IllegalArgumentException;
 import java.io.PrintStream;

@@ -1,3 +1,5 @@
+package analysis;
+
 import java.time.LocalDate;
 import github.Comment;
 import github.Repository;

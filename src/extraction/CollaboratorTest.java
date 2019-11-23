@@ -2,7 +2,10 @@
  * Collaborator Test
  *
  */
-
+package extraction;
+import github.Collaborator;
+import github.Repository;
+import github.Commit;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
