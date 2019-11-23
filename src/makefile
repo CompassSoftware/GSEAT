@@ -47,6 +47,7 @@ clean-all:
 
 clean-extract:
 	@echo "cleaning extract/"
+	make -f makefile_ext clean_ext
 
 clean-analysis:
 	@echo "cleaning analysis/"
@@ -61,67 +62,22 @@ run:
 	make test
 
 compile:
-	make analysis
-	make extract
-	make github
-	
-github:
-	make collab
-	make commit
-	make repo
-	make issue
-	make comment
+	make compile_analysis
+	make -f makefile_ext compile_ext
 
-analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)
+compile_analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)
 	javac analysis/Analysis.java
 	javac -cp .:$(JUNIT5_JAR) analysis/AnalysisTest.java
 
-extract: extraction/Extraction.java extraction/ExtractionTest.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR) $(JUNIT5_JAR)
-	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java
-	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR):$(JUNIT5_JAR) extraction/ExtractionTest.java
-
-compile2: extraction/Extraction.java Demo.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR)
-	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java Demo.java
-	java -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) Demo
-
-collab:	github/Collaborator.java github/CollaboratorTest.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR) $(JUNIT5_JAR)
-	javac github/Collaborator.java
-	javac -cp .:$(JUNIT5_JAR) github/CollaboratorTest.java
-
-commit:	github/Commit.java github/CommitTest.java $(JUNIT5_JAR)
-	javac github/Commit.java
-	javac -cp .:$(JUNIT5_JAR) github/CommitTest.java
-    
-issue: github/Issue.java github/IssueTest.java $(JUNIT5_JAR)
-	javac github/Issue.java
-	javac -cp .:$(JUNIT5_JAR) github/IssueTest.java
-
-comment: github/Comment.java github/CommentTest.java $(JUNIT5_JAR)
-	javac github/Comment.java
-	javac -cp .:$(JUNIT5_JAR) github/CommentTest.java
-
-repo: github/Repository.java github/RepositoryTest.java $(JUNIT5_JAR)
-	javac github/Repository.java
-	javac -cp .:$(JUNIT5_JAR) github/RepositoryTest.java
-
 clean:
-	rm -f *~
-	rm -f *.class
 	rm -f analysis/*.class
-	rm -f extraction/*.class
-	rm -f github/*.class
+	make -f makefile_ext clean_ext
 
-test: $(JUNIT5_JAR)
-	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
+test:
+	make -f makefile_ext test_ext
 
-defchk: extraction/*.java github/*.java $(CKSTYLE_XML)
-	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) extraction/Extraction.java github/Collaborator.java github/Commit.java github/Issue.java github/Comment.java github/Repository.java
+defchk:
+	make -f makefile_ext defchk_ext
 
-customchk: extraction/*.java github/*.java style.xml
-	java $(CKSTYLE_COMMAND) -c style.xml extraction/Extraction.java github/Collaborator.java github/Commit.java github/Issue.java github/Comment.java github/Repository.java
-
-style.xml:
-	@echo "Custom checkstyle needs a local style.xml file."
-	@echo "Copy cs_appstate_checks.xml into style.xml and edit as needed."
-	@echo "--------------------------------------------------------------"
-
+customchk:
+	make -f makefile_ext customchk_ext
