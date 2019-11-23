@@ -89,12 +89,11 @@ clean:
 test: $(JUNIT5_JAR)
 	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
 
-defchk: extraction/*.java $(CKSTYLE_XML)
-#	checkstyle Calculator.java
-	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) extraction/Extraction.java extraction/Collaborator.java extraction/Commit.java extraction/Issue.java extraction/Comment.java extraction/Repository.java
+defchk: extraction/*.java github/*.java $(CKSTYLE_XML)
+	java $(CKSTYLE_COMMAND) -c $(CKSTYLE_XML) extraction/Extraction.java github/Collaborator.java github/Commit.java github/Issue.java github/Comment.java github/Repository.java
 
-customchk: extraction/*.java style.xml
-	java $(CKSTYLE_COMMAND) -c style.xml extraction/Extraction.java extraction/Collaborator.java extraction/Commit.java extraction/Issue.java extraction/Comment.java extraction/Repository.java
+customchk: extraction/*.java github/*.java style.xml
+	java $(CKSTYLE_COMMAND) -c style.xml extraction/Extraction.java github/Collaborator.java github/Commit.java github/Issue.java github/Comment.java github/Repository.java
 
 style.xml:
 	@echo "Custom checkstyle needs a local style.xml file."
