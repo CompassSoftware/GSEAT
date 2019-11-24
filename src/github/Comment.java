@@ -8,11 +8,11 @@ import java.util.Date;
  * @version 1.0
  */
 public class Comment {
-    String commentText;
-    String commentType;
-    String userName;
-    Date dateCreated;
-    Date dateUpdated;
+    private String commentText;
+    private String commentType;
+    private String userName;
+    private Date dateCreated;
+    private Date dateUpdated;
 
     /**
     * Constructor for comment object.

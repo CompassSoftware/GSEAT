@@ -6,10 +6,10 @@ package github;
  * @version 1.0
  */
 public class Collaborator {
-    String firstName;
-    String lastName;
-    String userName;
-    String id;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String id;
 
     /**
     * Constructor without arguments for Collaborator object.

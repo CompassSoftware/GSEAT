@@ -18,10 +18,10 @@ public class Repository {
     * Constructor for repository object.
     */
     public Repository() {
-        collaborators = new ArrayList<>();
-        issues = new ArrayList<>();
-        commits = new ArrayList<>();
-        comments = new ArrayList<>();
+        this.collaborators = new ArrayList<>();
+        this.issues = new ArrayList<>();
+        this.commits = new ArrayList<>();
+        this.comments = new ArrayList<>();
     }
 
     /**
@@ -29,7 +29,7 @@ public class Repository {
      * @param collab is a new collaborator 
      */
     public void addCollaborator(Collaborator collab) {
-        collaborators.add(collab);
+        this.collaborators.add(collab);
     }
 
     /**
@@ -37,7 +37,7 @@ public class Repository {
      * @param issue is a new issue
      */
     public void addIssue(Issue issue) {
-        issues.add(issue);
+        this.issues.add(issue);
     }
 
     /**
@@ -45,7 +45,7 @@ public class Repository {
      * @param commit is a new commit
      */
     public void addCommit(Commit commit) {
-        commits.add(commit);
+        this.commits.add(commit);
     }
 
     /**
@@ -53,7 +53,7 @@ public class Repository {
      * @param comment is a new comment
      */
     public void addComment(Comment comment) {
-        comments.add(comment);
+        this.comments.add(comment);
     }
 
     /**
@@ -61,7 +61,7 @@ public class Repository {
      * @return collaborators field
      */
     public ArrayList<Collaborator> getCollaborators() {
-        return collaborators;
+        return this.collaborators;
     }
 
     /**
@@ -69,7 +69,7 @@ public class Repository {
      * @return issues field
      */
     public ArrayList<Issue> getIssues() {
-        return issues;
+        return this.issues;
     }
 
     /**
@@ -77,7 +77,7 @@ public class Repository {
      * @return commits field
      */
     public ArrayList<Commit> getCommits() {
-        return commits;
+        return this.commits;
     }
 
     /**
@@ -85,6 +85,6 @@ public class Repository {
      * @return comments field
      */
     public ArrayList<Comment> getComments() {
-        return comments;
+        return this.comments;
     } 
 }
