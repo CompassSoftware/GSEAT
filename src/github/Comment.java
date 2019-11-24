@@ -1,75 +1,112 @@
 package github;
 
-import java.time.LocalDate;
+import java.util.Date;
 
-public class Comment
-{
+ /**
+ * Commit class.
+ * @author Thomas Neumayr
+ * @version 1.0
+ */
+public class Comment {
     String commentText;
     String commentType;
     String userName;
-    LocalDate dateCreated;
-    LocalDate dateUpdated;
+    Date dateCreated;
+    Date dateUpdated;
 
-    /*
-     * Constructor that takes a Collaborator object, a String that is the text of the comment,
-     * and a String that is the commentType ("repo", "commit", "issue", etc...). 
-     */
-    public Comment(String commentText, Collaborator C, String commentType)
-    {
-        this.userName = C.getUserName();
+    /**
+    * Constructor for comment object.
+    * @param commentText - Text of the comment.
+    * @param c - Collaborator/Creator of the commit.
+    * @param commentType - Type of the comment ("repo", "commit", "issue", 
+    *                      etc.).
+    */
+    public Comment(String commentText, Collaborator c, String commentType) {
+        this.userName = c.getUserName();
         this.commentText = commentText;
         this.commentType = commentType;
-        this.dateCreated = LocalDate.now();
-        this.dateUpdated = LocalDate.now();
+        this.dateCreated = null;
+        this.dateUpdated = null;
     }
 
-    public void setCommentText(String commentText)
-    {
+    /**
+     * Setter for comment text.
+     * @param commentText - Text of the comment.
+     */
+    public void setCommentText(String commentText) {
         this.commentText = commentText;
     }
     
-    public void setCommentType(String commentType)
-    {
+    /**
+     * Setter for comment type.
+     * @param commentType - Type of the comment ("repo", "commit", "issue", 
+     *                      etc.).
+     */
+    public void setCommentType(String commentType) {
         this.commentType = commentType;
     }
 
-    public void setUserName(String userName)
-    {
+    /**
+     * Setter for userName.
+     * @param userName - User name of the comment creator.
+     */
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public void setdateCreated(LocalDate d)
-    {
-        this.dateCreated = d;
+    /**
+     * Setter for dateCreated.
+     * @param dateCreated - Date of the creation of the comment.
+     */
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public void setDateUpdated(LocalDate d)
-    {
-        this.dateUpdated = d;
+    /**
+     * Setter for dateUpdated.
+     * @param dateUpdated - Date of the update of the comment.
+     */
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 
-    public String getCommentText()
-    {
+    /**
+     * Getter for comment text.
+     * @return Text of the comment.
+     */
+    public String getCommentText() {
         return this.commentText;
     }
-    
-    public String getCommentType()
-    {
+
+    /**
+     * Getter for comment type.
+     * @return Comment type of the comment.
+     */    
+    public String getCommentType() {
         return this.commentType;
     }
 
-    public String getUserName()
-    {
+    /**
+     * Getter for userName.
+     * @return User name of the comment creator.
+     */
+    public String getUserName() {
         return this.userName;
     }
 
-    public LocalDate getDateCreated()
-    {
+    /**
+     * Getter for dateCreated.
+     * @return Date of the creation of the comment.
+     */
+    public Date getDateCreated() {
         return this.dateCreated;
     }
 
-    public LocalDate getDateUpdated()
-    {
+    /**
+     * Getter for dateUpdated.
+     * @return Date of the update of the comment.
+     */
+    public Date getDateUpdated() {
         return this.dateUpdated;
     }
 }
