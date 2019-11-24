@@ -1,3 +1,4 @@
+package analysis;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -5,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.time.LocalDate;
+import java.util.Date;
 
 import github.Repository;
 import github.Comment;
@@ -92,27 +94,27 @@ public class AnalysisTest
         
         Issue i1 = new Issue("issue 1", coll2);
         Comment comm1 = new Comment("this is good", coll1, "type1");
-        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        comm1.setDateCreated(convertToDate(LocalDate.now().minusDays(4)));
         i1.addComment(comm1);
         Comment comm2 = new Comment("this is bad", coll1, "type1");
-        comm2.setdateCreated(LocalDate.now().minusDays(13));
+        comm2.setDateCreated(convertToDate(LocalDate.now().minusDays(13)));
         i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
         Comment comm3 = new Comment("this is okay", coll2, "type2");
-        comm3.setdateCreated(LocalDate.now().minusDays(2));
+        comm3.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
         i2.addComment(comm3);
         
         Commit com1 = new Commit("commit 1", coll1);
-        com1.setdateCreated(LocalDate.now().minusDays(3));
+        com1.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
         Comment comm4 = new Comment("cool", coll2, "type2");
-        comm4.setdateCreated(LocalDate.now().minusDays(1));
+        comm4.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
         com1.addComment(comm4);
 
         Commit com2 = new Commit ("commit 2", coll2);
-        com2.setdateCreated(LocalDate.now().minusDays(10));
+        com2.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
         Comment comm5 = new Comment("cool2", coll1, "type2");
-        comm5.setdateCreated(LocalDate.now().minusDays(3));
+        comm5.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
         com2.addComment(comm5);
 
         Repository repo = new Repository();
@@ -122,7 +124,7 @@ public class AnalysisTest
         repo.addCommit(com2);
 
         Analysis analysis = new Analysis(repo);        
-        int actual = analysis.countCommits(LocalDate.now().minusDays(5), LocalDate.now());
+        int actual = analysis.countCommits(convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
 		int expected = 1;
 		assertEquals(expected, actual);
 	}
@@ -136,30 +138,30 @@ public class AnalysisTest
         Collaborator coll2 = new Collaborator("misses","test","tester2","3");
         
         Issue i1 = new Issue("issue 1", coll2);
-        i1.setdateCreated(LocalDate.now().minusDays(2));
+        i1.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
         Comment comm1 = new Comment("this is good", coll1, "type1");
-        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        comm1.setDateCreated(convertToDate(LocalDate.now().minusDays(4)));
         i1.addComment(comm1);
         Comment comm2 = new Comment("this is bad", coll1, "type1");
-        comm2.setdateCreated(LocalDate.now().minusDays(13));
+        comm2.setDateCreated(convertToDate(LocalDate.now().minusDays(13)));
         i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
-        i2.setdateCreated(LocalDate.now().minusDays(6));
+        i2.setDateCreated(convertToDate(LocalDate.now().minusDays(6)));
         Comment comm3 = new Comment("this is okay", coll2, "type2");
-        comm3.setdateCreated(LocalDate.now().minusDays(2));
+        comm3.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
         i2.addComment(comm3);
         
         Commit com1 = new Commit("commit 1", coll1);
-        com1.setdateCreated(LocalDate.now().minusDays(3));
+        com1.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
         Comment comm4 = new Comment("cool", coll2, "type2");
-        comm4.setdateCreated(LocalDate.now().minusDays(1));
+        comm4.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
         com1.addComment(comm4);
 
         Commit com2 = new Commit ("commit 2", coll2);
-        com2.setdateCreated(LocalDate.now().minusDays(10));
+        com2.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
         Comment comm5 = new Comment("cool2", coll1, "type2");
-        comm5.setdateCreated(LocalDate.now().minusDays(3));
+        comm5.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
         com2.addComment(comm5);
 
         Repository repo = new Repository();
@@ -169,7 +171,7 @@ public class AnalysisTest
         repo.addCommit(com2);
 
         Analysis analysis = new Analysis(repo);        
-        int actual = analysis.countIssues(LocalDate.now().minusDays(5), LocalDate.now());
+        int actual = analysis.countIssues(convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
 		int expected = 1;
 		assertEquals(expected, actual);
 	}
@@ -315,8 +317,8 @@ public class AnalysisTest
 
         int expected = 5;
         int actual = analysis.countCommitsComments(
-            LocalDate.now().minusDays(1),
-            LocalDate.now());
+            convertToDate(LocalDate.now().minusDays(1)),
+            convertToDate(LocalDate.now()));
 
         assertEquals(expected, actual);
     }
@@ -388,9 +390,9 @@ public class AnalysisTest
         Comment c1 = new Comment("comment", collab1, "issue");
         Comment c2 = new Comment("comment2", collab2, "issue");
         Comment c3 = new Comment("comment3", collab1, "issue");
-        c1.setdateCreated(LocalDate.now().minusDays(10));
-        c2.setdateCreated(LocalDate.now().minusDays(10));
-        c3.setdateCreated(LocalDate.now().minusDays(10));
+        c1.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        c2.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        c3.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
         
         i1.addComment(c1);
         i1.addComment(c2);
@@ -413,7 +415,7 @@ public class AnalysisTest
         Analysis analysis = new Analysis(repo);
 
         int expected = 7;
-        int actual = analysis.countComments(LocalDate.now().minusDays(5), LocalDate.now());
+        int actual = analysis.countComments(convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
 
         assertEquals(expected, actual);
     }
@@ -447,8 +449,8 @@ public class AnalysisTest
 
         int expected = 5;
         int actual = analysis.countIssuesComments(
-            LocalDate.now().minusDays(1),
-            LocalDate.now());
+            convertToDate(LocalDate.now().minusDays(1)),
+            convertToDate(LocalDate.now()));
 
         assertEquals(expected, actual); 
     }
@@ -496,25 +498,25 @@ public class AnalysisTest
         
         Issue i1 = new Issue("issue 1", coll2);
         Comment comm1 = new Comment("this is good", coll1, "type1");
-        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        comm1.setDateCreated(convertToDate(LocalDate.now().minusDays(4)));
         i1.addComment(comm1);
         Comment comm2 = new Comment("this is bad", coll1, "type1");
-        comm2.setdateCreated(LocalDate.now().minusDays(13));
+        comm2.setDateCreated(convertToDate(LocalDate.now().minusDays(13)));
         i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
         Comment comm3 = new Comment("this is okay", coll2, "type2");
-        comm3.setdateCreated(LocalDate.now().minusDays(2));
+        comm3.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
         i2.addComment(comm3);
         
         Commit com1 = new Commit("commit 1", coll1);
         Comment comm4 = new Comment("cool", coll2, "type2");
-        comm4.setdateCreated(LocalDate.now().minusDays(1));
+        comm4.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
         com1.addComment(comm4);
 
         Commit com2 = new Commit ("commit 2", coll2);
         Comment comm5 = new Comment("cool2", coll1, "type2");
-        comm5.setdateCreated(LocalDate.now().minusDays(3));
+        comm5.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
         com2.addComment(comm5);
 
         Repository repo = new Repository();
@@ -524,7 +526,7 @@ public class AnalysisTest
         repo.addCommit(com2);
 
         Analysis analysis = new Analysis(repo);        
-        int actual = analysis.countCommentsByCollaborator("tester1", LocalDate.now().minusDays(5), LocalDate.now());
+        int actual = analysis.countCommentsByCollaborator("tester1", convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
 		int expected = 2;
 		assertEquals(expected, actual);
 	}
@@ -591,7 +593,7 @@ public class AnalysisTest
 
         Analysis analysis = new Analysis(repo);        
         int actual = analysis.countIssuesByCollaborator("tester1",
-            LocalDate.now().plusDays(1), i2.getDateCreated());
+            convertToDate(LocalDate.now().plusDays(1)), i2.getDateCreated());
 		int expected = -1;
 		assertEquals(expected, actual);
 	}
@@ -625,7 +627,7 @@ public class AnalysisTest
 
         Analysis analysis = new Analysis(repo);        
         int actual = analysis.countIssuesByCollaborator("tester1",
-            i2.getDateCreated(), LocalDate.now());
+            i2.getDateCreated(), convertToDate(LocalDate.now()));
 		int expected = 1;
 		assertEquals(expected, actual);
 	}
@@ -702,7 +704,7 @@ public class AnalysisTest
         
         Analysis analysis = new Analysis(repo);        
         int actual = analysis.countCollaboratorCommits("tester1",
-            LocalDate.now().plusDays(1), com3.getDateCreated());
+            convertToDate(LocalDate.now().plusDays(1)), com3.getDateCreated());
 		int expected = -1;
 		assertEquals(expected, actual);
 	}
@@ -741,7 +743,7 @@ public class AnalysisTest
         
         Analysis analysis = new Analysis(repo);        
         int actual = analysis.countCollaboratorCommits("tester1",
-            com1.getDateCreated(), LocalDate.now());
+            com1.getDateCreated(), convertToDate(LocalDate.now()));
 		int expected = 2;
 		assertEquals(expected, actual);
 	}
@@ -768,9 +770,9 @@ public class AnalysisTest
         Comment c1 = new Comment("comment", collab1, "issue");
         Comment c2 = new Comment("comment2", collab2, "issue");
         Comment c3 = new Comment("comment3", collab1, "issue");
-        c1.setdateCreated(LocalDate.now().minusDays(10));
-        c2.setdateCreated(LocalDate.now().minusDays(10));
-        c3.setdateCreated(LocalDate.now().minusDays(10));
+        c1.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        c2.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        c3.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
         
         i1.addComment(c1);
         i1.addComment(c2);
@@ -794,7 +796,7 @@ public class AnalysisTest
 
         int expected = 6;
         int actual = analysis.countContributionsByCollaborator(
-            "tester", LocalDate.now().minusDays(5), LocalDate.now());
+            "tester", convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
 
         assertEquals(expected, actual);
     }
@@ -849,6 +851,10 @@ public class AnalysisTest
         int actual = analysis.countContributionsByCollaborator("tester");
         
         assertEquals(expected, actual);
+    }
+   
+    public Date convertToDate(LocalDate dateToConvert) {
+        return java.sql.Date.valueOf(dateToConvert);
     }
 
 }

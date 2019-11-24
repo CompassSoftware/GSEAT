@@ -1,4 +1,4 @@
-package extraction;
+package github;
 /**
  * Repository Test
  *

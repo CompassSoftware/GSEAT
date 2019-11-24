@@ -1,8 +1,8 @@
+package github;
 /**
  * Collaborator Test
  *
  */
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,16 +37,5 @@ public class CollaboratorTest
             c1.setUserName("HariGeorgeTheFirst");
             Assert.assertEquals(c1.getUserName(), "HariGeorgeTheFirst");
         }
-
-        @Test
-    public void testRepository()
-    {
-        Extraction extract = new Extraction();
-        Repository repo = new Repository();
-        repo.addCommit(new Commit("henry", new Collaborator()));
-        repo.addCollaborator(new Collaborator());
-        extract.addRepo(repo);
-        System.err.println("Result: PASSED\n");
-    }
 
 }
