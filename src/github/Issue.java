@@ -1,6 +1,7 @@
 package github;
-import java.util.ArrayList;
+
 import java.util.Date;
+import java.util.ArrayList;
 
  /**
  * Issue class.
@@ -8,11 +9,11 @@ import java.util.Date;
  * @version 1.0
  */
 public class Issue {
-    String issueText;
-    String userName;
-    ArrayList<Comment> comments;
-    Date dateCreated;
-    Date dateUpdated;
+    private String issueText;
+    private String userName;
+    private Date dateCreated;
+    private Date dateUpdated;
+    private ArrayList<Comment> comments;
 
     /**
     * Constructor for issue object.
@@ -20,11 +21,11 @@ public class Issue {
     * @param c - Collaborator/Creator of the issue.
     */
     public Issue(String issueText, Collaborator c) {
-        this.comments = new ArrayList<Comment>();
         this.userName = c.getUserName();
         this.issueText = issueText;
         this.dateCreated = null;
         this.dateUpdated = null;
+        this.comments = new ArrayList<Comment>();
     }
 
     /**
@@ -60,6 +61,14 @@ public class Issue {
     }
 
     /**
+     * Setter for comments.
+     * @param comments - ArrayList of the comments of the issue.
+     */
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    /**
      * Getter for issue text.
      * @return Text of the issue.
      */
@@ -89,5 +98,21 @@ public class Issue {
      */
     public Date getDateUpdated() {
         return this.dateUpdated;
+    }
+
+    /**
+     * Getter for comments.
+     * @return ArrayList of comments of the issue.
+     */
+    public ArrayList<Comment> getComments() {
+        return this.comments;
+    }
+
+    /**
+     * Adds new comment to the ArrayList of comments.
+     * @param New comment that should be added to the ArrayList.
+     */
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

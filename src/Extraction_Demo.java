@@ -2,7 +2,7 @@ import extraction.*;
 import github.*;
 import java.util.*;
 
-public class Demo {
+public class Extraction_Demo {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		
