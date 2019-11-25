@@ -606,5 +606,15 @@ public class Analysis
         //return totals
         return total;
     }
+
+    /**
+     * Counts percent contributions by collaborator.
+     *
+     * @param username of collaborator
+     */
+    public double percentContributionsByCollaborator(String username)
+    {
+        return (double) countContributionsByCollaborator(username) / (double) countContributions();
+    }
 }
 
