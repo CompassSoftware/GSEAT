@@ -13,7 +13,24 @@ public class Issue {
     private String userName;
     private Date dateCreated;
     private Date dateUpdated;
-    private ArrayList<Comment> comments;
+    private ArrayList<Comment> comments;   
+
+    /**
+    * Constructor for issue object.
+    * @param issueText - Text of the issue.
+    * @param c - Collaborator/Creator of the issue.
+    * @param dateCreated - Date of the creation of the issue.
+    * @param dateUpdated - Date of the update of the issue.
+    * @param comments - ArrayList of the comments of the issue.
+    */
+    public Issue(String issueText, Collaborator c, Date dateCreated, 
+                 Date dateUpdated, ArrayList<Comment> comments) {
+        this.issueText = issueText;
+        this.userName = c.getUserName();
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+        this.comments = comments;
+    }
 
     /**
     * Constructor for issue object.
@@ -21,12 +38,8 @@ public class Issue {
     * @param c - Collaborator/Creator of the issue.
     */
     public Issue(String issueText, Collaborator c) {
-        this.userName = c.getUserName();
-        this.issueText = issueText;
-        this.dateCreated = new Date();
-        this.dateUpdated = new Date();
-        this.comments = new ArrayList<Comment>();
-    }
+        this(issueText, c, new Date(), new Date(), new ArrayList<Comment>());
+    } 
 
     /**
      * Setter for issue text.
