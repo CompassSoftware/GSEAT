@@ -794,7 +794,7 @@ public class AnalysisTest
         int expected = 17;
         int actual = analysis.countContributionsBetweenDates(
             convertToDate(LocalDate.now().minusDays(10)),
-            convertToDate(LocalDate.now()));
+            new Date());
  
         assertEquals(expected, actual);
     }
