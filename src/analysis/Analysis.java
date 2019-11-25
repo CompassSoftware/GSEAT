@@ -493,5 +493,20 @@ public class Analysis
         total += countCommentsByCollaborator(username, start, end);
         return total;
     }
+
+    /**
+     * Count the number of commits, comments, and
+     * issues for Repo.
+     *
+     * @return total
+     *              total number of commits, comments,
+     *              and issues
+     */
+    public int countContributions() {
+        return countCommits() 
+               + countComments();
+               + countIssues();
+
+    }
 }
 
