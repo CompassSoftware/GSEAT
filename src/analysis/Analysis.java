@@ -192,6 +192,44 @@ public class Analysis
         return count;
     }
 
+     /**
+     * countRepoComments
+     *
+     * Counts the comments that each commit has for repo.
+     *
+     * @return count of comments
+     */
+    public int countRepoComments()
+    {
+        return repo.getComments().size();
+    }
+   
+    /**
+     * countRepoComments
+     *
+     * Counts the comments that each commit has for the repo
+	 * between 2 dates.
+     *
+     * @param start - the earliest date that comments will
+     *  be counted from.
+     * @param end - the latest date that comments will be counted to.
+     *
+     * @return count of comments
+     */
+    public int countRepoComments(Date start, Date end)
+    {
+        int count = 0;
+        for (Comment w : repo.getComments())
+        {
+            if (w.getDateCreated().compareTo(start) >= 0
+                && w.getDateCreated().compareTo(end) <= 0)
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
     /**
      * countComments
      * Counts the total number of comments in the repository.
@@ -202,6 +240,7 @@ public class Analysis
     {
         int total = countIssuesComments();
         total += countCommitsComments();
+		total += countRepoComments();
         return total;
     }
     
@@ -220,6 +259,7 @@ public class Analysis
     {
         int total = countIssuesComments(start, end);
         total += countCommitsComments(start, end);
+		total += countRepoComments(start, end);
         return total;
     }
     
@@ -235,6 +275,7 @@ public class Analysis
         int count = 0;
         count += countIssueCommentsByCollaborator(username);
         count += countCommitCommentsByCollaborator(username);
+		count += countRepoCommentsByCollaborator(username);
         return count;
     }
 
@@ -253,6 +294,7 @@ public class Analysis
         int count = 0;
         count += countIssueCommentsByCollaborator(username, start, end);
         count += countCommitCommentsByCollaborator(username, start, end);
+		count += countRepoCommentsByCollaborator(username, start, end);
         return count;
     }
 
@@ -357,6 +399,51 @@ public class Analysis
                 {
                     count++;
                 }
+            }
+        }
+        return count;
+    }
+
+	/**
+    * countRepoCommentsByCollaborator
+    * Counts repo comments made by collaborator.
+    *
+	* @param username of collaborator
+    * @return count of comments
+    */
+    public int countRepoCommentsByCollaborator(String username)
+    {
+        int count = 0;
+        for (Comment c : repo.getComments())
+        {
+            if ((c.getUserName()).equals(username))
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+    * countRepoCommentsByCollaborator
+    * Counts repo comments made by collaborator.
+    *
+	* @param username of collaborator
+	* @param start date
+	* @param end date
+    * @return count of comments
+    */
+    public int countRepoCommentsByCollaborator(String username, 
+		Date start, Date end)
+    {
+        int count = 0;
+        for (Comment c : repo.getComments())
+        {
+            if ((c.getUserName()).equals(username) 
+				&& (start.compareTo(c.getDateCreated()) <= 0) 
+				&& (end.compareTo(c.getDateCreated()) >= 0))
+            {
+                count++;
             }
         }
         return count;
