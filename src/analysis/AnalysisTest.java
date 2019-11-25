@@ -30,7 +30,7 @@ public class AnalysisTest
 		Class c;
 		try
 		{
-			c = Class.forName("Analysis");
+			c = Class.forName("analysis.Analysis");
 		} 
 		catch (Exception e)
 		{
@@ -318,7 +318,7 @@ public class AnalysisTest
         int expected = 5;
         int actual = analysis.countCommitsComments(
             convertToDate(LocalDate.now().minusDays(1)),
-            convertToDate(LocalDate.now()));
+            new Date());
 
         assertEquals(expected, actual);
     }
@@ -415,7 +415,7 @@ public class AnalysisTest
         Analysis analysis = new Analysis(repo);
 
         int expected = 7;
-        int actual = analysis.countComments(convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
+        int actual = analysis.countComments(convertToDate(LocalDate.now().minusDays(5)), new Date());
 
         assertEquals(expected, actual);
     }
@@ -430,7 +430,9 @@ public class AnalysisTest
         Collaborator collab1 = new Collaborator("test","test","tester","343");
         Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
         Issue issue1 = new Issue("issue1", collab1);
-        issue1.addComment(new Comment("comment1", collab1, "I have an issue"));
+        Comment c1 = new Comment("comment1", collab1, "I have an issue");
+        c1.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
+        issue1.addComment(c1);
         issue1.addComment(new Comment("comment2", collab2, "I have an issue"));
         issue1.addComment(new Comment("comment3", collab1, "I have an issue"));
 
@@ -447,10 +449,10 @@ public class AnalysisTest
 
         Analysis analysis = new Analysis(repo);
 
-        int expected = 5;
+        int expected = 4;
         int actual = analysis.countIssuesComments(
-            convertToDate(LocalDate.now().minusDays(1)),
-            convertToDate(LocalDate.now()));
+            convertToDate(LocalDate.now().minusDays(2)),
+            new Date());
 
         assertEquals(expected, actual); 
     }
@@ -565,41 +567,7 @@ public class AnalysisTest
 	}
 
     /**
-	* Tests countIssuesByCollaborator with dates in wrong order.
-	*/
-	@Test
-	public void testCountIssuesByCollaboratorDatesWrong() {
-		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
-        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
-        
-        Issue i1 = new Issue("issue 1", coll2);
-        i1.addComment(new Comment("this is good", coll1, "type1")); 
-        i1.addComment(new Comment("this is bad", coll1, "type1"));
-
-        Issue i2 = new Issue("issue 2", coll1);
-        i2.addComment(new Comment("this is okay", coll2, "type2"));
-        
-        Commit com1 = new Commit("commit 1", coll1);
-        com1.addComment(new Comment("cool", coll2, "type2"));
-
-        Commit com2 = new Commit ("commit 2", coll2);
-        com2.addComment(new Comment("cool2", coll1, "type2"));
-
-        Repository repo = new Repository();
-        repo.addIssue(i1);
-        repo.addIssue(i2);
-        repo.addCommit(com1);
-        repo.addCommit(com2);
-
-        Analysis analysis = new Analysis(repo);        
-        int actual = analysis.countIssuesByCollaborator("tester1",
-            convertToDate(LocalDate.now().plusDays(1)), i2.getDateCreated());
-		int expected = -1;
-		assertEquals(expected, actual);
-	}
-    
-    /**
-	* Tests countIssuesByCollaborator with dates in correct order.
+	* Tests countIssuesByCollaborator with dates.
 	*/
 	@Test
 	public void testCountIssuesByCollaboratorDates() {
@@ -627,7 +595,7 @@ public class AnalysisTest
 
         Analysis analysis = new Analysis(repo);        
         int actual = analysis.countIssuesByCollaborator("tester1",
-            i2.getDateCreated(), convertToDate(LocalDate.now()));
+            i2.getDateCreated(), new Date());
 		int expected = 1;
 		assertEquals(expected, actual);
 	}
@@ -671,82 +639,50 @@ public class AnalysisTest
 	}
     
     /**
-	* Tests countCollaboratorCommits(...) with dates in wrong order.
-	*/
-	@Test
-	public void testCountCollaboratorCommits2() {
-		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
+    * Tests countCommits with Dates.
+    */
+    @Test
+    public void testCountCommitsByCollaboratorDate() {
+        Collaborator coll1 = new Collaborator("mister","test","tester1","2");
         Collaborator coll2 = new Collaborator("misses","test","tester2","3");
-        
+
         Issue i1 = new Issue("issue 1", coll2);
-        i1.addComment(new Comment("this is good", coll1, "type1")); 
-        i1.addComment(new Comment("this is bad", coll1, "type1"));
+        Comment comm1 = new Comment("this is good", coll1, "type1");
+        comm1.setDateCreated(convertToDate(LocalDate.now().minusDays(4)));
+        i1.addComment(comm1);
+        Comment comm2 = new Comment("this is bad", coll1, "type1");
+        comm2.setDateCreated(convertToDate(LocalDate.now().minusDays(13)));
+        i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
-        i2.addComment(new Comment("this is okay", coll2, "type2"));
-        
+        Comment comm3 = new Comment("this is okay", coll2, "type2");
+        comm3.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
+        i2.addComment(comm3);
+
         Commit com1 = new Commit("commit 1", coll1);
-        com1.addComment(new Comment("cool", coll2, "type2"));
+        com1.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
+        Comment comm4 = new Comment("cool", coll2, "type2");
+        comm4.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
+        com1.addComment(comm4);
 
         Commit com2 = new Commit ("commit 2", coll2);
-        com2.addComment(new Comment("cool2", coll1, "type2"));
-
-        Commit com3 = new Commit("commit 3", coll1);
-        com3.addComment(new Comment("great job", coll1, "type3"));
+        com2.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
+        Comment comm5 = new Comment("cool2", coll1, "type2");
+        comm5.setDateCreated(convertToDate(LocalDate.now().minusDays(3)));
+        com2.addComment(comm5);
 
         Repository repo = new Repository();
         repo.addIssue(i1);
         repo.addIssue(i2);
         repo.addCommit(com1);
         repo.addCommit(com2);
-        repo.addCommit(com3);
-        
-        
-        Analysis analysis = new Analysis(repo);        
-        int actual = analysis.countCollaboratorCommits("tester1",
-            convertToDate(LocalDate.now().plusDays(1)), com3.getDateCreated());
-		int expected = -1;
-		assertEquals(expected, actual);
-	}
 
-    /**
-	* Tests countCollaboratorCommits(...) with dates in correct order.
-	*/
-	@Test
-	public void testCountCollaboratorCommits3() {
-		Collaborator coll1 = new Collaborator("mister","test","tester1","2");
-        Collaborator coll2 = new Collaborator("misses","test","tester2","3");
-        
-        Issue i1 = new Issue("issue 1", coll2);
-        i1.addComment(new Comment("this is good", coll1, "type1")); 
-        i1.addComment(new Comment("this is bad", coll1, "type1"));
-
-        Issue i2 = new Issue("issue 2", coll1);
-        i2.addComment(new Comment("this is okay", coll2, "type2"));
-        
-        Commit com1 = new Commit("commit 1", coll1);
-        com1.addComment(new Comment("cool", coll2, "type2"));
-
-        Commit com2 = new Commit ("commit 2", coll2);
-        com2.addComment(new Comment("cool2", coll1, "type2"));
-
-        Commit com3 = new Commit("commit 3", coll1);
-        com3.addComment(new Comment("great job", coll1, "type3"));
-
-        Repository repo = new Repository();
-        repo.addIssue(i1);
-        repo.addIssue(i2);
-        repo.addCommit(com1);
-        repo.addCommit(com2);
-        repo.addCommit(com3);
-        
-        
-        Analysis analysis = new Analysis(repo);        
-        int actual = analysis.countCollaboratorCommits("tester1",
-            com1.getDateCreated(), convertToDate(LocalDate.now()));
-		int expected = 2;
-		assertEquals(expected, actual);
-	}
+        Analysis analysis = new Analysis(repo);
+        int actual = analysis.countCollaboratorCommits("tester1", convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
+        int expected = 1;
+        assertEquals(expected, actual);
+    }
+    
 
     /**
      * Tests countContributionsByCollaborator by date.
@@ -796,7 +732,7 @@ public class AnalysisTest
 
         int expected = 6;
         int actual = analysis.countContributionsByCollaborator(
-            "tester", convertToDate(LocalDate.now().minusDays(5)), convertToDate(LocalDate.now()));
+            "tester", convertToDate(LocalDate.now().minusDays(5)), new Date());
 
         assertEquals(expected, actual);
     }
