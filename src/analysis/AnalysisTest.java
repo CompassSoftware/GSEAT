@@ -839,14 +839,14 @@ public class AnalysisTest
         issue1.addComment(new Comment("I have an issue", collab1, "issue"));
         issue1.addComment(new Comment("I have an issue", collab2, "issue"));
         issue1.addComment(new Comment("I have an issue", collab1, "issue"));
-        issue2.addComment(new Comment("I have an issue", collab2, "issue")
-        issue2.addComment(new Comment("I have an issue", collab1, "issue")
+        issue2.addComment(new Comment("I have an issue", collab2, "issue"));
+        issue2.addComment(new Comment("I have an issue", collab1, "issue"));
         issue1.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
         issue2.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));        
 
         Repository repo = new Repository();
         repo.addComment(comment1);
-        repo.addComment()comment2;
+        repo.addComment(comment2);
         repo.addComment(comment3);
         repo.addCommit(commit1);
         repo.addCommit(commit2);
