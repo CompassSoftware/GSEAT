@@ -1,4 +1,6 @@
-import java.time.LocalDate;
+package analysis;
+
+import java.util.Date;
 import github.Comment;
 import github.Repository;
 import github.Issue;
@@ -57,7 +59,7 @@ public class Analysis
      * @param end end date
      * @return count of commits
      */
-    public int countCommits(LocalDate start, LocalDate end)
+    public int countCommits(Date start, Date end)
     {
         int count = 0;
         for (Commit c : repo.getCommits())
@@ -80,7 +82,7 @@ public class Analysis
      * @param end end date
      * @return count of issues
      */
-    public int countIssues(LocalDate start, LocalDate end)
+    public int countIssues(Date start, Date end)
     {
         int count = 0;
         for (Issue i : repo.getIssues())
@@ -124,7 +126,7 @@ public class Analysis
      *
      * @return count of comments
      */
-    public int countIssuesComments(LocalDate start, LocalDate end)
+    public int countIssuesComments(Date start, Date end)
     {
         int count = 0;
         for (Issue i : repo.getIssues())
@@ -172,7 +174,7 @@ public class Analysis
      *
      * @return count of comments
      */
-    public int countCommitsComments(LocalDate start, LocalDate end)
+    public int countCommitsComments(Date start, Date end)
     {
         int count = 0;
         for (Commit j : repo.getCommits())
@@ -214,7 +216,7 @@ public class Analysis
      * @return number of comments in the repository between
      *  certain dates.
      */
-    public int countComments(LocalDate start, LocalDate end)
+    public int countComments(Date start, Date end)
     {
         int total = countIssuesComments(start, end);
         total += countCommitsComments(start, end);
@@ -246,7 +248,7 @@ public class Analysis
     * @return count of comments
     */
     public int countCommentsByCollaborator(String username, 
-		LocalDate start, LocalDate end)
+		Date start, Date end)
     {
         int count = 0;
         count += countIssueCommentsByCollaborator(username, start, end);
@@ -288,7 +290,7 @@ public class Analysis
     * @return count of comments
     */
     public int countIssueCommentsByCollaborator(String username, 
-		LocalDate start, LocalDate end)
+		Date start, Date end)
     {
         int count = 0;
         for (Issue i : repo.getIssues())
@@ -341,7 +343,7 @@ public class Analysis
     * @return count of comments
     */
     public int countCommitCommentsByCollaborator(String username, 
-		LocalDate start, LocalDate end)
+		Date start, Date end)
     {
         int count = 0;
         for (Commit i : repo.getCommits())
@@ -399,13 +401,9 @@ public class Analysis
      * @param start - The start date.
      * @param end - The end date.
      */
-    public int countIssuesByCollaborator(String username, LocalDate start, 
-            LocalDate end)
+    public int countIssuesByCollaborator(String username, Date start, 
+            Date end)
     {
-        if (start.isAfter(end))
-        {
-            return -1;
-        }
         int count = 0;
         for (Issue i : repo.getIssues())
         {
@@ -458,13 +456,9 @@ public class Analysis
      * @param start - The start date.
      * @param end - The end date.
      */
-    public int countCollaboratorCommits(String username, LocalDate start, 
-            LocalDate end)
+    public int countCollaboratorCommits(String username, Date start, 
+            Date end)
     {
-        if (start.isAfter(end))
-        {
-            return -1;
-        }
         int count = 0;
         for (Commit i : repo.getCommits())
         {
@@ -492,7 +486,7 @@ public class Analysis
      *  collaborator during certain date range.
      */
     public int countContributionsByCollaborator(String username,
-        LocalDate start, LocalDate end)
+        Date start, Date end)
     {
         int total = countIssuesByCollaborator(username, start, end);
         total += countCollaboratorCommits(username, start, end);

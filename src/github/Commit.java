@@ -1,75 +1,118 @@
 package github;
 
+import java.util.Date;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
-public class Commit
-{
-    String info;
-    String userName;
-    LocalDate dateCreated;
-    LocalDate dateUpdated;
-    ArrayList<Comment> comments;
+ /**
+ * Commit class.
+ * @author Nischinth Murari
+ * @version 1.0
+ */
+public class Commit {
+    private String info;
+    private String userName;
+    private Date dateCreated;
+    private Date dateUpdated;
+    private ArrayList<Comment> comments;
 
-    /*
-     * Constructor that take a Collaborator object and a String for info about the inital commit. 
+    /**
+    * Constructor for commit object.
+    * @param info - Info text of the commit.
+    * @param c - Collaborator/Creator of the commit.
+    */
+    public Commit(String info, Collaborator c) {
+        this.userName = c.getUserName();
+        this.info = info;
+        this.dateCreated = new Date();
+        this.dateUpdated = new Date();
+        this.comments = new ArrayList<>();
+    }
+
+    /**
+     * Setter for info.
+     * @param info - Info text of the commit.
      */
-    public Commit(String info, Collaborator C)
-    {
-        this.comments = new ArrayList<Comment>();
-        this.userName = C.getUserName();
-        this.info = info;
-        this.dateCreated = LocalDate.now();
-        this.dateUpdated = LocalDate.now();
-    }
-
-    public void setInfo(String info)
-    {
+    public void setInfo(String info) {
         this.info = info;
     }
 
-    public void setUserName(String userName)
-    {
+    /**
+     * Setter for userName.
+     * @param userName - User name of the commit creator.
+     */
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public void setdateCreated(LocalDate d)
-    {
-        this.dateCreated = d;
+    /**
+     * Setter for dateCreated.
+     * @param dateCreated - Date of the creation of the commit.
+     */
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
-    public void setDateUpdated(LocalDate d)
-    {
-        this.dateUpdated = d;
+    /**
+     * Setter for dateUpdated.
+     * @param dateUpdated - Date of the update of the commit.
+     */
+    public void setDateUpdated(Date dateUpdated) {
+        this.dateUpdated = dateUpdated;
     }
 
-    public String getInfo()
-    {
+    /**
+     * Setter for comments.
+     * @param comments - ArrayList of the comments of the commit.
+     */
+    public void setComments(ArrayList<Comment> comments) {
+        this.comments = comments;
+    }
+
+    /**
+     * Getter for info.
+     * @return Info text of the commit.
+     */
+    public String getInfo() {
         return this.info;
     }
 
-    public String getUserName()
-    {
+    /**
+     * Getter for userName.
+     * @return User name of the commit creator.
+     */
+    public String getUserName() {
         return this.userName;
     }
 
-    public LocalDate getDateCreated()
-    {
+    /**
+     * Getter for dateCreated.
+     * @return Date of the creation of the commit.
+     */
+    public Date getDateCreated() {
         return this.dateCreated;
     }
 
-    public LocalDate getDateUpdated()
-    {
+    /**
+     * Getter for dateUpdated.
+     * @return Date of the update of the commit.
+     */
+    public Date getDateUpdated() {
         return this.dateUpdated;
     }
 
-    public void addComment(Comment comment)
-    {
-        this.comments.add(comment);
+    /**
+     * Getter for comments.
+     * @return ArrayList of comments of the commit.
+     */
+    public ArrayList<Comment> getComments() {
+        return this.comments;
     }
 
-    public ArrayList<Comment> getComments()
-    {
-        return comments;
+    /**
+     * Adds new comment to the ArrayList of comments.
+     * @param New comment that should be added to the ArrayList.
+     */
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
     }
 }

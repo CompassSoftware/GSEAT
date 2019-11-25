@@ -1,9 +1,9 @@
+package github;
 /**
  * Collaborator Test
  *
  */
-
-import java.time.LocalDate;
+import java.util.Date;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,20 +12,23 @@ public class CommitTest
 {
     Commit cc;
     Collaborator c1;
+    Date d;
     @BeforeEach//Initialize two Collaborator objects for testing.
         public void init()
         {
-             
             c1 = new Collaborator("Nischinth", "Murari", "Nischinth-bot", "i12849");
             cc = new Commit("Initial Commit", c1);
+            d = new Date();
+            cc.setDateCreated(d);
         }
+        
     @Test
         public void testGetters()
         {
             Assert.assertEquals(cc.getUserName(), "Nischinth-bot");
             Assert.assertEquals(cc.getInfo(), "Initial Commit");
-            Assert.assertEquals(cc.getDateCreated(), LocalDate.now());
-            Assert.assertEquals(cc.getDateUpdated(), LocalDate.now());
+            Assert.assertEquals(cc.getDateCreated(), d);
+            Assert.assertEquals(cc.getDateUpdated(), d);
         }
 
     @Test 
