@@ -23,8 +23,8 @@ public class Commit {
     public Commit(String info, Collaborator c) {
         this.userName = c.getUserName();
         this.info = info;
-        this.dateCreated = null;
-        this.dateUpdated = null;
+        this.dateCreated = new Date();
+        this.dateUpdated = new Date();
         this.comments = new ArrayList<>();
     }
 
