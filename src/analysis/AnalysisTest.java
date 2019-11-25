@@ -740,5 +740,63 @@ public class AnalysisTest
     public Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
+
+    /*
+     * Tests countContributionsBetweenDates().
+     */
+    @Test
+    public void testCountContributionsBetweenDates()
+    {
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        
+        // COMMENTS
+        Comment comment1 = new Comment("I have a comment", collab1, "repo");
+        Comment comment2 = new Comment("I have a comment", collab2, "repo");
+        Comment comment3 = new Comment("I have a comment", collab1, "repo");
+        comment1.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
+        comment2.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
+        comment3.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
+        
+        // COMMITS
+        Commit commit1 = new Commit("commit1", collab1);
+        Commit commit2 = new Commit("commit2", collab2);
+        commit1.addComment(new Comment("I'm making a commit", collab1, "commit"));
+        commit1.addComment(new Comment("I'm making a commit", collab2, "commit"));
+        commit1.addComment(new Comment("I'm making a commit", collab1, "commit"));
+        commit2.addComment(new Comment("I'm making a commit", collab2, "commit"));
+        commit2.addComment(new Comment("I'm making a commit", collab1, "commit"));
+        commit1.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
+        commit2.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
+
+        // ISSUES
+        Issue issue1 = new Issue("issue1", collab1);
+        Issue issue2 = new Issue("commit2", collab2);
+        issue1.addComment(new Comment("I have an issue", collab1, "issue"));
+        issue1.addComment(new Comment("I have an issue", collab2, "issue"));
+        issue1.addComment(new Comment("I have an issue", collab1, "issue"));
+        issue2.addComment(new Comment("I have an issue", collab2, "issue"));
+        issue2.addComment(new Comment("I have an issue", collab1, "issue"));
+        issue1.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));
+        issue2.setDateCreated(convertToDate(LocalDate.now().minusDays(7)));        
+
+        Repository repo = new Repository();
+        repo.addComment(comment1);
+        repo.addComment(comment2);
+        repo.addComment(comment3);
+        repo.addCommit(commit1);
+        repo.addCommit(commit2);
+        repo.addIssue(issue1);
+        repo.addIssue(issue2);
+
+        Analysis analysis = new Analysis(repo);
+
+        int expected = 17;
+        int actual = analysis.countContributionsBetweenDates(
+            convertToDate(LocalDate.now().minusDays(10)),
+            new Date());
+ 
+        assertEquals(expected, actual);
+    }
 }
 

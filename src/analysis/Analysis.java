@@ -493,5 +493,31 @@ public class Analysis
         total += countCommentsByCollaborator(username, start, end);
         return total;
     }
+
+    /**
+     * Count the number of commits, comments, 
+     * and issues for Repo between 2 dates.
+     *
+     * @param start start date
+     * @param end end date
+     *
+     * @return total 
+     *              total number of commits, comments, and issues
+     *              between two specified dates
+     */
+    public int countContributionsBetweenDates(Date start, Date end)
+    {
+        int total = 0;
+        //int[] totals = new int[4];        
+        total += countCommits(start, end);
+        //totals[0] = countCommits(start, end);
+        total += countComments(start, end);
+        //totals[1] = countComments(start, end);
+        total += countIssues(start, end);
+        //totals[2] = countIssues(start, end);
+        //totals[3] = totals[0] + totals[1] + totals[2];
+        //return totals
+        return total;
+    }
 }
 
