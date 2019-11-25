@@ -504,9 +504,8 @@ public class Analysis
      */
     public int countContributions() {
         return countCommits() 
-               + countComments();
+               + countComments() 
                + countIssues();
-
     }
 }
 
