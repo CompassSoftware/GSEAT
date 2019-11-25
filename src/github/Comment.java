@@ -25,8 +25,8 @@ public class Comment {
         this.userName = c.getUserName();
         this.commentText = commentText;
         this.commentType = commentType;
-        this.dateCreated = null;
-        this.dateUpdated = null;
+        this.dateCreated = new Date();
+        this.dateUpdated = new Date();
     }
 
     /**

@@ -23,8 +23,8 @@ public class Issue {
     public Issue(String issueText, Collaborator c) {
         this.userName = c.getUserName();
         this.issueText = issueText;
-        this.dateCreated = null;
-        this.dateUpdated = null;
+        this.dateCreated = new Date();
+        this.dateUpdated = new Date();
         this.comments = new ArrayList<Comment>();
     }
 
