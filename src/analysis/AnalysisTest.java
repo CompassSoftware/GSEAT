@@ -785,7 +785,7 @@ public class AnalysisTest
         
         assertEquals(expected, actual);
     }
-    
+
     public Date convertToDate(LocalDate dateToConvert) {
         return java.sql.Date.valueOf(dateToConvert);
     }
