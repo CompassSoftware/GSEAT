@@ -495,6 +495,8 @@ public class Analysis
     }
 
     /**
+     * countContributions
+     *
      * Count the number of commits, comments, and
      * issues for Repo.
      *
