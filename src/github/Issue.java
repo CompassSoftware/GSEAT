@@ -13,7 +13,7 @@ public class Issue {
     private String userName;
     private Date dateCreated;
     private Date dateUpdated;
-    private ArrayList<Comment> comments;   
+    private ArrayList<Comment> comments;
 
     /**
     * Constructor for issue object.

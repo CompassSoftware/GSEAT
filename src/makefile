@@ -65,6 +65,9 @@ compile:
 	make -f makefile_ext compile_ext
 	make compile_analysis
 
+compile2:
+	make -f makefile_ext compile2
+
 compile_analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)
 	javac analysis/Analysis.java
 	javac -cp .:$(JUNIT5_JAR) analysis/AnalysisTest.java
