@@ -35,7 +35,7 @@ public class CommitTest
         public void testSetters()
         {
             cc.setCollaborator(c1);
-            Assert.assertEquals(cc.getCollaborator().getUserName(), "Heironymous-bot");
+            Assert.assertEquals(cc.getCollaborator().getUserName(), "Nischinth-bot");
             cc.setInfo("2nd Commit");
             Assert.assertEquals(cc.getInfo(), "2nd Commit"); 
         }

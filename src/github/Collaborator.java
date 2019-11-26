@@ -136,4 +136,28 @@ public class Collaborator {
     public void addComment(Comment comment) {
         comments.add(comment);
     }
+    
+    /**
+     * Get commits list.
+     * @return a list of commits
+     */
+    public ArrayList<Commit> getCommits() {
+        return this.commits;
+    }
+    
+    /**
+     * Get issues list.
+     * @return a list of issues
+     */
+    public ArrayList<Issue> getIssues() {
+        return this.issues;
+    }
+    
+    /**
+     * Get comments list.
+     * @return a list of comments
+     */
+    public ArrayList<Comment> getComments() {
+        return this.comments;
+    }
 }
