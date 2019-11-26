@@ -36,7 +36,6 @@ public class CommentTest
     @Test 
         public void testSetters()
         {
-            c1 = new Collaborator("Nischinth", "Murari", "Nischinth-bot", "i12849");
             comment.setCollaborator(c1);
             Assert.assertEquals(comment.getCollaborator().getUserName(), "Nischinth-bot");
             comment.setCommentText("2nd Comment");
