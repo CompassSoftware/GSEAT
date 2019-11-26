@@ -90,7 +90,7 @@ public class Comment {
      * Getter for userName.
      * @return the comment creator.
      */
-    public Collaborator getUserName() {
+    public Collaborator getCollaborator() {
         return this.collaborator;
     }
 
