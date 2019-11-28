@@ -241,7 +241,7 @@ public class Extraction {
                 return null;
             }
 
-            String tempToken = "jacobmacfarland:" + token;
+            String tempToken = token + ":x-oauth-basic";
             String authString = "Basic " + Base64.getEncoder().encode(
                 tempToken.getBytes());
             connection.setRequestProperty("Authorization", authString); 
