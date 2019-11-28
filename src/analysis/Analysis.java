@@ -313,7 +313,7 @@ public class Analysis
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if ((c.getUserName()).equals(username))
+                if ((c.getCollaborator().getUserName()).equals(username))
                 {
                     count++;
                 }
@@ -340,7 +340,7 @@ public class Analysis
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if ((c.getUserName()).equals(username) 
+                if ((c.getCollaborator().getUserName()).equals(username) 
 					&& (start.compareTo(c.getDateCreated()) <= 0) 
 					&& (end.compareTo(c.getDateCreated()) >= 0))
                 {
@@ -366,7 +366,7 @@ public class Analysis
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if ((c.getUserName()).equals(username))
+                if ((c.getCollaborator().getUserName()).equals(username))
                 {
                     count++;
                 }
@@ -393,7 +393,7 @@ public class Analysis
             ArrayList<Comment> comments = i.getComments();
             for (Comment c : comments)
             {
-                if ((c.getUserName()).equals(username) 
+                if ((c.getCollaborator().getUserName()).equals(username) 
 					&& (start.compareTo(c.getDateCreated()) <= 0) 
 					&& (end.compareTo(c.getDateCreated()) >= 0))
                 {
@@ -416,7 +416,7 @@ public class Analysis
         int count = 0;
         for (Comment c : repo.getComments())
         {
-            if ((c.getUserName()).equals(username))
+            if ((c.getCollaborator().getUserName()).equals(username))
             {
                 count++;
             }
@@ -439,7 +439,7 @@ public class Analysis
         int count = 0;
         for (Comment c : repo.getComments())
         {
-            if ((c.getUserName()).equals(username) 
+            if ((c.getCollaborator().getUserName()).equals(username) 
 				&& (start.compareTo(c.getDateCreated()) <= 0) 
 				&& (end.compareTo(c.getDateCreated()) >= 0))
             {
@@ -465,7 +465,7 @@ public class Analysis
         int count = 0;
         for (Issue i : repo.getIssues())
         {
-            if ((i.getUserName()).equals(username))
+            if ((i.getCollaborator().getUserName()).equals(username))
             {
                 count++;
             }
@@ -494,7 +494,7 @@ public class Analysis
         int count = 0;
         for (Issue i : repo.getIssues())
         {
-            if ((i.getUserName()).equals(username)
+            if ((i.getCollaborator().getUserName()).equals(username)
                 && i.getDateCreated().compareTo(start) >= 0
                 && i.getDateCreated().compareTo(end) <= 0)
             {
@@ -520,7 +520,7 @@ public class Analysis
         int count = 0;
         for (Commit i : repo.getCommits())
         {
-            if (i.getUserName().equals(username)) 
+            if (i.getCollaborator().getUserName().equals(username)) 
             {
                 count++;
             }
@@ -549,7 +549,7 @@ public class Analysis
         int count = 0;
         for (Commit i : repo.getCommits())
         {
-            if ((i.getUserName()).equals(username)
+            if ((i.getCollaborator().getUserName()).equals(username)
                 && i.getDateCreated().compareTo(start) >= 0
                 && i.getDateCreated().compareTo(end) <= 0)
             {

@@ -36,7 +36,7 @@ public class IssueTest
         public void testSetters()
         {
             issue.setCollaborator(c1);
-            Assert.assertEquals(issue.getUserName(), "Nischinth-bot");
+            Assert.assertEquals(issue.getCollaborator().getUserName(), "Nischinth-bot");
             issue.setIssueText("2nd Issue");
             Assert.assertEquals(issue.getIssueText(), "2nd Issue");
         }

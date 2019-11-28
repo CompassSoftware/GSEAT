@@ -87,7 +87,6 @@ public class Extraction {
         for (int i = 0; i < issues.size(); i++) {
             JSONObject jsonIssue = 
                 JSONObject.fromObject(issues.get(i).toString());
-            Issue issue = new Issue("", new Collaborator());
 
             JSONObject assignee = jsonIssue.getJSONObject("assignee");
             String userName = assignee.getString("login");
@@ -97,8 +96,10 @@ public class Extraction {
 
             Date dateCreated = githubDateStringToDate(dateCreatedString);
             Date dateUpdated = githubDateStringToDate(dateUpdatedString);
+            
+            Collaborator collab = new Collaborator("", "", userName, "");
+            Issue issue = new Issue(issueText, collab);
 
-            issue.setUserName(userName);
             issue.setIssueText(issueText);
             issue.setDateCreated(dateCreated);
             issue.setDateUpdated(dateUpdated);
@@ -136,10 +137,9 @@ public class Extraction {
                 jsonCommitInfo.getJSONObject("committer");
             String userName = outerCommitter.getString("login");
 
-            Commit commit = new Commit("", new Collaborator());
+            Collaborator collab = new Collaborator("", "", userName, "");
+            Commit commit = new Commit(message, collab);
 
-            commit.setInfo(message);
-            commit.setUserName(userName);
             commit.setDateCreated(dateCreated);
 
             repo.addCommit(commit);
@@ -168,10 +168,10 @@ public class Extraction {
             Date dateCreated = githubDateStringToDate(dateCreatedString);
             Date dateUpdated = githubDateStringToDate(dateUpdatedString);
 
-            Comment comment = new Comment("", new Collaborator(), "");
+            Collaborator collab = new Collaborator("", "", userName, "");
+            Comment comment = new Comment("", collab, "");
 
             comment.setCommentText(body);
-            comment.setUserName(userName);
             comment.setDateCreated(dateCreated);
             comment.setDateUpdated(dateUpdated);
 
