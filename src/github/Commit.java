@@ -2,6 +2,7 @@ package github;
 
 import java.util.Date;
 import java.util.ArrayList;
+import java.text.*;
 
  /**
  * Commit class.
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Commit {
     private String info;
-    private String userName;
+    private Collaborator collaborator;
     private Date dateCreated;
     private Date dateUpdated;
     private ArrayList<Comment> comments;
@@ -21,7 +22,7 @@ public class Commit {
     * @param c - Collaborator/Creator of the commit.
     */
     public Commit(String info, Collaborator c) {
-        this.userName = c.getUserName();
+        this.collaborator = c;
         this.info = info;
         this.dateCreated = new Date();
         this.dateUpdated = new Date();
@@ -38,10 +39,10 @@ public class Commit {
 
     /**
      * Setter for userName.
-     * @param userName - User name of the commit creator.
+     * @param c - the commit creator.
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCollaborator(Collaborator c) {
+        this.collaborator = c;
     }
 
     /**
@@ -78,10 +79,10 @@ public class Commit {
 
     /**
      * Getter for userName.
-     * @return User name of the commit creator.
+     * @return the commit creator.
      */
-    public String getUserName() {
-        return this.userName;
+    public Collaborator getCollaborator() {
+        return this.collaborator;
     }
 
     /**
