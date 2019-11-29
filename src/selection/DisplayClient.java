@@ -2,32 +2,48 @@ package selection;
 
 import java.util.Scanner;
 import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import github.Repository;
+
 
 public class DisplayClient {
-    Scanner kb = new Scanner(System.in);
 
     public static void main(String[] args) {
-
-        System.out.println("Select how to display: \n 1: By repo \n 2: By User \n 3 By Date");
+        Scanner kb = new Scanner(System.in);
+        Repository repo = new Repository();
+        System.out.println("Select how to display: \n 1: By repo \n 2: By User \n 3: By Date");
         int var = kb.nextInt();
+        ByRepo disp;
         switch (var) {
-            case 1:
-                Display disp = new ByRepo(repo);
-            case 2:
+            case 1: {
+                disp = new ByRepo(repo);
+                break;
+            }
+            case 2: {
                 System.out.println("Enter User: ");
+                String buff = kb.nextLine();
                 String user = kb.nextLine();
-                Display disp = new ByUser(repo, user);
-            case 3:
+                disp = new ByRepo(repo);
+                disp.display();
+                break;
+            }
+            case 3: {
                 System.out.println("Enter the dates in the format DD/MM/YYY ");
                 String dateString1 = kb.nextLine();
                 String dateString2 = kb.nextLine();
                 Date date1 = dateStringToDate(dateString1);
                 Date date2 = dateStringToDate(dateString2);
+                disp = new ByRepo(repo);
+                break;
                 //Pass these dates to a ByDate class.
                 //ByDate should extend the display class.
                 //ByDate should handle the display.
-                
+            }
+            default: {
+                System.out.println("Please choose: ");
+                break;
+            }
         }
     }
     public static Date dateStringToDate(String dateString) {
@@ -44,5 +60,8 @@ public class DisplayClient {
             return null;
         }
         return date;
+    }
+    public Repository makeRepo() {
+        
     }
 }
