@@ -10,7 +10,7 @@ import java.util.Date;
 public class Comment {
     private String commentText;
     private String commentType;
-    private String userName;
+    private Collaborator collaborator;
     private Date dateCreated;
     private Date dateUpdated;
 
@@ -25,7 +25,7 @@ public class Comment {
     */
     public Comment(String commentText, Collaborator c, String commentType,
                    Date dateCreated, Date dateUpdated) {
-        this.userName = c.getUserName();
+        this.collaborator = c;
         this.commentText = commentText;
         this.commentType = commentType;
         this.dateCreated = dateCreated;
@@ -62,10 +62,10 @@ public class Comment {
 
     /**
      * Setter for userName.
-     * @param userName - User name of the comment creator.
+     * @param c - the comment creator.
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCollaborator(Collaborator c) {
+        this.collaborator = c;
     }
 
     /**
@@ -102,10 +102,10 @@ public class Comment {
 
     /**
      * Getter for userName.
-     * @return User name of the comment creator.
+     * @return the comment creator.
      */
-    public String getUserName() {
-        return this.userName;
+    public Collaborator getCollaborator() {
+        return this.collaborator;
     }
 
     /**

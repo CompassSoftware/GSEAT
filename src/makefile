@@ -72,6 +72,10 @@ compile_analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR
 	javac analysis/Analysis.java
 	javac -cp .:$(JUNIT5_JAR) analysis/AnalysisTest.java
 
+compileExtractionDemo: extraction/Extraction.java Extraction_Demo.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR)
+	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java Extraction_Demo.java
+	java -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) Extraction_Demo
+
 clean:
 	rm -f analysis/*.class
 	make -f makefile_ext clean_ext

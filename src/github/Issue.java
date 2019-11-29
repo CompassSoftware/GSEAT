@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Issue {
     private String issueText;
-    private String userName;
+    private Collaborator collaborator;
     private Date dateCreated;
     private Date dateUpdated;
     private ArrayList<Comment> comments;
@@ -26,7 +26,7 @@ public class Issue {
     public Issue(String issueText, Collaborator c, Date dateCreated, 
                  Date dateUpdated, ArrayList<Comment> comments) {
         this.issueText = issueText;
-        this.userName = c.getUserName();
+        this.collaborator = c;
         this.dateCreated = dateCreated;
         this.dateUpdated = dateUpdated;
         this.comments = comments;
@@ -51,10 +51,10 @@ public class Issue {
 
     /**
      * Setter for userName.
-     * @param userName - User name of the issue creator.
+     * @param c - the issue creator.
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCollaborator(Collaborator c) {
+        this.collaborator = c;
     }
 
     /**
@@ -91,10 +91,10 @@ public class Issue {
 
     /**
      * Getter for userName.
-     * @return User name of the issue creator.
+     * @return the issue creator.
      */
-    public String getUserName() {
-        return this.userName;
+    public Collaborator getCollaborator() {
+        return this.collaborator;
     }
 
     /**
