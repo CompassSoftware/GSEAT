@@ -2,7 +2,6 @@ package github;
 
 import java.util.Date;
 import java.util.ArrayList;
-import java.text.*;
 
  /**
  * Commit class.
@@ -13,23 +12,20 @@ public class Commit {
     private String info;
     private Collaborator collaborator;
     private Date dateCreated;
-    private Date dateUpdated;
     private ArrayList<Comment> comments;
 
     /**
     * Constructor for commit object.
-    * @param issueText - Text of the commit.
+    * @param info - Text of the commit.
     * @param c - Collaborator/Creator of the commit.
     * @param dateCreated - Date of the creation of the commit.
-    * @param dateUpdated - Date of the update of the commit.
     * @param comments - ArrayList of the comments of the commit.
     */
     public Commit(String info, Collaborator c, Date dateCreated,
-                 Date dateUpdated, ArrayList<Comment> comments) {
+                  ArrayList<Comment> comments) {
         this.info = info;
         this.collaborator = c;
         this.dateCreated = dateCreated;
-        this.dateUpdated = dateUpdated;
         this.comments = comments;
     }
 
@@ -39,7 +35,7 @@ public class Commit {
     * @param c - Collaborator/Creator of the commit.
     */
     public Commit(String info, Collaborator c) {
-        this(info, c, new Date(), new Date(), new ArrayList<Comment>());
+        this(info, c, new Date(), new ArrayList<Comment>());
     }
 
     /**
@@ -64,14 +60,6 @@ public class Commit {
      */
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    /**
-     * Setter for dateUpdated.
-     * @param dateUpdated - Date of the update of the commit.
-     */
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 
     /**
@@ -107,14 +95,6 @@ public class Commit {
     }
 
     /**
-     * Getter for dateUpdated.
-     * @return Date of the update of the commit.
-     */
-    public Date getDateUpdated() {
-        return this.dateUpdated;
-    }
-
-    /**
      * Getter for comments.
      * @return ArrayList of comments of the commit.
      */
@@ -124,7 +104,7 @@ public class Commit {
 
     /**
      * Adds new comment to the ArrayList of comments.
-     * @param New comment that should be added to the ArrayList.
+     * @param comment New comment that should be added to the ArrayList.
      */
     public void addComment(Comment comment) {
         this.comments.add(comment);

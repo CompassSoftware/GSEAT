@@ -123,7 +123,7 @@ public class Issue {
 
     /**
      * Adds new comment to the ArrayList of comments.
-     * @param New comment that should be added to the ArrayList.
+     * @param comment New comment that should be added to the ArrayList.
      */
     public void addComment(Comment comment) {
         this.comments.add(comment);

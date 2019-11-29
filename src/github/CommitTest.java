@@ -28,7 +28,6 @@ public class CommitTest
             Assert.assertEquals(cc.getCollaborator().getUserName(), "Nischinth-bot");
             Assert.assertEquals(cc.getInfo(), "Initial Commit");
             Assert.assertEquals(cc.getDateCreated(), d);
-            Assert.assertEquals(cc.getDateUpdated(), d);
         }
 
     @Test 
