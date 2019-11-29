@@ -1,3 +1,6 @@
+import analysis.*;
+import github.*;
+import java.util.Date;
 import java.time.LocalDate;
 import github.Comment;
 import github.Repository;
@@ -12,7 +15,7 @@ import github.Collaborator;
  *  Val Lapensée-Rankine
  * @version 11-12-2019
  */
-public class Demo 
+public class AnalysisDemo 
 {    
     /**
      * Function to print something to the console screen.
@@ -27,18 +30,16 @@ public class Demo
         // (made by collaborator 2).
         // Commit 1 is by collaborator 1 with one comment by collab 2
         // Commit 2 is by collaborator 2 with one comment by collab 1
-        // Calls countIssuesComments; should print '3'.
-        // Calls countCommentsByCollaborator for collaborator 1; should print 2
 
         Collaborator coll1 = new Collaborator("mister", "test", "tester1", "2");
         Collaborator coll2 = new Collaborator("misses", "test", "tester2", "3");
         
         Issue i1 = new Issue("issue 1", coll2);
         Comment comm1 = new Comment("this is good", coll1, "type1");
-        comm1.setdateCreated(LocalDate.now().minusDays(4));
+        comm1.setDateCreated(AnalysisDemo.convert(LocalDate.now().minusDays(4)));
         i1.addComment(comm1); 
         Comment comm2 = new Comment("this is bad", coll1, "type1");
-        comm2.setdateCreated(LocalDate.now());
+        comm2.setDateCreated(AnalysisDemo.convert(LocalDate.now()));
         i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
@@ -49,7 +50,7 @@ public class Demo
 
         Commit com2 = new Commit("commit 2", coll2);
         Comment comm3 = new Comment("cool2", coll1, "type2");
-        comm3.setdateCreated(LocalDate.now().minusDays(10));
+        comm3.setDateCreated(AnalysisDemo.convert(LocalDate.now().minusDays(10)));
         com2.addComment(comm3);
 
         Repository repo = new Repository();
@@ -62,43 +63,52 @@ public class Demo
 
         int issueComments = analysis.countIssuesComments();
         int issueCommentsInLast5Days = analysis.countIssuesComments(
-            LocalDate.now().minusDays(5), LocalDate.now());    
+            AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+            new Date());    
         
         int commitComments = analysis.countCommitsComments();
         int commitCommentsByDate = analysis.countCommitsComments(
-            LocalDate.now().minusDays(5), LocalDate.now());
+            AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+            new Date());
 
         int collab1Comments = analysis.countCommentsByCollaborator("tester1");
         int collab1CommentsByDate = analysis
             .countCommentsByCollaborator("tester1",
-            LocalDate.now().minusDays(5), LocalDate.now());
+            AnalysisDemo.convert(LocalDate.now().minusDays(5)),
+            new Date());
         
         int collab1Issues = analysis.countIssuesByCollaborator("tester1");      
         int collab1IssuesByDate = analysis.countIssuesByCollaborator("tester1",
-            LocalDate.now().minusDays(5), LocalDate.now());     
+            AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+            new Date());     
         
         int collab1Commits = analysis.countCollaboratorCommits("tester1");
         int collab1CommitsByDate = analysis.countCollaboratorCommits("tester1", 
-            LocalDate.now().minusDays(5), LocalDate.now());
+            AnalysisDemo.convert(LocalDate.now().minusDays(5)),
+            new Date());
 
         int commits = analysis.countCommits();
         int issues = analysis.countIssues();
         int commitsInLast5Days = analysis.countCommits(
-                LocalDate.now().minusDays(5), LocalDate.now());
+                AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+                new Date());
         int issuesInLast5Days = analysis.countIssues(
-                LocalDate.now().minusDays(5), LocalDate.now());
+                AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+                new Date());
 
         int issueCommentsByCollaborator = 
             analysis.countIssueCommentsByCollaborator("tester1");
         int issueCommentsByCollaboratorLast5Days = 
             analysis.countIssueCommentsByCollaborator("tester1",
-                    LocalDate.now().minusDays(5), LocalDate.now());
+                    AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+                    new Date());
 
         int commitCommentsByCollaborator = 
             analysis.countCommitCommentsByCollaborator("tester1");
         int commitCommentsByCollaboratorLast5Days = 
             analysis.countCommitCommentsByCollaborator("tester1",
-                LocalDate.now().minusDays(5), LocalDate.now());
+                AnalysisDemo.convert(LocalDate.now().minusDays(5)), 
+                new Date());
 
 
         System.out.println("Number of issue comments: " + issueComments);
@@ -144,5 +154,9 @@ public class Demo
                 + "in the last 5 days: "
                 + commitCommentsByCollaboratorLast5Days);
     
+    }
+
+    public static Date convert(LocalDate date) {
+        return java.sql.Date.valueOf(date);
     }
 }

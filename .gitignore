@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+# Backup files
+# emacs
+*~
+
 # Log file
 *.log
 
@@ -11,7 +15,7 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
+#*.jar #probably want our custom jars to be included...
 *.war
 *.nar
 *.ear
