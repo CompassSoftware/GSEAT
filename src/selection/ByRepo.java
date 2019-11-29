@@ -44,10 +44,9 @@ public class ByRepo {
     }
 
     public void displayIssueComments() {
-        int i = 0;
         System.out.print("Issue Comments: ");
         int var = analysis.countIssuesComments();
-        while (i < analysis.countIssuesComments()) {
+        for (int i = 0; i < analysis.countIssuesComments(); i++) {
             System.out.print("*");
         }
         System.out.println();
