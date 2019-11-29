@@ -18,15 +18,28 @@ public class Commit {
 
     /**
     * Constructor for commit object.
+    * @param issueText - Text of the commit.
+    * @param c - Collaborator/Creator of the commit.
+    * @param dateCreated - Date of the creation of the commit.
+    * @param dateUpdated - Date of the update of the commit.
+    * @param comments - ArrayList of the comments of the commit.
+    */
+    public Commit(String info, Collaborator c, Date dateCreated,
+                 Date dateUpdated, ArrayList<Comment> comments) {
+        this.info = info;
+        this.collaborator = c;
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+        this.comments = comments;
+    }
+
+    /**
+    * Constructor for commit object.
     * @param info - Info text of the commit.
     * @param c - Collaborator/Creator of the commit.
     */
     public Commit(String info, Collaborator c) {
-        this.collaborator = c;
-        this.info = info;
-        this.dateCreated = new Date();
-        this.dateUpdated = new Date();
-        this.comments = new ArrayList<>();
+        this(info, c, new Date(), new Date(), new ArrayList<Comment>());
     }
 
     /**

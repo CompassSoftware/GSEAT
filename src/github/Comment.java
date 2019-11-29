@@ -3,7 +3,7 @@ package github;
 import java.util.Date;
 
  /**
- * Commit class.
+ * Comment class.
  * @author Thomas Neumayr
  * @version 1.0
  */
@@ -20,13 +20,27 @@ public class Comment {
     * @param c - Collaborator/Creator of the commit.
     * @param commentType - Type of the comment ("repo", "commit", "issue", 
     *                      etc.).
+    * @param dateCreated - Date of the creation of the comment.
+    * @param dateUpdated - Date of the update of the comment.
     */
-    public Comment(String commentText, Collaborator c, String commentType) {
+    public Comment(String commentText, Collaborator c, String commentType,
+                   Date dateCreated, Date dateUpdated) {
         this.collaborator = c;
         this.commentText = commentText;
         this.commentType = commentType;
-        this.dateCreated = new Date();
-        this.dateUpdated = new Date();
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+    }
+
+    /**
+    * Constructor for comment object.
+    * @param commentText - Text of the comment.
+    * @param c - Collaborator/Creator of the commit.
+    * @param commentType - Type of the comment ("repo", "commit", "issue", 
+    *                      etc.).
+    */
+    public Comment(String commentText, Collaborator c, String commentType) {
+        this(commentText, c, commentType, new Date(), new Date());
     }
 
     /**
