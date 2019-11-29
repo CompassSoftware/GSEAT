@@ -28,7 +28,7 @@ public class Extraction_Demo {
 		for (int i = 0; i < issues.size(); i++) {
 			Issue issue = issues.get(i);
 			System.out.println("Issue " + (i + 1) + ": ");
-			System.out.println("     Username: " + issue.getUserName());
+			System.out.println("     Username: " + issue.getCollaborator().getUserName());
 			System.out.println("     Issue text: " + issue.getIssueText());
 			System.out.println("     Date Created: " + issue.getDateCreated());
 			System.out.println("     Date Updated: " + issue.getDateUpdated());
@@ -44,7 +44,7 @@ public class Extraction_Demo {
 		for (int i = 0; i < commits.size(); i++) {
 					Commit commit = commits.get(i);
 					System.out.println("Commit " + (i + 1) + ": ");
-					System.out.println("     Username: " + commit.getUserName());
+					System.out.println("     Username: " + commit.getCollaborator().getUserName());
 					System.out.println("     Commit text: " + commit.getInfo());
 					System.out.println("     Date Created: " + commit.getDateCreated());
 					System.out.println("     Date Updated: " + commit.getDateUpdated());
@@ -60,7 +60,7 @@ public class Extraction_Demo {
 		for (int i = 0; i < comments.size(); i++) {
 					Comment comment = comments.get(i);
 					System.out.println("Comment " + (i + 1) + ": ");
-					System.out.println("     Username: " + comment.getUserName());
+					System.out.println("     Username: " + comment.getCollaborator().getUserName());
 					System.out.println("     Comment text: " + comment.getCommentText());
 					System.out.println("     Date Created: " + comment.getDateCreated());
 					System.out.println("     Date Updated: " + comment.getDateUpdated());
