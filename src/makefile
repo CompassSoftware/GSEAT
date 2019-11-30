@@ -67,6 +67,7 @@ compile:
 	make compile_analysis
 
 compile_selection: selection/ByRepo.java selection/GitUser.java
+	javac selection/Display.java
 	javac selection/ByRepo.java
 	javac selection/DisplayClient.java
 compile_analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)

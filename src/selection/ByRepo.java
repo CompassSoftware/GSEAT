@@ -12,10 +12,10 @@ import github.*;
 * @version 1.0
 */
 
-public class ByRepo {
+public class ByRepo implements Display{
     Analysis analysis = null;
-    public ByRepo(Repository repo) {
 
+    public ByRepo(Repository repo) {
         this.analysis = new Analysis(repo);
     }
 
