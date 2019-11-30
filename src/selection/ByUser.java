@@ -78,9 +78,7 @@ public class ByUser implements Display{
     }
 
     public void display() {
-        displayIssues();
-        displayCommits();
-        displayIssueComments();
-        displayCommitsComments();
+        displayCommentsByCollaborator(usesrName);
+        displayIssueCommentsByCollaborator(userName);
     }
 }
