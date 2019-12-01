@@ -4,65 +4,33 @@ import java.util.ArrayList;
  * @author: fwjia
  */
 import java.util.List;
+import java.util.Scanner;
  
 public class ListOutput<T> {
-	/***
-	 * 当前页
-	 */
+
 	private int page = 1;
  
-	/***
-	 * 总页数
-	 */
 	public int totalPages = 0;
  
-	/***
-	 * 每页数据条数
-	 */
 	private int pageRecorders;
  
-	/***
-	 * 总页数
-	 */
 	private int totalRows = 0;
  
-	/***
-	 * 每页的起始数
-	 */
 	private int pageStartRow = 0;
  
-	/***
-	 * 每页显示数据的终止数
-	 */
 	private int pageEndRow = 0;
  
-	/***
-	 * 是否有下一页
-	 */
 	private boolean hasNextPage = false;
  
-	/***
-	 * 是否有前一页
-	 */
 	private boolean hasPreviousPage = false;
  
-	/***
-	 * 数据集合
-	 */
 	private List<T> list;
  
 	public ListOutput(List<T> list, int pageRecorders) {
-		// 通过对象集，记录总数划分
 		init(list, pageRecorders);
 	}
  
-	/** */
-	/**
-	 * 初始化list，并告之该list每页的记录数
-	 *
-	 * @param list          数据几个
-	 * @param pageRecorders 一页显示多少数据
-	 */
+
 	public void init(List<T> list, int pageRecorders) {
 		this.pageRecorders = pageRecorders;
 		this.list = list;
@@ -89,7 +57,7 @@ public class ListOutput<T> {
 		}
 	}
  
-	// 判断要不要分页
+	// judge if needs paging
 	public boolean isNext() {
 		return list.size() > 5;
 	}
@@ -105,19 +73,19 @@ public class ListOutput<T> {
  
 	public void description() {
  
-		String description = "共有数据数:" + this.getTotalRows() +
+		String description = "the total data is: " + this.getTotalRows() + "  " +
  
-				"共有页数: " + this.getTotalPages() +
+				"the total page is: " + this.getTotalPages() + "  " +
  
-				"当前页数为:" + this.getPage() +
+				"the current page is: " + this.getPage() + "  " +
  
-				" 是否有前一页: " + this.isHasPreviousPage() +
+				"if has the previous page: " + this.isHasPreviousPage() + "  " +
  
-				" 是否有下一页:" + this.isHasNextPage() +
+				"if has the next page: " + this.isHasNextPage() + "  " +
  
-				" 开始行数:" + this.getPageStartRow() +
+				"the start colunm: " + this.getPageStartRow() + "  " +
  
-				" 终止行数:" + this.getPageEndRow();
+				"the end colunm: " + this.getPageEndRow();
  
 		System.out.println(description);
 	}
@@ -127,7 +95,7 @@ public class ListOutput<T> {
  
 		disposePage();
  
-		System.out.println("用户凋用的是第" + page + "页");
+		System.out.println("the page is: " + page);
 		this.description();
 		return getObjects(page);
 	}
@@ -173,9 +141,9 @@ public class ListOutput<T> {
 	}
  
 	/**
-	 * 获取第几页的内容
+	 * get the pages
 	 *
-	 * @param page 当前页面
+	 * @param page 
 	 * @return
 	 */
 	public List<T> getObjects(int page) {
@@ -186,7 +154,7 @@ public class ListOutput<T> {
 		}
 		this.disposePage();
 		if (page * pageRecorders < totalRows) {
-			// 判断是否为最后一页
+			// judge if is the end page
 			pageEndRow = page * pageRecorders;
 			pageStartRow = pageEndRow - pageRecorders;
 		} else {
@@ -277,28 +245,30 @@ public class ListOutput<T> {
 	public boolean isHasPreviousPage() {
 		return hasPreviousPage;
 	}
- 
+	
+	public static void addInput(List<String> list , List<String> input) {
+		list.addAll(input);
+	}
 	public static void main(String[] args) {
 		List<String> list = new ArrayList<String>();
-		list.add("a");
-		list.add("b");
-		list.add("c");
-		list.add("d");
-		list.add("e");
-		list.add("f");
-		list.add("g");
-		list.add("h");
-		list.add("i");
-		list.add("j");
-		list.add("k");
-		list.add("l");
-		list.add("m");
-		ListOutput<String> pm = new ListOutput<String>(list, 10);
- 
-		List<String> sublist = pm.getObjects(1);
-		for (int i = 0; i < sublist.size(); i++) {
-			System.out.println(sublist.get(i));
+		List<String> input = new ArrayList<String>();
+		input.add("a");
+		input.add("b");
+		input.add("c");
+		input.add("d");
+		addInput(list , input);
+		ListOutput<String> pm = new ListOutput<String>(list, 2);
+		while(true) {
+			System.out.println("Enter the page: ");
+			Scanner scan = new Scanner(System.in);
+			int page = scan.nextInt();
+			List<String> sublist = pm.getObjects(page);
+			pm.description();
+			for (int i = 0; i < sublist.size(); i++) {
+				System.out.println(sublist.get(i));
+			}
 		}
  
 	}
+
 }
