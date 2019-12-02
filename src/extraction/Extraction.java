@@ -1,22 +1,29 @@
 package extraction;
 
-//import github.*;
 import github.Repository;
 import github.Commit;
 import github.Comment;
 import github.Collaborator;
 import github.Issue;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import java.util.Scanner;
+import java.util.Date;
+import java.util.Base64;
 import java.util.ArrayList;
-import java.io.*;
-import java.util.*;
-import java.net.*;
-import java.awt.*;
+
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
+
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+
 import net.sf.json.JSONObject;
 import net.sf.json.JSONArray;
-
 
 /**
  * Extraction class.
@@ -87,7 +94,6 @@ public class Extraction {
         for (int i = 0; i < issues.size(); i++) {
             JSONObject jsonIssue = 
                 JSONObject.fromObject(issues.get(i).toString());
-            Issue issue = new Issue("", new Collaborator());
 
             JSONObject assignee = jsonIssue.getJSONObject("assignee");
             String userName = assignee.getString("login");
@@ -97,8 +103,10 @@ public class Extraction {
 
             Date dateCreated = githubDateStringToDate(dateCreatedString);
             Date dateUpdated = githubDateStringToDate(dateUpdatedString);
+            
+            Collaborator collab = new Collaborator("", "", userName, "");
+            Issue issue = new Issue(issueText, collab);
 
-            issue.setUserName(userName);
             issue.setIssueText(issueText);
             issue.setDateCreated(dateCreated);
             issue.setDateUpdated(dateUpdated);
@@ -136,10 +144,9 @@ public class Extraction {
                 jsonCommitInfo.getJSONObject("committer");
             String userName = outerCommitter.getString("login");
 
-            Commit commit = new Commit("", new Collaborator());
+            Collaborator collab = new Collaborator("", "", userName, "");
+            Commit commit = new Commit(message, collab);
 
-            commit.setInfo(message);
-            commit.setUserName(userName);
             commit.setDateCreated(dateCreated);
 
             repo.addCommit(commit);
@@ -168,10 +175,10 @@ public class Extraction {
             Date dateCreated = githubDateStringToDate(dateCreatedString);
             Date dateUpdated = githubDateStringToDate(dateUpdatedString);
 
-            Comment comment = new Comment("", new Collaborator(), "");
+            Collaborator collab = new Collaborator("", "", userName, "");
+            Comment comment = new Comment("", collab, "");
 
             comment.setCommentText(body);
-            comment.setUserName(userName);
             comment.setDateCreated(dateCreated);
             comment.setDateUpdated(dateUpdated);
 

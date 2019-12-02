@@ -1,5 +1,7 @@
 package github;
 
+import java.util.ArrayList;
+
  /**
  * Collaborator class for use in Extraction.java.
  * @author Nischinth Murari
@@ -10,6 +12,9 @@ public class Collaborator {
     private String lastName;
     private String userName;
     private String id;
+    private ArrayList<Commit> commits;
+    private ArrayList<Issue> issues;
+    private ArrayList<Comment> comments;
 
     /**
     * Constructor without arguments for Collaborator object.
@@ -19,6 +24,9 @@ public class Collaborator {
         this.lastName = "";
         this.userName = "";
         this.id = "";
+        commits = new ArrayList<Commit>();
+        issues = new ArrayList<Issue>();
+        comments = new ArrayList<Comment>();
     }
 
     /**
@@ -34,6 +42,9 @@ public class Collaborator {
         this.lastName = lastName;
         this.userName = userName;
         this.id = id;
+        commits = new ArrayList<Commit>();
+        issues = new ArrayList<Issue>();
+        comments = new ArrayList<Comment>();
     }
 
     /**
@@ -100,5 +111,53 @@ public class Collaborator {
      */
     public String getID() {
         return this.id;
+    }
+    
+    /**
+     * Add commit to commits list.
+     * @param commit - the commit to add
+     */
+    public void addCommit(Commit commit) {
+        commits.add(commit);
+    }
+    
+    /**
+     * Add issue to issues list.
+     * @param issue - the issue to add
+     */
+    public void addIssue(Issue issue) {
+        issues.add(issue);
+    }
+    
+    /**
+     * Add comment to comments list.
+     * @param comment - the comment to add
+     */
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
+    
+    /**
+     * Get commits list.
+     * @return a list of commits
+     */
+    public ArrayList<Commit> getCommits() {
+        return this.commits;
+    }
+    
+    /**
+     * Get issues list.
+     * @return a list of issues
+     */
+    public ArrayList<Issue> getIssues() {
+        return this.issues;
+    }
+    
+    /**
+     * Get comments list.
+     * @return a list of comments
+     */
+    public ArrayList<Comment> getComments() {
+        return this.comments;
     }
 }

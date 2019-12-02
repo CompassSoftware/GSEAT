@@ -10,10 +10,24 @@ import java.util.ArrayList;
  */
 public class Commit {
     private String info;
-    private String userName;
+    private Collaborator collaborator;
     private Date dateCreated;
-    private Date dateUpdated;
     private ArrayList<Comment> comments;
+
+    /**
+    * Constructor for commit object.
+    * @param info - Text of the commit.
+    * @param c - Collaborator/Creator of the commit.
+    * @param dateCreated - Date of the creation of the commit.
+    * @param comments - ArrayList of the comments of the commit.
+    */
+    public Commit(String info, Collaborator c, Date dateCreated,
+                  ArrayList<Comment> comments) {
+        this.info = info;
+        this.collaborator = c;
+        this.dateCreated = dateCreated;
+        this.comments = comments;
+    }
 
     /**
     * Constructor for commit object.
@@ -21,11 +35,7 @@ public class Commit {
     * @param c - Collaborator/Creator of the commit.
     */
     public Commit(String info, Collaborator c) {
-        this.userName = c.getUserName();
-        this.info = info;
-        this.dateCreated = null;
-        this.dateUpdated = null;
-        this.comments = new ArrayList<>();
+        this(info, c, new Date(), new ArrayList<Comment>());
     }
 
     /**
@@ -38,10 +48,10 @@ public class Commit {
 
     /**
      * Setter for userName.
-     * @param userName - User name of the commit creator.
+     * @param c - the commit creator.
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCollaborator(Collaborator c) {
+        this.collaborator = c;
     }
 
     /**
@@ -50,14 +60,6 @@ public class Commit {
      */
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
-    }
-
-    /**
-     * Setter for dateUpdated.
-     * @param dateUpdated - Date of the update of the commit.
-     */
-    public void setDateUpdated(Date dateUpdated) {
-        this.dateUpdated = dateUpdated;
     }
 
     /**
@@ -78,10 +80,10 @@ public class Commit {
 
     /**
      * Getter for userName.
-     * @return User name of the commit creator.
+     * @return the commit creator.
      */
-    public String getUserName() {
-        return this.userName;
+    public Collaborator getCollaborator() {
+        return this.collaborator;
     }
 
     /**
@@ -90,14 +92,6 @@ public class Commit {
      */
     public Date getDateCreated() {
         return this.dateCreated;
-    }
-
-    /**
-     * Getter for dateUpdated.
-     * @return Date of the update of the commit.
-     */
-    public Date getDateUpdated() {
-        return this.dateUpdated;
     }
 
     /**
@@ -110,7 +104,7 @@ public class Commit {
 
     /**
      * Adds new comment to the ArrayList of comments.
-     * @param New comment that should be added to the ArrayList.
+     * @param comment New comment that should be added to the ArrayList.
      */
     public void addComment(Comment comment) {
         this.comments.add(comment);

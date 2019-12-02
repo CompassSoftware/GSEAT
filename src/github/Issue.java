@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Issue {
     private String issueText;
-    private String userName;
+    private Collaborator collaborator;
     private Date dateCreated;
     private Date dateUpdated;
     private ArrayList<Comment> comments;
@@ -19,14 +19,27 @@ public class Issue {
     * Constructor for issue object.
     * @param issueText - Text of the issue.
     * @param c - Collaborator/Creator of the issue.
+    * @param dateCreated - Date of the creation of the issue.
+    * @param dateUpdated - Date of the update of the issue.
+    * @param comments - ArrayList of the comments of the issue.
+    */
+    public Issue(String issueText, Collaborator c, Date dateCreated, 
+                 Date dateUpdated, ArrayList<Comment> comments) {
+        this.issueText = issueText;
+        this.collaborator = c;
+        this.dateCreated = dateCreated;
+        this.dateUpdated = dateUpdated;
+        this.comments = comments;
+    }
+
+    /**
+    * Constructor for issue object.
+    * @param issueText - Text of the issue.
+    * @param c - Collaborator/Creator of the issue.
     */
     public Issue(String issueText, Collaborator c) {
-        this.userName = c.getUserName();
-        this.issueText = issueText;
-        this.dateCreated = null;
-        this.dateUpdated = null;
-        this.comments = new ArrayList<Comment>();
-    }
+        this(issueText, c, new Date(), new Date(), new ArrayList<Comment>());
+    } 
 
     /**
      * Setter for issue text.
@@ -38,10 +51,10 @@ public class Issue {
 
     /**
      * Setter for userName.
-     * @param userName - User name of the issue creator.
+     * @param c - the issue creator.
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setCollaborator(Collaborator c) {
+        this.collaborator = c;
     }
 
     /**
@@ -78,10 +91,10 @@ public class Issue {
 
     /**
      * Getter for userName.
-     * @return User name of the issue creator.
+     * @return the issue creator.
      */
-    public String getUserName() {
-        return this.userName;
+    public Collaborator getCollaborator() {
+        return this.collaborator;
     }
 
     /**
@@ -110,7 +123,7 @@ public class Issue {
 
     /**
      * Adds new comment to the ArrayList of comments.
-     * @param New comment that should be added to the ArrayList.
+     * @param comment New comment that should be added to the ArrayList.
      */
     public void addComment(Comment comment) {
         this.comments.add(comment);
