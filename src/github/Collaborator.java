@@ -1,6 +1,6 @@
 package github;
 
-import java.util.*;
+import java.util.ArrayList;
 
  /**
  * Collaborator class for use in Extraction.java.

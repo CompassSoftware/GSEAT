@@ -1,22 +1,29 @@
 package extraction;
 
-//import github.*;
 import github.Repository;
 import github.Commit;
 import github.Comment;
 import github.Collaborator;
 import github.Issue;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import java.util.Scanner;
+import java.util.Date;
+import java.util.Base64;
 import java.util.ArrayList;
-import java.io.*;
-import java.util.*;
-import java.net.*;
-import java.awt.*;
+
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
+
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+
 import net.sf.json.JSONObject;
 import net.sf.json.JSONArray;
-
 
 /**
  * Extraction class.
