@@ -582,6 +582,22 @@ public class Analysis
     }
 
     /**
+     * countContributions
+     *
+     * Count the number of commits, comments, and
+     * issues for Repo.
+     *
+     * @return total
+     *              total number of commits, comments,
+     *              and issues
+     */
+    public int countContributions() {
+        return countCommits() 
+               + countComments() 
+               + countIssues();
+    }
+
+    /**
      * Count the number of commits, comments, 
      * and issues for Repo between 2 dates.
      *
