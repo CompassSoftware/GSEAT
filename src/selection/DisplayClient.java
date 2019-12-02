@@ -36,10 +36,11 @@ public class DisplayClient {
                 break;
             }
             case 3: {
-                System.out.println("Enter the dates in the format DD/MM/YYY ");
+                System.out.println("Enter the dates in the format DD/MM/YYYY");
                 String dateString1 = kb.nextLine();
-                String buff = kb.nextLine();
+                kb.nextLine();
                 String dateString2 = kb.nextLine();
+                System.out.println("I done goofed and didn't figure out the date System that was used in the Extraction package in this sprint. We'll get 'em next time. '");
                 // LocalDate date1 = dateStringToDate(dateString1);
                 // LocalDate date2 = dateStringToDate(dateString2);
                 // disp = new ByDate(repo, date1, date2);
