@@ -62,7 +62,7 @@ public class ByUser implements Display{
     }
 
     public void displayCommentsByCollaborator(String user) {
-        System.out.printf("Comments by user: %s", user);
+        System.out.printf("Comments by %s: ", user);
         for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
             System.out.print("*");
         }
@@ -70,7 +70,7 @@ public class ByUser implements Display{
     }
 
     public void displayIssueCommentsByCollaborator(String user) {
-        System.out.printf("Issue comments by: %s\n", user);
+        System.out.printf("Issue comments by %s:", user);
         for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
             System.out.print("*");
         }
@@ -78,7 +78,8 @@ public class ByUser implements Display{
     }
 
     public void display() {
-        displayCommentsByCollaborator(usesrName);
+        displayCommentsByCollaborator(userName);
         displayIssueCommentsByCollaborator(userName);
+        // displayCommitsByCollaborator(userName);
     }
 }

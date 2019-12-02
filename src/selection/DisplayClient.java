@@ -31,13 +31,14 @@ public class DisplayClient {
                 System.out.println("Enter User: ");
                 String buff = kb.nextLine();
                 String user = kb.nextLine();
-                // disp = new ByUser(repo, user);
-                // disp.display();
+                disp = new ByUser(repo, user);
+                disp.display();
                 break;
             }
             case 3: {
                 System.out.println("Enter the dates in the format DD/MM/YYY ");
                 String dateString1 = kb.nextLine();
+                String buff = kb.nextLine();
                 String dateString2 = kb.nextLine();
                 // LocalDate date1 = dateStringToDate(dateString1);
                 // LocalDate date2 = dateStringToDate(dateString2);
