@@ -47,7 +47,6 @@ public class Extraction_Demo {
 					System.out.println("     Username: " + commit.getCollaborator().getUserName());
 					System.out.println("     Commit text: " + commit.getInfo());
 					System.out.println("     Date Created: " + commit.getDateCreated());
-					System.out.println("     Date Updated: " + commit.getDateUpdated());
 		}
 		
 		System.out.println("------------------------------------------------------------------------");
