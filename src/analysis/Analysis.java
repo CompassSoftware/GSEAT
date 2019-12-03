@@ -1,6 +1,7 @@
 package analysis;
 
 import java.util.Date;
+import java.text.DecimalFormat;
 import github.Comment;
 import github.Repository;
 import github.Issue;
@@ -15,7 +16,13 @@ import java.util.ArrayList;
  */
 public class Analysis
 {
+    private static final long MILLISPERDAY = 86400000;
+    private static final long DAYSPERPERIOD = 7;
+    private static final long FRACTIONTOPERCENT = 100;
+
     Repository repo;
+
+    
 
     /**
      * Analysis constructor.
@@ -561,6 +568,7 @@ public class Analysis
 
     /**
      * countContributionsByCollaborator
+     *
      * Counts the total number of contributions(comments, issues,
      *  etc) in the repository by a specific collaborator, added
      *  during certain dates.
@@ -582,6 +590,8 @@ public class Analysis
     }
 
     /**
+     * countContributionsBetweenDates(...)
+     *
      * Count the number of commits, comments, 
      * and issues for Repo between 2 dates.
      *
@@ -605,6 +615,88 @@ public class Analysis
         //totals[3] = totals[0] + totals[1] + totals[2];
         //return totals
         return total;
+    }
+
+    /**
+     * contributionBreakdownByCollaborator(...)
+     *
+     * A method that returns a breakdown (string)
+     * of what percentage of contributions for a
+     * certain collaborator were done between each
+     * 7 day period from the repo creation date to
+     * the current date.
+     *
+     * @return info
+     *             sentence containing contributions
+     *             by collaborator through a set of
+     *             7 day periods
+     * @param username
+     */
+    public String contributionBreakdownByCollaborator(String username)
+    {
+        /*First calculate the repo start date.*/
+        Date start = new Date();
+        for (Issue i : repo.getIssues())
+        {
+            if (i.getDateCreated().before(start))
+            {
+                start = (Date)i.getDateCreated().clone();
+            }
+        }
+        for (Commit c: repo.getCommits())
+        {
+            if (c.getDateCreated().before(start))
+            {
+                start = (Date)c.getDateCreated().clone();
+            }
+        }
+        for (Comment c: repo.getComments())
+        {
+            if (c.getDateCreated().before(start))
+            {
+                start = (Date)c.getDateCreated().clone();
+            }
+        }
+
+        ArrayList<String> contributions = new ArrayList<>();
+
+        Date current = new Date();
+        Date end = 
+            ((Date)start.clone()).setTime(
+            start.getTime() 
+            + DAYSPERPERIOD * MILLISPERDAY);
+
+        DecimalFormat df = new DecimalFormat("###.00");
+
+        while (end.before(current))
+        {
+            contributions.add(
+                    df.format(
+                        ((double)(this.countContributionsByCollaborator(
+                            username, start, end))
+                        / (double)(this.countContributionsBetweenDates()))
+                        * FRACTIONTOPERCENT
+                        );
+            start.setTime(
+                    start.getTime() 
+                    + DAYSPERPERIOD * MILLISPERDAY);
+            end.setTime(
+                    end.getTime()
+                    + DAYSPERPERIOD * MILLISPERDAY);
+        }
+
+
+        String message = "All-time Contributions by " + username 
+                         + " from:\n";
+
+        for (String s : contributions)
+        {
+            message += start.toString() + " to " end.toString()
+                + "   -   " + s + "%\n";
+        }
+
+
+        return message;
     }
 }
 
