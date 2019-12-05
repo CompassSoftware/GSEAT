@@ -643,17 +643,19 @@ public class Analysis
 
     /**
      * A method to return the percentage of all
-     * contributions a certain collaborator made.
+     * contributions a certain collaborator made between dates.
      *
      * @param collaborator username
+     * @param start date
+     * @param end date
      * @return percentage of contributions
      */
-    public double percentContributionsByCollaborator(String username)
+    public double percentContributionsByCollaborator(String username, Date start, Date end)
     {
-        double contributions = countContributions();
+        double contributions = countContributionsBetweenDates(start, end);
         if(contributions != 0.0)
         {
-            return (double) countContributionsByCollaborator(username) / contributions;
+            return (double) countContributionsByCollaborator(username, start, end) / contributions;
         }
         return 0.0;
     }

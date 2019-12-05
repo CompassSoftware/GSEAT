@@ -977,10 +977,10 @@ public class AnalysisTest
     }
 
     /**
-     * Tests countPercentContributionsByCollaborator.
+     * Tests percentContributionsByCollaborator by date.
      */
     @Test
-    public void testPercentContributionsByCollaborator() {
+    public void testPercentContributionsByCollaboratorByDate() {
         Collaborator collab1 = new Collaborator("test","test","tester","343");
         Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
         Commit cmt1 = new Commit("commit1", collab1);
@@ -993,12 +993,15 @@ public class AnalysisTest
         cmt2.addComment(new Comment("comment2", collab1, "commit"));
 
         Commit cmt3 = new Commit("commit3", collab2);
-
+        
         Issue i1 = new Issue("issue1", collab1);
         Comment c1 = new Comment("comment", collab1, "issue");
         Comment c2 = new Comment("comment2", collab2, "issue");
         Comment c3 = new Comment("comment3", collab1, "issue");
-
+        c1.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        c2.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        c3.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+        
         i1.addComment(c1);
         i1.addComment(c2);
         i1.addComment(c3);
@@ -1019,9 +1022,10 @@ public class AnalysisTest
 
         Analysis analysis = new Analysis(repo);
 
-        double expected = 8.0 / 16.0;
-        double actual = analysis.percentContributionsByCollaborator("tester");
-        
+        double expected = 6.0 / 13.0;
+        double actual = analysis.percentContributionsByCollaborator(
+            "tester", convertToDate(LocalDate.now().minusDays(5)), new Date());
+
         assertEquals(expected, actual);
     }
 }
