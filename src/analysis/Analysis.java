@@ -582,6 +582,24 @@ public class Analysis
     }
 
     /**
+     * countContributionsByCollaborator
+     * Counts the total number of contributions(comments, issues,
+     *  etc) in the repository by a specific collaborator.
+     *
+     * @param username - the username of the collaborator
+     *
+     * @return sum of issues, comments, commits, etc by specific
+     *  collaborator during certain date range.
+     */
+    public int countContributionsByCollaborator(String username)
+    {
+        int total = countIssuesByCollaborator(username);
+        total += countCollaboratorCommits(username);
+        total += countCommentsByCollaborator(username);
+        return total;
+    }
+  
+    /**
      * countContributions
      *
      * Count the number of commits, comments, and
