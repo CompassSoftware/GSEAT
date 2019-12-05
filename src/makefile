@@ -51,6 +51,7 @@ clean-extract:
 
 clean-analysis:
 	@echo "cleaning analysis/"
+	rm -f analysis/*.class
 
 clean-selection:
 	@echo "cleaning selection/"
@@ -65,13 +66,15 @@ compile:
 	make -f makefile_ext compile_ext
 	make compile_analysis
 
+compileExtractionDemo:
+	make -f makefile_ext compileExtractionDemo
+
 compile_analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)
 	javac analysis/Analysis.java
 	javac -cp .:$(JUNIT5_JAR) analysis/AnalysisTest.java
 
 clean:
-	rm -f analysis/*.class
-	make -f makefile_ext clean_ext
+	make clean-all
 
 test:
 	make -f makefile_ext test_ext

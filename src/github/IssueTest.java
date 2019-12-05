@@ -26,7 +26,7 @@ public class IssueTest
     @Test
         public void testGetters()
         {
-            Assert.assertEquals(issue.getUserName(), "Nischinth-bot");
+            Assert.assertEquals(issue.getCollaborator().getUserName(), "Nischinth-bot");
             Assert.assertEquals(issue.getIssueText(), "Initial Issue");
             Assert.assertEquals(issue.getDateCreated(), d);
             Assert.assertEquals(issue.getDateUpdated(), d);
@@ -35,8 +35,8 @@ public class IssueTest
     @Test 
         public void testSetters()
         {
-            issue.setUserName("Heironymous-bot");
-            Assert.assertEquals(issue.getUserName(), "Heironymous-bot");
+            issue.setCollaborator(c1);
+            Assert.assertEquals(issue.getCollaborator().getUserName(), "Nischinth-bot");
             issue.setIssueText("2nd Issue");
             Assert.assertEquals(issue.getIssueText(), "2nd Issue");
         }

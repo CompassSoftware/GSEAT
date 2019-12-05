@@ -56,7 +56,7 @@ compile_extract: extraction/Extraction.java extraction/ExtractionTest.java $(JSO
 	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java
 	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR):$(JUNIT5_JAR) extraction/ExtractionTest.java
 
-compile2: extraction/Extraction.java Extraction_Demo.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR)
+compileExtractionDemo: extraction/Extraction.java Extraction_Demo.java $(JSON_JAR) $(EZMORPH_JAR) $(COMMONS_LOGGING_JAR) $(COMMONS_LANG_JAR) $(COMMONS_COLLECTION_JAR) $(COMMONS_BEANUTILS_JAR)
 	javac -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) extraction/Extraction.java Extraction_Demo.java
 	java -cp .:$(JSON_JAR):$(EZMORPH_JAR):$(COMMONS_LOGGING_JAR):$(COMMONS_LANG_JAR):$(COMMONS_COLLECTION_JAR):$(COMMONS_BEANUTILS_JAR) Extraction_Demo
 

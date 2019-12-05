@@ -25,17 +25,16 @@ public class CommitTest
     @Test
         public void testGetters()
         {
-            Assert.assertEquals(cc.getUserName(), "Nischinth-bot");
+            Assert.assertEquals(cc.getCollaborator().getUserName(), "Nischinth-bot");
             Assert.assertEquals(cc.getInfo(), "Initial Commit");
             Assert.assertEquals(cc.getDateCreated(), d);
-            Assert.assertEquals(cc.getDateUpdated(), d);
         }
 
     @Test 
         public void testSetters()
         {
-            cc.setUserName("Heironymous-bot");
-            Assert.assertEquals(cc.getUserName(), "Heironymous-bot");
+            cc.setCollaborator(c1);
+            Assert.assertEquals(cc.getCollaborator().getUserName(), "Nischinth-bot");
             cc.setInfo("2nd Commit");
             Assert.assertEquals(cc.getInfo(), "2nd Commit"); 
         }
