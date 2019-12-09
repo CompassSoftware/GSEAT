@@ -38,6 +38,15 @@ public class Repository {
      */
     public void addIssue(Issue issue) {
         this.issues.add(issue);
+        // Add issue to a collaborators list
+        for (int i = 0; i < this.collaborators.size(); i++) {
+            Collaborator currentCollaborator = this.collaborators.get(i);
+            String collabUserName = currentCollaborator.getUserName();
+            String issueUserName = issue.getCollaborator().getUserName();
+            if (collabUserName.equals(issueUserName)) {
+                currentCollaborator.addIssue(issue);
+            }
+        }
     }
 
     /**
@@ -46,6 +55,15 @@ public class Repository {
      */
     public void addCommit(Commit commit) {
         this.commits.add(commit);
+        // Add issue to a collaborators list
+        for (int i = 0; i < this.collaborators.size(); i++) {
+            Collaborator currentCollaborator = this.collaborators.get(i);
+            String collabUserName = currentCollaborator.getUserName();
+            String commitUserName = commit.getCollaborator().getUserName();
+            if (collabUserName.equals(commitUserName)) {
+                currentCollaborator.addCommit(commit);
+            }
+        }
     }
 
     /**
@@ -54,6 +72,14 @@ public class Repository {
      */
     public void addComment(Comment comment) {
         this.comments.add(comment);
+        for (int i = 0; i < this.collaborators.size(); i++) {
+            Collaborator currentCollaborator = this.collaborators.get(i);
+            String collabUserName = currentCollaborator.getUserName();
+            String commentUserName = comment.getCollaborator().getUserName();
+            if (collabUserName.equals(commentUserName)) {
+                currentCollaborator.addComment(comment);
+            }
+        }
     }
 
     /**
