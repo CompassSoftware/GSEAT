@@ -53,6 +53,25 @@ public class IssueTest
             Assert.assertEquals(issue.getComments().get(0).getDateCreated(), d);
         }
 
-
-
+    @Test
+        public void testGetComments()
+        {
+            Comment com1 = new Comment("This is number one", c1, "repo", d, d); 
+            Comment com2 = new Comment("This is number two", c1, "commit", d, d);
+            Comment com3 = new Comment("This is number three", c1, "repo", d, d);
+            Comment com4 = new Comment("This is number four", c1, "repo", d, d);
+            Comment com5 = new Comment("This is number five", c1, "repo", d, d);
+            ArrayList<Comment> cs = new ArrayList<Comment>();
+            cs.add(com1);
+            cs.add(com2);
+            cs.add(com3);
+            cs.add(com4);
+            cs.add(com5);
+            issue.addComment(com1);
+            issue.addComment(com2);
+            issue.addComment(com3);
+            issue.addComment(com4);
+            issue.addComment(com5);
+            Assert.assertArrayEquals(cs.toArray(), issue.getComments().toArray());
+        }
 }
