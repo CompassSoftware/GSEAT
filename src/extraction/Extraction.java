@@ -48,10 +48,10 @@ public class Extraction {
     * @return a repository object that contains data for specified repository
     */
     public Repository extract() {
+        addCollaboratorsToRepo();
         addIssuesToRepo();
         addCommitsToRepo();
         addCommentsToRepo();
-        addCollaboratorsToRepo();
         return repo;
     }
 

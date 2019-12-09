@@ -43,7 +43,7 @@ public class Repository {
             Collaborator currentCollaborator = this.collaborators.get(i);
             String collabUserName = currentCollaborator.getUserName();
             String issueUserName = issue.getCollaborator().getUserName();
-            if (collabUserName.equals(issueUserName)) {
+            if (collabUserName.toLowerCase().equals(issueUserName.toLowerCase())) {
                 currentCollaborator.addIssue(issue);
             }
         }
@@ -60,7 +60,7 @@ public class Repository {
             Collaborator currentCollaborator = this.collaborators.get(i);
             String collabUserName = currentCollaborator.getUserName();
             String commitUserName = commit.getCollaborator().getUserName();
-            if (collabUserName.equals(commitUserName)) {
+            if (collabUserName.toLowerCase().equals(commitUserName.toLowerCase())) {
                 currentCollaborator.addCommit(commit);
             }
         }
@@ -76,7 +76,7 @@ public class Repository {
             Collaborator currentCollaborator = this.collaborators.get(i);
             String collabUserName = currentCollaborator.getUserName();
             String commentUserName = comment.getCollaborator().getUserName();
-            if (collabUserName.equals(commentUserName)) {
+            if (collabUserName.toLowerCase().equals(commentUserName.toLowerCase())) {
                 currentCollaborator.addComment(comment);
             }
         }
