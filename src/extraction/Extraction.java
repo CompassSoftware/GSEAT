@@ -180,6 +180,47 @@ public class Extraction {
         }
 
     }
+    
+    /**
+    * Adds all collaborators found in the repository API call to commits
+    * // TODO: Collaborator url couldn't be followed due to 
+    *          authentication error, so pulling some collab
+    *          info from commit URL.
+    */
+    public void addCollaboratorsToRepo() {
+        JSONArray commits = getJsonArrayFromUrlWithAuth(baseUrl + "/commits");
+        ArrayList<Commit> commitsArrayList = new ArrayList<Commit>();
+      
+        for (int i = 0; i < commits.size(); i++) {
+
+            JSONObject jsonCommitInfo = 
+                JSONObject.fromObject(commits.get(i).toString());
+            JSONObject jsonCommit = jsonCommitInfo.getJSONObject("commit");
+            String message = jsonCommit.getString("message");
+            
+            // The github API has two "committer" dictionary keys. 
+            // The first committer will be called innerCommitter, 
+            // which is a "committer" key inside of a "commit" dictionary
+            JSONObject innerCommitter = jsonCommit.getJSONObject("committer");
+            String dateCreatedString = innerCommitter.getString("date");
+            String committerName = innerCommitter.getString("name");
+            String firstName = committerName.split("\\s+")[0];
+            String lastName = committerName.split("\\s+")[1];
+            Date dateCreated = githubDateStringToDate(dateCreatedString);
+
+            // The github API has two "committer" dictionary keys. 
+            // The second committer will be called outerCommitter, 
+            // which is a "committer" key not nested in any dictionaries.
+            JSONObject outerCommitter = 
+                jsonCommitInfo.getJSONObject("committer");
+            String userName = outerCommitter.getString("login");
+            String userID = outerCommitter.getString("id");
+
+            Collaborator collab = new Collaborator(firstName, lastName, userName, userID);
+
+            repo.addCollaborator(collab);
+        }
+    }
 
     /**
     * Get a single json object from a specified URL. 
