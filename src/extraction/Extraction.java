@@ -51,6 +51,7 @@ public class Extraction {
         addIssuesToRepo();
         addCommitsToRepo();
         addCommentsToRepo();
+        addCollaboratorsToRepo();
         return repo;
     }
 
@@ -203,9 +204,13 @@ public class Extraction {
             // which is a "committer" key inside of a "commit" dictionary
             JSONObject innerCommitter = jsonCommit.getJSONObject("committer");
             String dateCreatedString = innerCommitter.getString("date");
-            String committerName = innerCommitter.getString("name");
-            String firstName = committerName.split("\\s+")[0];
-            String lastName = committerName.split("\\s+")[1];
+            String[] committerName = innerCommitter.getString("name").split("\\s+");
+            String firstName = "";
+            String lastName = "";
+            if (committerName.length == 2) {
+                firstName = committerName[0];
+                lastName = committerName[1];
+            } else firstName = committerName[0];
             Date dateCreated = githubDateStringToDate(dateCreatedString);
 
             // The github API has two "committer" dictionary keys. 

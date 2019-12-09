@@ -67,6 +67,13 @@ public class Extraction_Demo {
 		}
 		
 		System.out.println("------------------------------------------------------------------------");
+		System.out.println("------------------------------------------------------------------------\n\n\n\n\n\n\n");
+
+		ArrayList<Collaborator> collaborators = repo.getCollaborators();
+		for (int i = 0; i < collaborators.size(); i++) {
+			Collaborator collab = collaborators.get(i);
+			System.out.println("Collaborator: " + collab.getFirstName() + " " + collab.getLastName());
+		}
 		
 	}
 
