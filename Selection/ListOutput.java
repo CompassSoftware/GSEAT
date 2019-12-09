@@ -1,3 +1,4 @@
+package Selection;
 import java.util.ArrayList;
 /**
  * @version 1.0
@@ -101,7 +102,7 @@ public class ListOutput<T> {
 	}
  
 	/**
-	 * 处理分页
+	 * 麓娄脌铆路脰脪鲁
 	 */
 	private void disposePage() {
  
