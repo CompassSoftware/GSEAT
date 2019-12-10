@@ -103,7 +103,6 @@ public class Extraction_Demo {
 				System.out.println("        Username: " + commit.getCollaborator().getUserName());
 				System.out.println("        Commit text: " + commit.getInfo());
 				System.out.println("        Date Created: " + commit.getDateCreated());
-				System.out.println("        Date Updated: " + commit.getDateUpdated());
 				
 				for (int k = 0; k < commit.getComments().size(); k++) {
 					Comment comment = commit.getComments().get(k);
