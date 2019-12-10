@@ -6,7 +6,7 @@ import github.Repository;
 import github.Issue;
 import github.Commit;
 import java.util.ArrayList;
-//import github.Collaborator;
+import github.Collaborator;
 
 /**
  * Analysis.java.
@@ -659,5 +659,135 @@ public class Analysis
         }
         return 0.0;
     }
+
+    /**
+     * contributionBreakdown
+     *
+     * Returns a breakdown of percentage on contributions
+     * of all collabortators were done between each 7 day
+     * period from the repo creation date to the current date
+     * 
+     * @return String of percentage contributions for every
+     * collaborator
+     */
+    public String contributionBreakdown() {
+	ArrayList<Collaborator> collabs = repo.getCollaborators();
+	String result = "";
+	Date begin = getRepoBeginDate();
+	Date start = getRepoBeginDate();
+	Date end = (Date) start.clone();
+	end.setDate(start.getDate() + 7);
+	Date stop = new Date();
+
+	String beginString = (begin.getYear() + 1900) + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
+	String stopString = (stop.getYear() + 1900) + "-" + (stop.getMonth() + 1) + "-" + stop.getDate();
+
+	
+	for (Collaborator c: collabs) {
+	    result += "\nContributions by " + c.getUserName() 
+		+ "\nFrom: " + beginString + " To: " + stopString
+		+ " in weekly increments:\n\n";
+	    while (stop.after(start)) {
+		String startString = (start.getYear() + 1900) + "-" + (start.getMonth() + 1) + "-" + start.getDate();
+		String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
+
+		result += startString + " to " + endString + ": ";
+		result += ((double) countContributionsByCollaborator(c.getUserName(), start, end)
+			/ (double) countContributionsBetweenDates(start, end)) * 100 + "%\n";
+		start = end;
+		end = (Date) start.clone();
+		end.setDate(start.getDate() + 7);
+	    }
+	    start = getRepoBeginDate();
+	    end = (Date) start.clone();
+	    end.setDate(start.getDate() + 7);
+	}
+	return result;
+    }    
+    /**
+     * contributionBreakdownByCollaborator
+     *
+     * Returns a breakdown of percentage on contributions
+     * of all collabortators were done between each 7 day
+     * period from the start date to the end date
+     *
+     * @param starting - the earliest date to count contributions from
+     * @param ending - the latest date to count contributions to
+     *
+     * @return String of percentage contributions for every
+     * collaborator
+     */
+    public String contributionBreakdown(Date starting, Date ending) {
+        ArrayList<Collaborator> collabs = repo.getCollaborators();
+	String result = "";
+	Date begin = starting;
+	Date start = starting;
+	Date end = (Date) start.clone();
+	end.setDate(start.getDate() + 7);
+	Date stop = ending;
+
+	String beginString = (begin.getYear() + 1900) + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
+	String stopString = (stop.getYear() + 1900) + "-" + (stop.getMonth() + 1) + "-" + stop.getDate();
+
+	
+	for (Collaborator c: collabs) {
+	    result += "\nContributions by " + c.getUserName() 
+		+ "\nFrom: " + beginString + " To: " + stopString
+		+ " in weekly increments:\n\n";
+	    while (stop.after(start)) {
+		String startString = (start.getYear() + 1900) + "-" + (start.getMonth() + 1) + "-" + start.getDate();
+		String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
+
+		result += startString + " to " + endString + ": ";
+		result += ((double) countContributionsByCollaborator(c.getUserName(), start, end)
+			/ (double) countContributionsBetweenDates(start, end)) * 100 + "%\n";
+		start = end;
+		end = (Date) start.clone();
+		end.setDate(start.getDate() + 7);
+	    }
+	    start = starting;
+	    end = (Date) start.clone();
+	    end.setDate(start.getDate() + 7);
+	}
+	return result;
+    }
+
+    /** 
+     * getRepoBeginDate(...)
+     *
+     * Loop through to figure out what the
+     * beginning/start date of the repo is.
+     *
+     * @return start - the start date
+     *                 of the repo
+     */
+    public Date getRepoBeginDate()
+    {
+        Date start = new Date();
+        for (Issue i : repo.getIssues())
+        {
+            if (i.getDateCreated().before(start))
+            {
+                start = (Date) i.getDateCreated().clone();
+            }
+        }
+        for (Commit c: repo.getCommits())
+        {
+            if (c.getDateCreated().before(start))
+            {
+                start = (Date) c.getDateCreated().clone();
+            }
+        }
+        for (Comment c: repo.getComments())
+        {
+            if (c.getDateCreated().before(start))
+            {
+                start = (Date) c.getDateCreated().clone();
+            }
+        }
+
+        return start;
+    }
+
 }
 

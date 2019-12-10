@@ -1028,5 +1028,120 @@ public class AnalysisTest
 
         assertEquals(expected, actual);
     }
+
+    /**
+     * Tests contributionBreakdown.
+     */
+    @Test
+    public void testContributionBreakdown() {
+        Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        Commit cmt1 = new Commit("commit1", collab1);
+	cmt1.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+
+	Comment c1 = new Comment("comment1", collab1, "commit");
+	c1.setDateCreated(convertToDate(LocalDate.now().minusDays(9)));
+	Comment c2 = new Comment("comment2", collab2, "commit");
+	c2.setDateCreated(convertToDate(LocalDate.now().minusDays(2)));
+	Comment c3 = new Comment("comment3", collab1, "commit");
+	c3.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
+	
+        cmt1.addComment(c1);
+        cmt1.addComment(c2);
+        cmt1.addComment(c3);
+        
+        Repository repo = new Repository();
+	repo.addCollaborator(collab1);
+	repo.addCollaborator(collab2);
+        repo.addCommit(cmt1);
+
+        Analysis analysis = new Analysis(repo);
+
+        Date daysAgo = new Date();
+	daysAgo.setDate(daysAgo.getDate() - 10);
+
+        Date today = new Date();
+	Date middle = (Date) daysAgo.clone();
+	middle.setDate(middle.getDate() + 7);
+
+	Date end = (Date) middle.clone();
+	end.setDate(end.getDate() + 7);
+
+        String daysAgoString = (daysAgo.getYear() + 1900) + "-" + (daysAgo.getMonth() + 1) + "-" + daysAgo.getDate();
+	String todayString = (today.getYear() + 1900) + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+	String middleString = (middle.getYear() + 1900) + "-" + (middle.getMonth() + 1) + "-" + middle.getDate();
+	String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
+
+        String expected = "\nContributions by tester"
+	    + "\nFrom: " + daysAgoString + " To: " + todayString + " in weekly increments:"
+	    + "\n"
+	    + "\n" + daysAgoString + " to " + middleString + ": 100.0%"
+	    + "\n" + middleString + " to " + endString + ": 50.0%"
+	    + "\n"
+	    + "\nContributions by tester2"
+	    + "\nFrom: " + daysAgoString + " To: " + todayString + " in weekly increments:"
+	    + "\n"
+	    + "\n" + daysAgoString + " to " + middleString + ": 0.0%"
+	    + "\n" + middleString + " to " + endString + ": 50.0%"
+	    + "\n";
+
+        String actual = analysis.contributionBreakdown();
+
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests contributionBreakdownByCollaborator by dates.
+     */
+    @Test
+    public void testContributionBreakdownByDate() {
+	Collaborator collab1 = new Collaborator("test","test","tester","343");
+        Collaborator collab2 = new Collaborator("test2","test2","tester2","3243");
+        Commit cmt1 = new Commit("commit1", collab1);
+	cmt1.setDateCreated(convertToDate(LocalDate.now().minusDays(10)));
+
+	Comment c1 = new Comment("comment1", collab1, "commit");
+	c1.setDateCreated(convertToDate(LocalDate.now().minusDays(9)));
+	Comment c2 = new Comment("comment2", collab2, "commit");
+	c2.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
+	Comment c3 = new Comment("comment3", collab1, "commit");
+	c3.setDateCreated(convertToDate(LocalDate.now().minusDays(1)));
+	
+        cmt1.addComment(c1);
+        cmt1.addComment(c2);
+        cmt1.addComment(c3);
+        
+        Repository repo = new Repository();
+	repo.addCollaborator(collab1);
+	repo.addCollaborator(collab2);
+        repo.addCommit(cmt1);
+
+        Analysis analysis = new Analysis(repo);
+
+        Date daysAgo = new Date();
+	daysAgo.setDate(daysAgo.getDate() - 10);
+
+        Date today = new Date();
+	Date middle = (Date) daysAgo.clone();
+	middle.setDate(middle.getDate() + 7);
+
+        String daysAgoString = (daysAgo.getYear() + 1900) + "-" + (daysAgo.getMonth() + 1) + "-" + daysAgo.getDate();
+	String middleString = (middle.getYear() + 1900) + "-" + (middle.getMonth() + 1) + "-" + middle.getDate();
+
+        String expected = "\nContributions by tester"
+	    + "\nFrom: " + daysAgoString + " To: " + middleString + " in weekly increments:"
+	    + "\n"
+	    + "\n" + daysAgoString + " to " + middleString + ": 100.0%"
+	    + "\n"
+	    + "\nContributions by tester2"
+	    + "\nFrom: " + daysAgoString + " To: " + middleString + " in weekly increments:"
+	    + "\n"
+	    + "\n" + daysAgoString + " to " + middleString + ": 0.0%"
+	    + "\n";
+
+        String actual = analysis.contributionBreakdown(daysAgo, middle);
+
+        assertEquals(expected, actual);
+    }
 }
 
