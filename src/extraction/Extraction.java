@@ -280,7 +280,12 @@ public class Extraction {
 
             Collaborator collab = new Collaborator(firstName, lastName, userName, userID);
 
-            repo.addCollaborator(collab);
+            // Check if collaborator was already added. If not, add to list. 
+            boolean collabAlreadyExists = false;
+            for (int j = 0; j < repo.getCollaborators().size(); j++) {
+                if (userName.toLowerCase().equals(repo.getCollaborators().get(j).getUserName().toLowerCase())) collabAlreadyExists = true;
+            }
+            if (!collabAlreadyExists) repo.addCollaborator(collab);
         }
     }
 
