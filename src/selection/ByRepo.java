@@ -48,9 +48,9 @@ public class ByRepo implements Display{
         /**
         * Displays the number of comments on the issues in the repository as a row of asterisks.
         */
-    public void displayIssueComments() {
-        System.out.print("Issue Comments: ");
-        int var = analysis.countIssuesComments();
+    public void displayComments() {
+        System.out.print("Comments: ");
+        int var = analysis.countComments();
         for (int i = 0; i < var; i++) {
             System.out.print("*");
         }
@@ -69,14 +69,28 @@ public class ByRepo implements Display{
         System.out.println();
     }
 
+    /**
+    * Displays the number of comments on issues.
+    */
+    public void displayIssuesComments() {
+        System.out.printf("Issue comments: " );
+        int var = analysis.countComments();
+        for (int i = 0; i < var; i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
 
-        /**
-        * Calls the methods of the ByRepo class.
-        */
+
+
+    /**
+    * Calls the methods of the ByRepo class.
+    */
     public void display() {
         displayIssues();
         displayCommits();
-        displayIssueComments();
+        displayComments();
         displayCommitsComments();
+        displayIssuesComments();
     }
 }

@@ -29,6 +29,8 @@ public class DisplayClient {
             Display disp;
             switch (var) {
                 case 0: {
+                    System.out.println("OK, exiting the program.");
+                    System.out.println("##########################################################################");
                     System.exit(0);
                 }
                 case 1: {
@@ -95,7 +97,7 @@ public class DisplayClient {
         return date;
     }
     /**
-    * A helper method in testing. Copied the way the analysis team made a repo for testing. 
+    * A helper method in testing. Copied the way the analysis team made a repo for testing.
     */
     public static Repository makeRepo(Repository repo) {
         Collaborator coll1 = new Collaborator("mister", "test", "tester1", "2");
@@ -103,10 +105,11 @@ public class DisplayClient {
 
         Issue i1 = new Issue("issue 1", coll2);
         Comment comm1 = new Comment("this is good", coll1, "type1");
-        // comm1.setdateCreated(LocalDate.now().minusDays(4));
-        // i1.addComment(comm1);
+        comm1.setDateCreated(toDate("2019-12-01"));
+        i1.addComment(comm1);
         Comment comm2 = new Comment("this is bad", coll1, "type1");
-        // comm2.setdateCreated(LocalDate.now());
+
+        comm2.setDateCreated(toDate("2019-11-25"));
         i1.addComment(comm2);
 
         Issue i2 = new Issue("issue 2", coll1);
@@ -117,15 +120,15 @@ public class DisplayClient {
 
         Commit com2 = new Commit("commit 2", coll2);
         Comment comm3 = new Comment("cool2", coll1, "type2");
-        // comm3.setdateCreated(LocalDate.now().minusDays(10));
+        comm3.setDateCreated(toDate("2019-11-20"));
         com2.addComment(comm3);
 
         Comment comm4 = new Comment("cool2", coll1, "type2");
-        // comm3.setdateCreated(LocalDate.now().minusDays(10));
+        comm3.setDateCreated(toDate("2019-11-15"));
         com2.addComment(comm4);
 
         Comment comm5 = new Comment("cool2", coll1, "type2");
-        // comm3.setdateCreated(LocalDate.now().minusDays(10));
+        comm3.setDateCreated(toDate("2019-11-10"));
         com2.addComment(comm5);
         repo = new Repository();
         repo.addIssue(i1);

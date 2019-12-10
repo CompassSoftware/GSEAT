@@ -57,7 +57,7 @@ public class ByUser implements Display{
     * @param user
     */
     public void displayCommentsByCollaborator(String user) {
-        System.out.print("Issue Comments: ");
+        System.out.print("Comments by " + user + ": ");
         int var = analysis.countCommentsByCollaborator(user);
         for (int i = 0; i < var; i++) {
             System.out.print("*");
@@ -70,7 +70,7 @@ public class ByUser implements Display{
     * @param user
     */
     public void displayCommitsCommentsByCollaborator(String user) {
-        System.out.print("Issue Comments by "+ user + ": ");
+        System.out.print("Commit Comments by "+ user + ": ");
         int var = analysis.countCommitCommentsByCollaborator(user);
         for (int i = 0; i < var; i++) {
             System.out.print("*");

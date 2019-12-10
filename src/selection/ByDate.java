@@ -58,6 +58,19 @@ import java.util.Date;
     }
 
     /**
+    * Displays the number of comments made in the date range
+    * @param start
+    * @param end
+    */
+    public void displayComments(Date start, Date end) {
+        System.out.print("Comments: ");
+        for (int i = 0; i < analysis.countComments(start, end); i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
+
+    /**
     * Displays the number of comments made in the issues in the date range
     * @param start
     * @param end
@@ -76,7 +89,7 @@ import java.util.Date;
     * @param end
     */
     public void displayCommitsComments(Date start, Date end) {
-        System.out.print("Comments on Commits: ");
+        System.out.print("Commit Comments: ");
         for (int i = 0; i < analysis.countCommitsComments(start, end); i++) {
             System.out.print("*");
         }
@@ -88,6 +101,7 @@ import java.util.Date;
     public void display() {
         displayIssues(start, end);
         displayCommits(start, end);
+        displayComments(start, end);
         displayIssueComments(start, end);
         displayCommitsComments(start, end);
     }
