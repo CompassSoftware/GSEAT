@@ -6,7 +6,7 @@ import github.Repository;
 import github.Issue;
 import github.Commit;
 import java.util.ArrayList;
-//import github.Collaborator;
+import github.Collaborator;
 
 /**
  * Analysis.java.
