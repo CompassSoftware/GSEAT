@@ -24,67 +24,43 @@ public class ByDate implements Display {
         this.analysis = new Analysis(repo);
     }
 
-    public void displayCommits() {
-        System.out.print("Commits: ");
-        for (int i = 0; i < analysis.countCommits(); i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-    }
-
-    public void displayIssues() {
-        System.out.print("Issues: ");
-        for (int i = 0; i < analysis.countIssues(); i++){
-            System.out.print("*");
-        }
-        System.out.println();
-    }
-
     public void displayCommits(Date start, Date end) {
-        System.out.print("Commits");
+        System.out.print("Commits: ");
         for (int i = 0; i < analysis.countCommits(start, end); i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
-    public void displayIssueComments() {
+    public void displayIssues(Date start, Date end) {
+        System.out.print("Issues: ");
+        for (int i = 0; i < analysis.countIssues(start, end); i++) {
+            System.out.print("*");
+        }
+        System.out.println();
+    }
+
+    public void displayIssueComments(Date start, Date end) {
         System.out.print("Issue Comments: ");
-        int var = analysis.countIssuesComments();
-        for (int i = 0; i < analysis.countIssuesComments(); i++) {
+        for (int i = 0; i < analysis.countIssuesComments(start, end); i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
-    public void displayCommitsComments() {
-        System.out.print("Commit Comments: ");
-        for (int i = 0; i < analysis.countCommitsComments(); i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-    }
 
-    public void displayCommentsByCollaborator(String user) {
-        System.out.printf("Comments by user: %s", user);
-        for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-    }
-
-    public void displayIssueCommentsByCollaborator(String user) {
-        System.out.printf("Issue comments by: %s\n", user);
-        for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
+    public void displayCommitsComments(Date start, Date end) {
+        System.out.print("Comments on Commits: ");
+        for (int i = 0; i < analysis.countCommitsComments(start, end); i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
     public void display() {
-        displayIssues();
-        displayCommits();
-        displayIssueComments();
-        displayCommitsComments();
+        displayIssues(start, end);
+        displayCommits(start, end);
+        displayIssueComments(start, end);
+        displayCommitsComments(start, end);
     }
 }
