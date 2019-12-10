@@ -674,9 +674,10 @@ public class Analysis
                     df.format(
                         ((double)(this.countContributionsByCollaborator(
                             username, start, end))
-                        / (double)(this.countContributionsBetweenDates()))
+                        / (double)(this.countContributions()))
                         * FRACTIONTOPERCENT
-                        );
+                        )
+                            );
             start.setTime(
                     start.getTime() 
                     + DAYSPERPERIOD * MILLISPERDAY);
@@ -691,7 +692,7 @@ public class Analysis
 
         for (String s : contributions)
         {
-            message += start.toString() + " to " end.toString()
+            message += start.toString() + " to " + end.toString()
                 + "   -   " + s + "%\n";
         }
 
