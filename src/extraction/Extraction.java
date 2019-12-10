@@ -94,6 +94,7 @@ public class Extraction {
             String issueText = jsonIssue.getString("title");
             String dateCreatedString = jsonIssue.getString("created_at");
             String dateUpdatedString = jsonIssue.getString("updated_at");
+            String commentURL = jsonIssue.getString("comments_url");
 
             Date dateCreated = githubDateStringToDate(dateCreatedString);
             Date dateUpdated = githubDateStringToDate(dateUpdatedString);
@@ -104,6 +105,34 @@ public class Extraction {
             issue.setIssueText(issueText);
             issue.setDateCreated(dateCreated);
             issue.setDateUpdated(dateUpdated);
+            
+            // Add comments on issue to issue object
+            // TODO: Refactor into another method if time permits
+            JSONArray comments = getJsonArrayFromUrlWithAuth(commentURL);
+            ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+
+            for (int j = 0; j < comments.size(); j++) {
+                JSONObject jsonComment = 
+                    JSONObject.fromObject(comments.get(j).toString());
+                JSONObject commentUser = jsonComment.getJSONObject("user");
+                String commentUserName = commentUser.getString("login");
+                String commentBody = jsonComment.getString("body");
+                String commentDateCreatedString = jsonComment.getString("created_at");
+                String commentDateUpdatedString = jsonComment.getString("updated_at");
+
+                Date commentDateCreated = githubDateStringToDate(commentDateCreatedString);
+                Date commentDateUpdated = githubDateStringToDate(commentDateUpdatedString);
+
+                Collaborator commentCollab = new Collaborator("", "", commentUserName, "");
+                Comment comment = new Comment("", commentCollab, "");
+
+                comment.setCommentText(commentBody);
+                comment.setDateCreated(commentDateCreated);
+                comment.setDateUpdated(commentDateUpdated);
+
+                issue.addComment(comment);
+
+            }
 
             repo.addIssue(issue);
         }
@@ -122,6 +151,7 @@ public class Extraction {
 
             JSONObject jsonCommitInfo = 
                 JSONObject.fromObject(commits.get(i).toString());
+            String commentURL = jsonCommitInfo.getString("comments_url");
             JSONObject jsonCommit = jsonCommitInfo.getJSONObject("commit");
             String message = jsonCommit.getString("message");
             // The github API has two "committer" dictionary keys. 
@@ -140,8 +170,35 @@ public class Extraction {
 
             Collaborator collab = new Collaborator("", "", userName, "");
             Commit commit = new Commit(message, collab);
-
             commit.setDateCreated(dateCreated);
+            
+            // Get comments from commits
+            JSONArray comments = getJsonArrayFromUrlWithAuth(commentURL);
+            ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+
+            for (int j = 0; j < comments.size(); j++) {
+                JSONObject jsonComment = 
+                    JSONObject.fromObject(comments.get(j).toString());
+                JSONObject commentUser = jsonComment.getJSONObject("user");
+                String commentUserName = commentUser.getString("login");
+                String commentBody = jsonComment.getString("body");
+                String commentDateCreatedString = jsonComment.getString("created_at");
+                String commentDateUpdatedString = jsonComment.getString("updated_at");
+
+                Date commentDateCreated = githubDateStringToDate(commentDateCreatedString);
+                Date commentDateUpdated = githubDateStringToDate(commentDateUpdatedString);
+
+                Collaborator commentCollab = new Collaborator("", "", commentUserName, "");
+                Comment comment = new Comment("", commentCollab, "");
+
+                comment.setCommentText(commentBody);
+                comment.setDateCreated(commentDateCreated);
+                comment.setDateUpdated(commentDateUpdated);
+
+                commit.addComment(comment);
+
+            }
+
 
             repo.addCommit(commit);
 
