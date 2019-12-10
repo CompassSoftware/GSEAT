@@ -751,5 +751,43 @@ public class Analysis
 	}
 	return result;
     }
+
+    /** 
+     * getRepoBeginDate(...)
+     *
+     * Loop through to figure out what the
+     * beginning/start date of the repo is.
+     *
+     * @return start - the start date
+     *                 of the repo
+     */
+    public Date getRepoBeginDate()
+    {
+        Date start = new Date();
+        for (Issue i : repo.getIssues())
+        {
+            if (i.getDateCreated().before(start))
+            {
+                start = (Date) i.getDateCreated().clone();
+            }
+        }
+        for (Commit c: repo.getCommits())
+        {
+            if (c.getDateCreated().before(start))
+            {
+                start = (Date) c.getDateCreated().clone();
+            }
+        }
+        for (Comment c: repo.getComments())
+        {
+            if (c.getDateCreated().before(start))
+            {
+                start = (Date) c.getDateCreated().clone();
+            }
+        }
+
+        return start;
+    }
+
 }
 
