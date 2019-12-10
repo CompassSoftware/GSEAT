@@ -55,6 +55,7 @@ public class Extraction {
     * @return a repository object that contains data for specified repository
     */
     public Repository extract() {
+        addCollaboratorsToRepo();
         addIssuesToRepo();
         addCommitsToRepo();
         addCommentsToRepo();
@@ -100,6 +101,7 @@ public class Extraction {
             String issueText = jsonIssue.getString("title");
             String dateCreatedString = jsonIssue.getString("created_at");
             String dateUpdatedString = jsonIssue.getString("updated_at");
+            String commentURL = jsonIssue.getString("comments_url");
 
             Date dateCreated = githubDateStringToDate(dateCreatedString);
             Date dateUpdated = githubDateStringToDate(dateUpdatedString);
@@ -110,6 +112,34 @@ public class Extraction {
             issue.setIssueText(issueText);
             issue.setDateCreated(dateCreated);
             issue.setDateUpdated(dateUpdated);
+            
+            // Add comments on issue to issue object
+            // TODO: Refactor into another method if time permits
+            JSONArray comments = getJsonArrayFromUrlWithAuth(commentURL);
+            ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+
+            for (int j = 0; j < comments.size(); j++) {
+                JSONObject jsonComment = 
+                    JSONObject.fromObject(comments.get(j).toString());
+                JSONObject commentUser = jsonComment.getJSONObject("user");
+                String commentUserName = commentUser.getString("login");
+                String commentBody = jsonComment.getString("body");
+                String commentDateCreatedString = jsonComment.getString("created_at");
+                String commentDateUpdatedString = jsonComment.getString("updated_at");
+
+                Date commentDateCreated = githubDateStringToDate(commentDateCreatedString);
+                Date commentDateUpdated = githubDateStringToDate(commentDateUpdatedString);
+
+                Collaborator commentCollab = new Collaborator("", "", commentUserName, "");
+                Comment comment = new Comment("", commentCollab, "");
+
+                comment.setCommentText(commentBody);
+                comment.setDateCreated(commentDateCreated);
+                comment.setDateUpdated(commentDateUpdated);
+
+                issue.addComment(comment);
+
+            }
 
             repo.addIssue(issue);
         }
@@ -128,6 +158,7 @@ public class Extraction {
 
             JSONObject jsonCommitInfo = 
                 JSONObject.fromObject(commits.get(i).toString());
+            String commentURL = jsonCommitInfo.getString("comments_url");
             JSONObject jsonCommit = jsonCommitInfo.getJSONObject("commit");
             String message = jsonCommit.getString("message");
             // The github API has two "committer" dictionary keys. 
@@ -146,8 +177,35 @@ public class Extraction {
 
             Collaborator collab = new Collaborator("", "", userName, "");
             Commit commit = new Commit(message, collab);
-
             commit.setDateCreated(dateCreated);
+            
+            // Get comments from commits
+            JSONArray comments = getJsonArrayFromUrlWithAuth(commentURL);
+            ArrayList<Comment> commentsArrayList = new ArrayList<Comment>();
+
+            for (int j = 0; j < comments.size(); j++) {
+                JSONObject jsonComment = 
+                    JSONObject.fromObject(comments.get(j).toString());
+                JSONObject commentUser = jsonComment.getJSONObject("user");
+                String commentUserName = commentUser.getString("login");
+                String commentBody = jsonComment.getString("body");
+                String commentDateCreatedString = jsonComment.getString("created_at");
+                String commentDateUpdatedString = jsonComment.getString("updated_at");
+
+                Date commentDateCreated = githubDateStringToDate(commentDateCreatedString);
+                Date commentDateUpdated = githubDateStringToDate(commentDateUpdatedString);
+
+                Collaborator commentCollab = new Collaborator("", "", commentUserName, "");
+                Comment comment = new Comment("", commentCollab, "");
+
+                comment.setCommentText(commentBody);
+                comment.setDateCreated(commentDateCreated);
+                comment.setDateUpdated(commentDateUpdated);
+
+                commit.addComment(comment);
+
+            }
+
 
             repo.addCommit(commit);
 
@@ -186,6 +244,56 @@ public class Extraction {
 
         }
 
+    }
+    
+    /**
+    * Adds all collaborators found in the repository API call to commits
+    * // TODO: Collaborator url couldn't be followed due to 
+    *          authentication error, so pulling some collab
+    *          info from commit URL.
+    */
+    public void addCollaboratorsToRepo() {
+        JSONArray commits = getJsonArrayFromUrlWithAuth(baseUrl + "/commits");
+        ArrayList<Commit> commitsArrayList = new ArrayList<Commit>();
+      
+        for (int i = 0; i < commits.size(); i++) {
+
+            JSONObject jsonCommitInfo = 
+                JSONObject.fromObject(commits.get(i).toString());
+            JSONObject jsonCommit = jsonCommitInfo.getJSONObject("commit");
+            String message = jsonCommit.getString("message");
+            
+            // The github API has two "committer" dictionary keys. 
+            // The first committer will be called innerCommitter, 
+            // which is a "committer" key inside of a "commit" dictionary
+            JSONObject innerCommitter = jsonCommit.getJSONObject("committer");
+            String dateCreatedString = innerCommitter.getString("date");
+            String[] committerName = innerCommitter.getString("name").split("\\s+");
+            String firstName = "";
+            String lastName = "";
+            if (committerName.length == 2) {
+                firstName = committerName[0];
+                lastName = committerName[1];
+            } else firstName = committerName[0];
+            Date dateCreated = githubDateStringToDate(dateCreatedString);
+
+            // The github API has two "committer" dictionary keys. 
+            // The second committer will be called outerCommitter, 
+            // which is a "committer" key not nested in any dictionaries.
+            JSONObject outerCommitter = 
+                jsonCommitInfo.getJSONObject("committer");
+            String userName = outerCommitter.getString("login");
+            String userID = outerCommitter.getString("id");
+
+            Collaborator collab = new Collaborator(firstName, lastName, userName, userID);
+
+            // Check if collaborator was already added. If not, add to list. 
+            boolean collabAlreadyExists = false;
+            for (int j = 0; j < repo.getCollaborators().size(); j++) {
+                if (userName.toLowerCase().equals(repo.getCollaborators().get(j).getUserName().toLowerCase())) collabAlreadyExists = true;
+            }
+            if (!collabAlreadyExists) repo.addCollaborator(collab);
+        }
     }
 
     /**
@@ -248,7 +356,7 @@ public class Extraction {
                 return null;
             }
 
-            String tempToken = "jacobmacfarland:" + token;
+            String tempToken = token + ":x-oauth-basic";
             String authString = "Basic " + Base64.getEncoder().encode(
                 tempToken.getBytes());
             connection.setRequestProperty("Authorization", authString); 

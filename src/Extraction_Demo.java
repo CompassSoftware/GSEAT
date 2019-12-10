@@ -66,6 +66,64 @@ public class Extraction_Demo {
 		}
 		
 		System.out.println("------------------------------------------------------------------------");
+		System.out.println("------------------------------------------------------------------------\n\n\n\n\n\n\n");
+
+		ArrayList<Collaborator> collaborators = repo.getCollaborators();
+		for (int i = 0; i < collaborators.size(); i++) {
+			
+			Collaborator collab = collaborators.get(i);
+			
+			ArrayList<Issue> collabIssues = collab.getIssues();
+			ArrayList<Commit> collabCommits = collab.getCommits();
+			ArrayList<Comment> collabComments = collab.getComments();
+			
+			System.out.println("Collaborator: " + collab.getFirstName() + " " + collab.getLastName());
+			
+			for (int j = 0; j < collabIssues.size(); j++) {
+				Issue issue = collabIssues.get(j);
+				System.out.println("    Issue " + (j + 1) + ": ");
+				System.out.println("        Username: " + issue.getCollaborator().getUserName());
+				System.out.println("        Issue text: " + issue.getIssueText());
+				System.out.println("        Date Created: " + issue.getDateCreated());
+				System.out.println("        Date Updated: " + issue.getDateUpdated());
+				
+				for (int k = 0; k < issue.getComments().size(); k++) {
+					Comment comment = issue.getComments().get(k);
+					System.out.println("            Comment " + (k + 1) + ": ");
+					System.out.println("                Username: " + comment.getCollaborator().getUserName());
+					System.out.println("                Comment text: " + comment.getCommentText());
+					System.out.println("                Date Created: " + comment.getDateCreated());
+					System.out.println("                Date Updated: " + comment.getDateUpdated());
+				}
+			}
+			
+			for (int j = 0; j < collabCommits.size(); j++) {
+				Commit commit = collabCommits.get(j);
+				System.out.println("    Commit " + (j + 1) + ": ");
+				System.out.println("        Username: " + commit.getCollaborator().getUserName());
+				System.out.println("        Commit text: " + commit.getInfo());
+				System.out.println("        Date Created: " + commit.getDateCreated());
+				
+				for (int k = 0; k < commit.getComments().size(); k++) {
+					Comment comment = commit.getComments().get(k);
+					System.out.println("            Comment " + (k + 1) + ": ");
+					System.out.println("                Username: " + comment.getCollaborator().getUserName());
+					System.out.println("                Comment text: " + comment.getCommentText());
+					System.out.println("                Date Created: " + comment.getDateCreated());
+					System.out.println("                Date Updated: " + comment.getDateUpdated());
+				}
+			}
+			
+			for (int j = 0; j < collabComments.size(); j++) {
+				Comment comment = collabComments.get(j);
+				System.out.println("    Comment " + (j + 1) + ": ");
+				System.out.println("        Username: " + comment.getCollaborator().getUserName());
+				System.out.println("        Comment text: " + comment.getCommentText());
+				System.out.println("        Date Created: " + comment.getDateCreated());
+				System.out.println("        Date Updated: " + comment.getDateUpdated());
+			}
+			
+		}
 		
 	}
 
