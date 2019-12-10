@@ -49,7 +49,7 @@ public class DisplayClient {
                 case 3: {
                     Date d1 = null;
                     while (d1 == null) {
-                        System.out.println("Enter the dates in the format YYYY-DD-MM");
+                        System.out.println("Enter the dates in the format YYYY-MM-DD");
                         String dateString1 = kb.nextLine();
                         d1 = toDate(dateString1);
                         if (d1 == null) {

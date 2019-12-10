@@ -24,29 +24,5 @@ public class DisplayTest {
         assertTrue((new ByDate(new Repository(), new Date(), new Date())) instanceof Display);
         assertTrue((new ByUser(new Repository(), new String("Hello"))) instanceof Display);
     }
-
-    // @Test
-    // public void testByUser() {
-    //     Collaborator collab = new Collaborator("person","test","person","4");
-    //     Collaborator collab2 = new Collaborator("person2", "test1", "person2User", "5");
-    //
-    //     Issue i1 = new Issue("issue1", collab);
-    //     i1.addComment(new Comment("another thing", collab, "issue"));
-    //     i1.addComment(new Comment("a thing", collab, "issue"));
-    //     i1.addComment(new Comment("things", collab, "issue"));
-    //     Issue i2 = new Issue("issue2", collab);
-    //     i2.addComment(new Comment("more things", collab, "issue"));
-    //     i2.addComment(new Comment("more more things", collab, "issue"));
-    //
-    //     Repository repo = new Repository();
-    //     repo.addIssue(i1);
-    //     repo.addIssue(i2);
-    //
-    //     Analysis analysis = new Analysis(repo);
-    //
-    //     int expected = 5;
-    //     int actual = analysis.countIssuesComments();
-    //
-    //     assertEquals(expected, actual);
-    // }
+    
 }

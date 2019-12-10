@@ -90,7 +90,7 @@ public class ByRepo implements Display{
         displayIssues();
         displayCommits();
         displayComments();
-        displayCommitsComments();
         displayIssuesComments();
+        displayCommitsComments();
     }
 }

@@ -70,6 +70,8 @@ compile_selection: selection/ByRepo.java selection/GitUser.java
 	javac selection/ByRepo.java
 	javac selection/ByDate.java
 	javac selection/DisplayClient.java
+demo_display: 
+	java selection/DisplayClient
 test_display:
 	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
 
