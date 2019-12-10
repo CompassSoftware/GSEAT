@@ -54,7 +54,6 @@ clean-analysis:
 
 clean-selection:
 	@echo "cleaning selection/"
-
 ######################################################################
 ######################################################################
 run:
@@ -71,6 +70,9 @@ compile_selection: selection/ByRepo.java selection/GitUser.java
 	javac selection/ByRepo.java
 	javac selection/ByDate.java
 	javac selection/DisplayClient.java
+test_display:
+	java -cp .:$(JUNIT5_JAR) $(JUNIT5_RUNNER) --scan-class-path 
+
 	
 compile_analysis: analysis/Analysis.java analysis/AnalysisTest.java $(JUNIT5_JAR)
 	javac analysis/Analysis.java

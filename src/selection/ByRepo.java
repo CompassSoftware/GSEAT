@@ -15,67 +15,64 @@ import github.*;
 public class ByRepo implements Display{
     Analysis analysis = null;
 
+    /**
+    * Constructor builds a new anlaysis object with repo.
+    * @param repo
+    */
     public ByRepo(Repository repo) {
         this.analysis = new Analysis(repo);
     }
-
+    /**
+    * Displays the number of commits as a row of asterisks.
+    */
     public void displayCommits() {
         System.out.print("Commits: ");
-        for (int i = 0; i < analysis.countCommits(); i++) {
+        int var = analysis.countCommits();
+        for (int i = 0; i < var; i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
+    /**
+    * Displays the number of issues in the repository as a row of asterisks.
+    */
     public void displayIssues() {
         System.out.print("Issues: ");
-        for (int i = 0; i < analysis.countIssues(); i++){
+        int var = analysis.countIssues();
+        for (int i = 0; i < var; i++){
             System.out.print("*");
         }
         System.out.println();
     }
-
-    public void displayCommits(Date start, Date end) {
-        System.out.print("Commits");
-        for (int i = 0; i < analysis.countCommits(start, end); i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-    }
-
+        /**
+        * Displays the number of comments on the issues in the repository as a row of asterisks.
+        */
     public void displayIssueComments() {
         System.out.print("Issue Comments: ");
         int var = analysis.countIssuesComments();
-        for (int i = 0; i < analysis.countIssuesComments(); i++) {
+        for (int i = 0; i < var; i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
+        /**
+        * Displays the number of comments on the Commits in the repository as a row of asterisks.
+        */
     public void displayCommitsComments() {
         System.out.print("Commit Comments: ");
-        for (int i = 0; i < analysis.countCommitsComments(); i++) {
+        int var = analysis.countCommitsComments();
+        for (int i = 0; i < var; i++) {
             System.out.print("*");
         }
         System.out.println();
     }
 
-    public void displayCommentsByCollaborator(String user) {
-        System.out.printf("Comments by user: %s", user);
-        for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-    }
 
-    public void displayIssueCommentsByCollaborator(String user) {
-        System.out.printf("Issue comments by: %s\n", user);
-        for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
-            System.out.print("*");
-        }
-        System.out.println();
-    }
-
+        /**
+        * Calls the methods of the ByRepo class.
+        */
     public void display() {
         displayIssues();
         displayCommits();

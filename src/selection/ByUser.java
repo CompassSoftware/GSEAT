@@ -15,34 +15,21 @@ import github.*;
 public class ByUser implements Display{
     Analysis analysis = null;
     String userName;
+    /**
+    * Constructor that creates a new analysis object and sets the username to be used.
+    * @param repo
+    * @param userName
+    */
+
     public ByUser(Repository repo, String userName) {
         this.analysis = new Analysis(repo);
         this.userName = userName;
     }
 
-    // public void displayCommits() {
-    //     System.out.print("Commits: ");
-    //     for (int i = 0; i < analysis.countCommits(); i++) {
-    //         System.out.print("*");
-    //     }
-    //     System.out.println();
-    // }
-    //
-    // public void displayIssues() {
-    //     System.out.print("Issues: ");
-    //     for (int i = 0; i < analysis.countIssues(); i++){
-    //         System.out.print("*");
-    //     }
-    //     System.out.println();
-    // }
-    //
-    // public void displayCommits(Date start, Date end) {
-    //     System.out.print("Commits");
-    //     for (int i = 0; i < analysis.countCommits(start, end); i++) {
-    //         System.out.print("*");
-    //     }
-    //     System.out.println();
-    // }
+    /**
+    * Displays the number of commits made by the user "user"
+    * @param user
+    */
     public void displayCommitsByCollaborator(String user) {
         System.out.print("Commits by " + user + ": ");
         int var = analysis.countCollaboratorCommits(user);
@@ -52,6 +39,10 @@ public class ByUser implements Display{
         System.out.println();
     }
 
+    /**
+    * Displays the number of issues made by the user "user"
+    * @param user
+    */
     public void displayIssuesByCollaborator(String user) {
         System.out.print("Issues By " + user + ": ");
         int var = analysis.countIssuesByCollaborator(user);
@@ -61,6 +52,10 @@ public class ByUser implements Display{
         System.out.println();
     }
 
+    /**
+    * Displays the number of comments made by the user "user"
+    * @param user
+    */
     public void displayCommentsByCollaborator(String user) {
         System.out.print("Issue Comments: ");
         int var = analysis.countCommentsByCollaborator(user);
@@ -70,7 +65,10 @@ public class ByUser implements Display{
         System.out.println();
     }
 
-
+    /**
+    * Displays the number of comments made by the user "user" on the commits
+    * @param user
+    */
     public void displayCommitsCommentsByCollaborator(String user) {
         System.out.print("Issue Comments by "+ user + ": ");
         int var = analysis.countCommitCommentsByCollaborator(user);
@@ -80,22 +78,10 @@ public class ByUser implements Display{
         System.out.println();
     }
 
-    // public void displayCommitsComments() {
-    //     System.out.print("Commit Comments: ");
-    //     for (int i = 0; i < analysis.countCommitsComments(); i++) {
-    //         System.out.print("*");
-    //     }
-    //     System.out.println();
-    // }
-    //
-    // public void displayCommentsByCollaborator(String user) {
-    //     System.out.printf("Comments by %s: ", user);
-    //     for (int i = 0; i < analysis.countCommentsByCollaborator(user); i++) {
-    //         System.out.print("*");
-    //     }
-    //     System.out.println();
-    // }
-
+    /**
+    * Displays the number of comments made by the user "user" on the issues
+    * @param user
+    */
     public void displayIssueCommentsByCollaborator(String user) {
         System.out.printf("Issue comments by %s:", user);
         int var = analysis.countCommentsByCollaborator(user);
@@ -105,6 +91,9 @@ public class ByUser implements Display{
         System.out.println();
     }
 
+    /**
+    * Calls the methods of the ByUser class.
+    */
     public void display() {
         displayIssuesByCollaborator(userName);
         displayCommitsByCollaborator(userName);

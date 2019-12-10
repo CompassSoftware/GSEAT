@@ -13,7 +13,10 @@ import github.Collaborator;
 
 
 public class DisplayClient {
-
+/**
+* Requests input reguarding what type of display to do.
+*
+*/
     public static void main(String[] args) {
         while (true) {
             System.out.println("##########################################################################");
@@ -66,9 +69,6 @@ public class DisplayClient {
                     disp.display();
 
                     break;
-                    //Pass these dates to a ByDate class.
-                    //ByDate should extend the display class.
-                    //ByDate should handle the display.
                 }
                 default: {
                     System.out.println("Please choose: ");
@@ -77,6 +77,9 @@ public class DisplayClient {
             }
         }
     }
+    /**
+    * Converts a string to a date object.
+    */
     public static Date toDate(String dateString){
         SimpleDateFormat formatter =
             new SimpleDateFormat("yyyy-MM-dd");
@@ -87,11 +90,13 @@ public class DisplayClient {
             date = formatter.parse(dateString);
         }
         catch (ParseException e) {
-            e.printStackTrace();
             return null;
         }
         return date;
     }
+    /**
+    * A helper method in testing. Copied the way the analysis team made a repo for testing. 
+    */
     public static Repository makeRepo(Repository repo) {
         Collaborator coll1 = new Collaborator("mister", "test", "tester1", "2");
         Collaborator coll2 = new Collaborator("misses", "test", "tester2", "3");
