@@ -1,6 +1,9 @@
 package analysis;
 
 import java.util.Date;
+import java.text.DecimalFormat;
+import java.text.FieldPosition;
+import java.lang.StringBuffer;
 import github.Comment;
 import github.Repository;
 import github.Issue;
@@ -15,7 +18,14 @@ import github.Collaborator;
  */
 public class Analysis
 {
+    private static final long MILLISPERDAY = 86400000;
+    private static final long DAYSPERPERIOD = 7;
+    private static final long FRACTIONTOPERCENT = 100;
+    private static final long CHECKBEFORE = 2;
+
     Repository repo;
+
+
 
     /**
      * Analysis constructor.
@@ -26,7 +36,7 @@ public class Analysis
     {
         repo = r;
     }
-    
+
     /**
      * countCommits.
      *
@@ -50,7 +60,7 @@ public class Analysis
         return repo.getIssues().size();
     }
 
-     /**
+    /**
      * countCommitsWithDates.
      *
      * Counts repo commits
@@ -65,7 +75,7 @@ public class Analysis
         for (Commit c : repo.getCommits())
         {
             if ((start.compareTo(c.getDateCreated()) <= 0) 
-					&& (end.compareTo(c.getDateCreated()) >= 0))
+                    && (end.compareTo(c.getDateCreated()) >= 0))
             {
                 count++;
             }
@@ -88,7 +98,7 @@ public class Analysis
         for (Issue i : repo.getIssues())
         {
             if ((start.compareTo(i.getDateCreated()) <= 0) 
-					&& (end.compareTo(i.getDateCreated()) >= 0))
+                    && (end.compareTo(i.getDateCreated()) >= 0))
             {
                 count++;
             }
@@ -113,7 +123,7 @@ public class Analysis
         }
         return count;
     }
-        
+
     /**
      * countIssuesComments.
      *
@@ -135,7 +145,7 @@ public class Analysis
             for (Comment c : comments)
             {
                 if ((start.compareTo(c.getDateCreated()) <= 0) 
-					&& (end.compareTo(c.getDateCreated()) >= 0))
+                        && (end.compareTo(c.getDateCreated()) >= 0))
                 {
                     count++;
                 } 
@@ -161,7 +171,7 @@ public class Analysis
         }
         return count;
     }
-   
+
     /**
      * countCommitsComments
      *
@@ -183,7 +193,7 @@ public class Analysis
             for (Comment w : comments)
             {
                 if (w.getDateCreated().compareTo(start) >= 0
-                    && w.getDateCreated().compareTo(end) <= 0)
+                        && w.getDateCreated().compareTo(end) <= 0)
                 {
                     count++;
                 }
@@ -192,7 +202,7 @@ public class Analysis
         return count;
     }
 
-     /**
+    /**
      * countRepoComments
      *
      * Counts the comments that each commit has for repo.
@@ -203,12 +213,12 @@ public class Analysis
     {
         return repo.getComments().size();
     }
-   
+
     /**
      * countRepoComments
      *
      * Counts the comments that each commit has for the repo
-	 * between 2 dates.
+     * between 2 dates.
      *
      * @param start - the earliest date that comments will
      *  be counted from.
@@ -222,7 +232,7 @@ public class Analysis
         for (Comment w : repo.getComments())
         {
             if (w.getDateCreated().compareTo(start) >= 0
-                && w.getDateCreated().compareTo(end) <= 0)
+                    && w.getDateCreated().compareTo(end) <= 0)
             {
                 count++;
             }
@@ -240,10 +250,10 @@ public class Analysis
     {
         int total = countIssuesComments();
         total += countCommitsComments();
-		total += countRepoComments();
+        total += countRepoComments();
         return total;
     }
-    
+
     /**
      * countComments
      * Counts the total number of comments in the repository.
@@ -259,52 +269,52 @@ public class Analysis
     {
         int total = countIssuesComments(start, end);
         total += countCommitsComments(start, end);
-		total += countRepoComments(start, end);
+        total += countRepoComments(start, end);
         return total;
     }
-    
+
     /**
-    * countCommentsByCollaborator
-    * Counts the comments made by a collaborator.
-    * 
-    * @param username of collaborator
-    * @return count of comments
-    */
+     * countCommentsByCollaborator
+     * Counts the comments made by a collaborator.
+     * 
+     * @param username of collaborator
+     * @return count of comments
+     */
     public int countCommentsByCollaborator(String username)
     {
         int count = 0;
         count += countIssueCommentsByCollaborator(username);
         count += countCommitCommentsByCollaborator(username);
-		count += countRepoCommentsByCollaborator(username);
+        count += countRepoCommentsByCollaborator(username);
         return count;
     }
 
     /**
-    * countCommentsByCollaborator
-    * Counts the comments made by a collaborator through dates.
-    * 
-	* @param username of collaborator
-	* @param start date
-	* @param end date
-    * @return count of comments
-    */
+     * countCommentsByCollaborator
+     * Counts the comments made by a collaborator through dates.
+     * 
+     * @param username of collaborator
+     * @param start date
+     * @param end date
+     * @return count of comments
+     */
     public int countCommentsByCollaborator(String username, 
-		Date start, Date end)
+            Date start, Date end)
     {
         int count = 0;
         count += countIssueCommentsByCollaborator(username, start, end);
         count += countCommitCommentsByCollaborator(username, start, end);
-		count += countRepoCommentsByCollaborator(username, start, end);
+        count += countRepoCommentsByCollaborator(username, start, end);
         return count;
     }
 
     /**
-    * countIssueCommentsByCollaborator
-    * Counts issue comments made by colllaborator.
-    *
-	* @param username of collaborator
-    * @return count of comments
-    */
+     * countIssueCommentsByCollaborator
+     * Counts issue comments made by colllaborator.
+     *
+     * @param username of collaborator
+     * @return count of comments
+     */
     public int countIssueCommentsByCollaborator(String username)
     {
         int count = 0;
@@ -323,16 +333,16 @@ public class Analysis
     }
 
     /**
-    * countIssueCommentsByCollaborator
-    * Counts issue comments made by colllaborator.
-    *
-	* @param username of collaborator
-	* @param start date
-	* @param end date
-    * @return count of comments
-    */
+     * countIssueCommentsByCollaborator
+     * Counts issue comments made by colllaborator.
+     *
+     * @param username of collaborator
+     * @param start date
+     * @param end date
+     * @return count of comments
+     */
     public int countIssueCommentsByCollaborator(String username, 
-		Date start, Date end)
+            Date start, Date end)
     {
         int count = 0;
         for (Issue i : repo.getIssues())
@@ -341,8 +351,8 @@ public class Analysis
             for (Comment c : comments)
             {
                 if ((c.getCollaborator().getUserName()).equals(username) 
-					&& (start.compareTo(c.getDateCreated()) <= 0) 
-					&& (end.compareTo(c.getDateCreated()) >= 0))
+                        && (start.compareTo(c.getDateCreated()) <= 0) 
+                        && (end.compareTo(c.getDateCreated()) >= 0))
                 {
                     count++;
                 }
@@ -352,12 +362,12 @@ public class Analysis
     }
 
     /**
-    * countCommitCommentsByCollaborator
-    * Counts commit comments made by collaborator.
-    *
-	* @param username of collaborator
-    * @return count of comments
-    */
+     * countCommitCommentsByCollaborator
+     * Counts commit comments made by collaborator.
+     *
+     * @param username of collaborator
+     * @return count of comments
+     */
     public int countCommitCommentsByCollaborator(String username)
     {
         int count = 0;
@@ -376,16 +386,16 @@ public class Analysis
     }
 
     /**
-    * countCommitCommentsByCollaborator
-    * Counts commit comments made by collaborator.
-    *
-	* @param username of collaborator
-	* @param start date
-	* @param end date
-    * @return count of comments
-    */
+     * countCommitCommentsByCollaborator
+     * Counts commit comments made by collaborator.
+     *
+     * @param username of collaborator
+     * @param start date
+     * @param end date
+     * @return count of comments
+     */
     public int countCommitCommentsByCollaborator(String username, 
-		Date start, Date end)
+            Date start, Date end)
     {
         int count = 0;
         for (Commit i : repo.getCommits())
@@ -394,8 +404,8 @@ public class Analysis
             for (Comment c : comments)
             {
                 if ((c.getCollaborator().getUserName()).equals(username) 
-					&& (start.compareTo(c.getDateCreated()) <= 0) 
-					&& (end.compareTo(c.getDateCreated()) >= 0))
+                        && (start.compareTo(c.getDateCreated()) <= 0) 
+                        && (end.compareTo(c.getDateCreated()) >= 0))
                 {
                     count++;
                 }
@@ -404,13 +414,13 @@ public class Analysis
         return count;
     }
 
-	/**
-    * countRepoCommentsByCollaborator
-    * Counts repo comments made by collaborator.
-    *
-	* @param username of collaborator
-    * @return count of comments
-    */
+    /**
+     * countRepoCommentsByCollaborator
+     * Counts repo comments made by collaborator.
+     *
+     * @param username of collaborator
+     * @return count of comments
+     */
     public int countRepoCommentsByCollaborator(String username)
     {
         int count = 0;
@@ -425,23 +435,23 @@ public class Analysis
     }
 
     /**
-    * countRepoCommentsByCollaborator
-    * Counts repo comments made by collaborator.
-    *
-	* @param username of collaborator
-	* @param start date
-	* @param end date
-    * @return count of comments
-    */
+     * countRepoCommentsByCollaborator
+     * Counts repo comments made by collaborator.
+     *
+     * @param username of collaborator
+     * @param start date
+     * @param end date
+     * @return count of comments
+     */
     public int countRepoCommentsByCollaborator(String username, 
-		Date start, Date end)
+            Date start, Date end)
     {
         int count = 0;
         for (Comment c : repo.getComments())
         {
             if ((c.getCollaborator().getUserName()).equals(username) 
-				&& (start.compareTo(c.getDateCreated()) <= 0) 
-				&& (end.compareTo(c.getDateCreated()) >= 0))
+                    && (start.compareTo(c.getDateCreated()) <= 0) 
+                    && (end.compareTo(c.getDateCreated()) >= 0))
             {
                 count++;
             }
@@ -472,7 +482,7 @@ public class Analysis
         }
         return count;
     }
-    
+
     /**
      * countIssuesByCollaborator
      *
@@ -495,8 +505,8 @@ public class Analysis
         for (Issue i : repo.getIssues())
         {
             if ((i.getCollaborator().getUserName()).equals(username)
-                && i.getDateCreated().compareTo(start) >= 0
-                && i.getDateCreated().compareTo(end) <= 0)
+                    && i.getDateCreated().compareTo(start) >= 0
+                    && i.getDateCreated().compareTo(end) <= 0)
             {
                 count++;
             }
@@ -550,8 +560,8 @@ public class Analysis
         for (Commit i : repo.getCommits())
         {
             if ((i.getCollaborator().getUserName()).equals(username)
-                && i.getDateCreated().compareTo(start) >= 0
-                && i.getDateCreated().compareTo(end) <= 0)
+                    && i.getDateCreated().compareTo(start) >= 0
+                    && i.getDateCreated().compareTo(end) <= 0)
             {
                 count++;
             }
@@ -561,6 +571,7 @@ public class Analysis
 
     /**
      * countContributionsByCollaborator
+     *
      * Counts the total number of contributions(comments, issues,
      *  etc) in the repository by a specific collaborator, added
      *  during certain dates.
@@ -573,7 +584,7 @@ public class Analysis
      *  collaborator during certain date range.
      */
     public int countContributionsByCollaborator(String username,
-        Date start, Date end)
+            Date start, Date end)
     {
         int total = countIssuesByCollaborator(username, start, end);
         total += countCollaboratorCommits(username, start, end);
@@ -583,6 +594,7 @@ public class Analysis
 
     /**
      * countContributionsByCollaborator
+     *
      * Counts the total number of contributions(comments, issues,
      *  etc) in the repository by a specific collaborator.
      *
@@ -598,7 +610,7 @@ public class Analysis
         total += countCommentsByCollaborator(username);
         return total;
     }
-  
+
     /**
      * countContributions
      *
@@ -609,13 +621,16 @@ public class Analysis
      *              total number of commits, comments,
      *              and issues
      */
-    public int countContributions() {
+    public int countContributions() 
+    {
         return countCommits() 
-               + countComments() 
-               + countIssues();
+            + countComments() 
+            + countIssues();
     }
 
     /**
+     * countContributionsBetweenDates(...)
+     *
      * Count the number of commits, comments, 
      * and issues for Repo between 2 dates.
      *
@@ -641,21 +656,87 @@ public class Analysis
         return total;
     }
 
+
     /**
+     * contributionBreakdownByCollaborator(...)
+     *
+     * A method that returns a breakdown (string)
+     * of what percentage of contributions for a
+     * certain collaborator were done between each
+     * 7 day period from the repo creation date to
+     * the current date.
+     *
+     * @return info
+     *             sentence containing contributions
+     *             by collaborator through a set of
+     *             7 day periods
+     * @param username 
+     *             the collaborator's username
+     */
+    public String contributionBreakdownByCollaborator(String username)
+    {
+        Date start = (Date) this.getRepoBeginDate();
+        Date absoluteStart = (Date) start.clone();
+
+        ArrayList<String> contributions = new ArrayList<>();
+
+        Date current = new Date();
+        Date end = ((Date) start.clone());
+        end.setDate(start.getDate() + 7);
+        
+        DecimalFormat df = new DecimalFormat("###.00");
+        
+        String data = "";
+
+        do {
+
+            data = df.format(
+                        ((double) (this.countContributionsByCollaborator(
+                                username, start, end))
+                         / (double) (this.countContributions()))
+                        * FRACTIONTOPERCENT, new StringBuffer(),
+                        new FieldPosition(0)).toString();
+
+            contributions.add(start.toString() + " to " + end.toString() 
+                     + " - " + data);
+
+            start.setDate(start.getDate() + 7);
+
+            end.setDate(start.getDate() + 7);
+
+        } while (end.before(current));
+
+        String message = "\nAll-time Contributions by " + username 
+            + "\nFrom: " + absoluteStart.toString() + " To: " + start.toString()
+            + "\nin weekly increments:\n\n";
+
+        for (String s : contributions)
+        {
+            message += s + "\n";
+        }
+
+        return message;
+    }
+
+    /**
+     * percentContributionsByCollaborator(...)
+     *
      * A method to return the percentage of all
      * contributions a certain collaborator made between dates.
      *
-     * @param collaborator username
-     * @param start date
-     * @param end date
+     * @param username - the collaborator
+     * @param start - the start date
+     * @param end - the end date
      * @return percentage of contributions
      */
-    public double percentContributionsByCollaborator(String username, Date start, Date end)
+    public double percentContributionsByCollaborator(String username, 
+            Date start, Date end)
     {
         double contributions = countContributionsBetweenDates(start, end);
-        if(contributions != 0.0)
+        if (contributions != 0.0)
         {
-            return (double) countContributionsByCollaborator(username, start, end) / contributions;
+            return (double) countContributionsByCollaborator(username,
+                    start, end) / contributions;
         }
         return 0.0;
     }
@@ -704,6 +785,7 @@ public class Analysis
 	}
 	return result;
     }    
+    
     /**
      * contributionBreakdownByCollaborator
      *
