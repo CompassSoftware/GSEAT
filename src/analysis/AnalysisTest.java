@@ -1143,5 +1143,86 @@ public class AnalysisTest
 
         assertEquals(expected, actual);
     }
+
+    /**
+     * Tests the toString method with no dates.
+     */
+    @Test
+    public void testToString() {
+        String username = "collab1";
+        String expected = String.format("Collaborator %s made 3 commits, 3 issues, and 6 comments.\n", username);
+        Repository repo = new Repository();
+        Collaborator collab1 = new Collaborator();
+        Commit commit1 = new Commit("idk",collab1);
+        Commit commit2 = new Commit("idrk",collab1);
+        Commit commit3 = new Commit("idek",collab1);
+        Issue issue1 = new Issue("help",collab1);
+        Issue issue2 = new Issue("me",collab1);
+        Issue issue3 = new Issue("live",collab1);
+        Comment comment1 = new Comment("this",collab1,"commit");
+        Comment comment2 = new Comment("beat",collab1,"commit");
+        Comment comment3 = new Comment("is",collab1,"commit");
+        Comment comment4 = new Comment("hypnotic",collab1,"issue");
+        Comment comment5 = new Comment("funky",collab1,"issue");
+        Comment comment6 = new Comment("fresh",collab1,"issue");
+        commit1.addComment(comment1);
+        commit2.addComment(comment2);
+        commit3.addComment(comment3);
+        issue1.addComment(comment4);
+        issue2.addComment(comment5);
+        issue3.addComment(comment6);
+        repo.addCommit(commit1);
+        repo.addCommit(commit2);
+        repo.addCommit(commit3);
+        repo.addIssue(issue1);
+        repo.addIssue(issue2);
+        repo.addIssue(issue3);
+        Analysis analysis = new Analysis(repo);        
+        String actual = analysis.toString(username);
+        assertEquals(expected, actual);
+    }
+
+    /**
+     * Tests the toString method with dates.
+     */
+    @Test
+    public void testToStringWithDates() {
+        String username = "collab1";
+        Date start = new Date();
+        Date end = new Date();
+        String leegggo = start.toString();
+        String donnezo = end.toString();
+        String expected = String.format("Collaborator %s made 3 commits, 3 issues, and 6 comments between %s and %s.\n",
+                                        username,leegggo,donnezo);
+        Repository repo = new Repository();
+        Collaborator collab1 = new Collaborator();
+        Commit commit1 = new Commit("idk",collab1);
+        Commit commit2 = new Commit("idrk",collab1);
+        Commit commit3 = new Commit("idek",collab1);
+        Issue issue1 = new Issue("help",collab1);
+        Issue issue2 = new Issue("me",collab1);
+        Issue issue3 = new Issue("live",collab1);
+        Comment comment1 = new Comment("this",collab1,"commit");
+        Comment comment2 = new Comment("beat",collab1,"commit");
+        Comment comment3 = new Comment("is",collab1,"commit");
+        Comment comment4 = new Comment("hypnotic",collab1,"issue");
+        Comment comment5 = new Comment("funky",collab1,"issue");
+        Comment comment6 = new Comment("fresh",collab1,"issue");
+        commit1.addComment(comment1);
+        commit2.addComment(comment2);
+        commit3.addComment(comment3);
+        issue1.addComment(comment4);
+        issue2.addComment(comment5);
+        issue3.addComment(comment6);
+        repo.addCommit(commit1);
+        repo.addCommit(commit2);
+        repo.addCommit(commit3);
+        repo.addIssue(issue1);
+        repo.addIssue(issue2);
+        repo.addIssue(issue3);
+        Analysis analysis = new Analysis(repo);        
+        String actual = analysis.toString(username,start,end);
+        assertEquals(expected, actual);
+    }
 }
 
