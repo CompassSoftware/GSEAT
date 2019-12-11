@@ -676,47 +676,38 @@ public class Analysis
     public String contributionBreakdownByCollaborator(String username)
     {
         Date start = (Date) this.getRepoBeginDate();
-        start.setTime(start.getTime() 
-                - (DAYSPERPERIOD * MILLISPERDAY * CHECKBEFORE));
-
+        Date absoluteStart = (Date) start.clone();
 
         ArrayList<String> contributions = new ArrayList<>();
 
         Date current = new Date();
         Date end = ((Date) start.clone());
-
-        end.setTime(
-                start.getTime() 
-                + DAYSPERPERIOD * MILLISPERDAY);
+        end.setDate(start.getDate() + 7);
         
-        Date absoluteStart = (Date) end.clone();
-
         DecimalFormat df = new DecimalFormat("###.00");
+        
+        String data = "";
 
+        do {
 
-        while (end.before(current))
-        {
-            contributions.add(
-                    df.format(
+            data = df.format(
                         ((double) (this.countContributionsByCollaborator(
                                 username, start, end))
                          / (double) (this.countContributions()))
                         * FRACTIONTOPERCENT, new StringBuffer(),
-                        new FieldPosition(0)).toString());
+                        new FieldPosition(0)).toString();
 
-            start.setTime(
-                    start.getTime() 
-                    + DAYSPERPERIOD * MILLISPERDAY);
-        
+            contributions.add(start.toString() + " to " + end.toString() 
+                     + " - " + data);
 
-            end.setTime(
-                    end.getTime()
-                    + DAYSPERPERIOD * MILLISPERDAY);
+            start.setDate(start.getDate() + 7);
 
-        }
+            end.setDate(start.getDate() + 7);
+
+        } while (end.before(current));
 
         String message = "\nAll-time Contributions by " + username 
-            + "\nFrom: " + absoluteStart.toString() + " To: " + current.toString()
+            + "\nFrom: " + absoluteStart.toString() + " To: " + start.toString()
             + "\nin weekly increments:\n\n";
 
         for (String s : contributions)
@@ -840,7 +831,7 @@ public class Analysis
 	    end = (Date) start.clone();
 	    end.setDate(start.getDate() + 7);
 	}
-	return result + " ";
+	return result;
     }
 
     /** 
