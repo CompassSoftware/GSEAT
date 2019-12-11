@@ -1189,11 +1189,11 @@ public class AnalysisTest
     public void testToStringWithDates() {
         String username = "collab1";
         Date start = new Date();
-        Date end = new Date();
+        //Date end = new Date();
         String leegggo = start.toString();
-        String donnezo = end.toString();
-        String expected = String.format("Collaborator %s made 3 commits, 3 issues, and 6 comments between %s and %s.\n",
-                                        username,leegggo,donnezo);
+        //String donnezo = end.toString();
+        //String expected = String.format("Collaborator %s made 3 commits, 3 issues, and 6 comments between %s and %s.\n",
+        //                                username,leegggo,donnezo);
         Repository repo = new Repository();
         Collaborator collab1 = new Collaborator("collab1","collab1","collab1","collab1");
         Commit commit1 = new Commit("idk",collab1);
@@ -1233,6 +1233,10 @@ public class AnalysisTest
         repo.addIssue(issue2);
         repo.addIssue(issue3);
         Analysis analysis = new Analysis(repo);        
+        Date end = new Date();
+        String donnezo = end.toString();
+        String expected = String.format("Collaborator %s made 3 commits, 3 issues, and 6 comments between %s and %s.\n",
+                                        username,leegggo,donnezo);
         String actual = analysis.toString(username,start,end);
         assertEquals(expected, actual);
     }
