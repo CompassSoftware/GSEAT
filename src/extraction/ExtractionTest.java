@@ -14,73 +14,57 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.*;
 import static org.junit.Assert.*;
+import org.junit.jupiter.api.BeforeEach;
+import java.util.*;
+
+import github.Repository;
+import github.Comment;
+import github.Issue;
+import github.Collaborator;
+import github.Commit;
 
 public class ExtractionTest {
-
-    @Test
-    public void testExtraction() {
-    
-    /*
-	// Prep for test
-	// Actual and expected outputs
-	String correctResult = "Hello, world!\n";
-	String testOutput = null;
-	String testFailed = null;
-
-	// Save current System.out and set to new stream we can read.
-	PrintStream origOut = System.out;
-	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	PrintStream newOut = new PrintStream(baos);
-	System.setOut(newOut);
-
-	// Conduct test of main method
-	try {
-	    String[] args = new String[0];
-	    Extraction.main(args);
+	// TODO: Can't get tests to compile properly. Uncomment below lines to see error.
+	/*Extraction extractor;
+	Repository repo;
+	Collaborator collab1;
+	
+	@BeforeEach
+	public void init() {
+		extractor = new Extraction("jacobmacfarland", "FinanceCalc", "Token");
+		repo = extractor.extract();
+		collab1 = repo.getCollaborators().get(0);
 	}
-	catch (Exception e) {
-	    testFailed = "Exception thrown unexpectedly";
+	
+	@Test
+	public void testExtractIssuesFromCollaborator() {
+		Assert.assertEquals(collab1.getIssues().size(), 2);
 	}
 
-	// Cleanup
-	// Get all the stuff the method wrote to System.out, and reset it.
-	System.out.flush();
-	testOutput = baos.toString();
-	System.setOut(origOut);
-
-	// Check results
-	if (testOutput == null)
-	    if (testFailed ==  null)
-		testFailed = "output to System.out expected";
-	    else
-		testFailed += "; output to System.out expected";
-	else if (testOutput.length() == 0)
-	    if (testFailed ==  null)
-		testFailed = "output to System.out expected";
-	    else
-		testFailed += "; output to System.out expected";
-	else if (! correctResult.equals(testOutput)) {
-	    if (testFailed ==  null)
-		testFailed = "Incorrect output generated.";
-	    else
-		testFailed += "; incorrect output generated.";
-	    testFailed += "\nExpected output: \"" + correctResult;
-	    testFailed += "\nGenerated output: \"" + testOutput + "\n";
+	@Test
+	public void testExtractCommitsFromCollaborator() {
+		Assert.assertEquals(collab1.getCommits().size(), 10);
 	}
-
-	// Show results
-	System.err.println("\nTest: \"java RazzleDazzle 1\" ");
-	if (testFailed != null) {
-	    System.err.println("Result: ERROR");
-	    System.err.println("Feedback: " + testFailed);
+	
+	@Test
+	public void testExtractCommentsFromCollaboratorIssues() {
+		Assert.assertEquals(collab1.getIssues().get(0).getComments().size(), 2);
 	}
-	else
-	    System.err.println("Result: PASSED\n");
-
-	assertEquals(testFailed, null);
-    */
-    
-    }
+	
+	@Test
+	public void testExtractCommentsFromCollaboratorCommits() {
+		Assert.assertEquals(collab1.getCommits().get(0).getComments().size(), 1);
+	}
+	
+	@Test
+	public void testExtractCollaborators() {
+		Assert.assertEquals(repo.getCollaborators().size(), 2);
+	}
+	
+	@Test
+	public void testExtractCommentsFromCollaborator() {
+		Assert.assertEquals(collab1.getComments().size(), 5);
+	}*/
 
 
 }
