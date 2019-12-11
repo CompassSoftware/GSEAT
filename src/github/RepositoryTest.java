@@ -47,8 +47,9 @@ public class RepositoryTest
     @Test
     public void testAddComments()
     {
-        Comment comm5 = new Comment("cool2", coll1, "type2");
-        repo.addComment(comm5)
+        Collaborator collab = new Collaborator("person", "test", "person", "4");
+        Comment comm5 = new Comment("cool2", collab, "type2");
+        repo.addComment(comm5);
         System.err.println("Result: PASSED\n");
     }
 }
