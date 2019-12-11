@@ -1,10 +1,13 @@
+/** ListOutput.java
+ *
+ * @author: Zhenyu Luo, Yuanboz
+ *
+ * @version: Sprint 3 version
+ */
+
 package selection;
 import java.util.ArrayList;
-/**
- * @version 1.0
- */
 import java.util.List;
-import java.util.Scanner;
 
 public class ListOutput<T> {
 
@@ -73,19 +76,11 @@ public class ListOutput<T> {
 
     public void description() {
 
-        String description = "the total data is: " + this.getTotalRows() + "  " +
+        String description = "Total Repositories are: " + this.getTotalRows() + "  " +
 
-                "the total page is: " + this.getTotalPages() + "  " +
+                "We have " + this.getTotalPages() + " page" + "  " +
 
-                "the current page is: " + this.getPage() + "  " +
-
-                "if has the previous page: " + this.isHasPreviousPage() + "  " +
-
-                "if has the next page: " + this.isHasNextPage() + "  " +
-
-                "the start colunm: " + this.getPageStartRow() + "  " +
-
-                "the end colunm: " + this.getPageEndRow();
+                "And we are on the " + this.getPage() + " page." + "  " ;
 
         System.out.println(description);
     }
@@ -100,9 +95,7 @@ public class ListOutput<T> {
         return getObjects(page);
     }
 
-    /**
-     * ´¦Àí·ÖÒ³
-     */
+
     private void disposePage() {
 
         if (page == 0) {
@@ -166,7 +159,6 @@ public class ListOutput<T> {
         if (!list.isEmpty()) {
             objects = list.subList(pageStartRow, pageEndRow);
         }
-        // this.description();
         return objects;
     }
 
@@ -249,4 +241,5 @@ public class ListOutput<T> {
     public static void addInput(List<String> list , ArrayList<String> input) {
         list.addAll(input);
     }
+
 }
