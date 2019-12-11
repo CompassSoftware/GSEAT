@@ -1,3 +1,10 @@
+/** Get_Info.java
+ *
+ * @author: Yuanboz
+ *
+ * @version: Sprint 3 version
+ */
+
 package selection;
 
 import java.util.Scanner;
@@ -23,6 +30,7 @@ public class Get_Info {
     public String getTOKEN() {
         return this.TOKEN;
     }
+
 
     public static String scan_input() {
         input = sc.nextLine();
