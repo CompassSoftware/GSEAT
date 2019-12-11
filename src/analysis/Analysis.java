@@ -870,5 +870,37 @@ public class Analysis
 
         return start;
     }
+
+    /**
+     * Returns a string representation of collaborator information.
+     * 
+     * @return i collaborator info as string
+     */
+    public String toString(String username)
+    {
+        String i = String.format("Collaborator %s made %d commits, %d issues, and %d comments.\n",
+                                username,
+                                countCollaboratorCommits(username),
+                                countIssuesByCollaborator(username),
+                                countCommentsByCollaborator(username));
+        return i;
+    }
+
+    /**
+     * Returns a string representation of collaborator information
+     * using the date parameters.
+     *
+     * @return d collaborator info as string
+     */
+    public String toString(String username, Date start, Date end)
+    {
+        String d = String.format("Collaborator %s made %d commits, %d issues, and %d comments between %s and %s.\n", 
+                                username,
+                                countCollaboratorCommits(username,start,end),
+                                countIssuesByCollaborator(username,start,end),
+                                countCommentsByCollaborator(username,start,end),
+                                start.toString(),end.toString());
+        return d;
+    }
 }
 
