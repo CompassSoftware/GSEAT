@@ -4,6 +4,7 @@ import java.util.*;
 
 public class Extraction_Demo {
 	public static void main(String[] args) {
+		
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.println("Enter user name: ");
@@ -67,6 +68,10 @@ public class Extraction_Demo {
 		
 		System.out.println("------------------------------------------------------------------------");
 		System.out.println("------------------------------------------------------------------------\n\n\n\n\n\n\n");
+		
+		System.out.println("COLLABORATORS SECTION:");
+		
+		System.out.println("------------------------------------------------------------------------\n\n");
 
 		ArrayList<Collaborator> collaborators = repo.getCollaborators();
 		for (int i = 0; i < collaborators.size(); i++) {
@@ -77,7 +82,19 @@ public class Extraction_Demo {
 			ArrayList<Commit> collabCommits = collab.getCommits();
 			ArrayList<Comment> collabComments = collab.getComments();
 			
-			System.out.println("Collaborator: " + collab.getFirstName() + " " + collab.getLastName());
+			System.out.println("\n\n");
+			
+			System.out.println("------------------------------------------------------------------------");
+			
+			System.out.println("Collaborator: " + collab.getFirstName() + 
+			" " + collab.getLastName() + ", ID: " + collab.getID() 
+			+ ", UserName: " + collab.getUserName());
+			
+			System.out.println("------------------------------------------------------------------------");
+
+			System.out.println("Issues for Collaborator:");
+			
+			System.out.println("------------------------------------------------------------------------");
 			
 			for (int j = 0; j < collabIssues.size(); j++) {
 				Issue issue = collabIssues.get(j);
@@ -86,6 +103,7 @@ public class Extraction_Demo {
 				System.out.println("        Issue text: " + issue.getIssueText());
 				System.out.println("        Date Created: " + issue.getDateCreated());
 				System.out.println("        Date Updated: " + issue.getDateUpdated());
+				
 				
 				for (int k = 0; k < issue.getComments().size(); k++) {
 					Comment comment = issue.getComments().get(k);
@@ -96,6 +114,12 @@ public class Extraction_Demo {
 					System.out.println("                Date Updated: " + comment.getDateUpdated());
 				}
 			}
+			
+			System.out.println("------------------------------------------------------------------------");
+
+			System.out.println("Commits for Collaborator:");
+			
+			System.out.println("------------------------------------------------------------------------");
 			
 			for (int j = 0; j < collabCommits.size(); j++) {
 				Commit commit = collabCommits.get(j);
@@ -113,6 +137,13 @@ public class Extraction_Demo {
 					System.out.println("                Date Updated: " + comment.getDateUpdated());
 				}
 			}
+			
+			System.out.println("------------------------------------------------------------------------");
+
+			System.out.println("Comments for Collaborator:");
+			
+			System.out.println("------------------------------------------------------------------------");
+			
 			
 			for (int j = 0; j < collabComments.size(); j++) {
 				Comment comment = collabComments.get(j);
