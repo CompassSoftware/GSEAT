@@ -808,6 +808,27 @@ public class Analysis
     }
 
     /**
+     * percentContributionsByCollaborator(...)
+     *
+     * A method to return the percentage of all
+     * contributions a certain collaborator made between dates.
+     *
+     * @param username - the collaborator
+     * @param start - the start date
+     * @param end - the end date
+     * @return percentage of contributions
+     */
+    public double percentContributionsByCollaborator(String username)
+    {
+        double contributions = countContributions();
+        if (contributions != 0.0)
+        {
+            return (double) countContributionsByCollaborator(username) / contributions;
+        }
+        return 0.0;
+    }
+
+    /**
      * contributionBreakdown
      *
      * Returns a breakdown of percentage on contributions
