@@ -124,13 +124,18 @@ public class Extraction {
                 JSONObject commentUser = jsonComment.getJSONObject("user");
                 String commentUserName = commentUser.getString("login");
                 String commentBody = jsonComment.getString("body");
-                String commentDateCreatedString = jsonComment.getString("created_at");
-                String commentDateUpdatedString = jsonComment.getString("updated_at");
+                String commentDateCreatedString = 
+                    jsonComment.getString("created_at");
+                String commentDateUpdatedString = 
+                    jsonComment.getString("updated_at");
 
-                Date commentDateCreated = githubDateStringToDate(commentDateCreatedString);
-                Date commentDateUpdated = githubDateStringToDate(commentDateUpdatedString);
+                Date commentDateCreated = 
+                    githubDateStringToDate(commentDateCreatedString);
+                Date commentDateUpdated = 
+                    githubDateStringToDate(commentDateUpdatedString);
 
-                Collaborator commentCollab = new Collaborator("", "", commentUserName, "");
+                Collaborator commentCollab = 
+                    new Collaborator("", "", commentUserName, "");
                 Comment comment = new Comment("", commentCollab, "");
 
                 comment.setCommentText(commentBody);
@@ -189,13 +194,18 @@ public class Extraction {
                 JSONObject commentUser = jsonComment.getJSONObject("user");
                 String commentUserName = commentUser.getString("login");
                 String commentBody = jsonComment.getString("body");
-                String commentDateCreatedString = jsonComment.getString("created_at");
-                String commentDateUpdatedString = jsonComment.getString("updated_at");
+                String commentDateCreatedString = 
+                    jsonComment.getString("created_at");
+                String commentDateUpdatedString = 
+                    jsonComment.getString("updated_at");
 
-                Date commentDateCreated = githubDateStringToDate(commentDateCreatedString);
-                Date commentDateUpdated = githubDateStringToDate(commentDateUpdatedString);
+                Date commentDateCreated = 
+                    githubDateStringToDate(commentDateCreatedString);
+                Date commentDateUpdated = 
+                    githubDateStringToDate(commentDateUpdatedString);
 
-                Collaborator commentCollab = new Collaborator("", "", commentUserName, "");
+                Collaborator commentCollab = 
+                    new Collaborator("", "", commentUserName, "");
                 Comment comment = new Comment("", commentCollab, "");
 
                 comment.setCommentText(commentBody);
@@ -268,13 +278,17 @@ public class Extraction {
             // which is a "committer" key inside of a "commit" dictionary
             JSONObject innerCommitter = jsonCommit.getJSONObject("committer");
             String dateCreatedString = innerCommitter.getString("date");
-            String[] committerName = innerCommitter.getString("name").split("\\s+");
+            String[] committerName = 
+                innerCommitter.getString("name").split("\\s+");
             String firstName = "";
             String lastName = "";
             if (committerName.length == 2) {
                 firstName = committerName[0];
                 lastName = committerName[1];
-            } else firstName = committerName[0];
+            } 
+            else {
+                firstName = committerName[0];
+            }
             Date dateCreated = githubDateStringToDate(dateCreatedString);
 
             // The github API has two "committer" dictionary keys. 
@@ -285,14 +299,20 @@ public class Extraction {
             String userName = outerCommitter.getString("login");
             String userID = outerCommitter.getString("id");
 
-            Collaborator collab = new Collaborator(firstName, lastName, userName, userID);
+            Collaborator collab = 
+                new Collaborator(firstName, lastName, userName, userID);
 
             // Check if collaborator was already added. If not, add to list. 
             boolean collabAlreadyExists = false;
             for (int j = 0; j < repo.getCollaborators().size(); j++) {
-                if (userName.toLowerCase().equals(repo.getCollaborators().get(j).getUserName().toLowerCase())) collabAlreadyExists = true;
+                if (userName.toLowerCase().equals(repo.getCollaborators().
+                    get(j).getUserName().toLowerCase())) {
+                    collabAlreadyExists = true;
+                }
             }
-            if (!collabAlreadyExists) repo.addCollaborator(collab);
+            if (!collabAlreadyExists) {
+                repo.addCollaborator(collab);
+            }
         }
     }
 
@@ -302,7 +322,7 @@ public class Extraction {
     * @return a json object representing the data retrieved from the URL 
     */
     public JSONObject getJsonObjectFromUrlWithAuth(String repoUrl) {
-        JSONObject jsonObject = null;
+        JSONObject jsonObject1 = null;
         try {
             URL url = new URL(repoUrl);
             URLConnection urlConnection = url.openConnection();
@@ -328,12 +348,12 @@ public class Extraction {
             while ((current = in.readLine()) != null) {
                 urlString += current;
             }
-            jsonObject = JSONObject.fromObject(urlString);
+            jsonObject1 = JSONObject.fromObject(urlString);
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-        return jsonObject;
+        return jsonObject1;
     }
 
     /**
