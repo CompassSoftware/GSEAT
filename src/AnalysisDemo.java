@@ -36,97 +36,97 @@ public class AnalysisDemo
             AnalysisDemo.convert(LocalDate.now().minusDays(4))));
 
         ArrayList<Comment> comments2 = new ArrayList<Comment>();
-        comments1.add(new Comment("commit comment 3", coll2, "commit",
+        comments2.add(new Comment("commit comment 3", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(6)),
             AnalysisDemo.convert(LocalDate.now().minusDays(6))));
-	    comments1.add(new Comment("commit comment 4", coll1, "commit",
+	    comments2.add(new Comment("commit comment 4", coll1, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(9)),
             AnalysisDemo.convert(LocalDate.now().minusDays(9))));
-	    comments1.add(new Comment("commit comment 5", coll1, "commit",
+	    comments2.add(new Comment("commit comment 5", coll1, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(2)),
             AnalysisDemo.convert(LocalDate.now().minusDays(2))));
 
         ArrayList<Comment> comments3 = new ArrayList<Comment>();
-        comments1.add(new Comment("commit comment 6", coll2, "commit",
+        comments3.add(new Comment("commit comment 6", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(10)),
             AnalysisDemo.convert(LocalDate.now().minusDays(10))));
 
         ArrayList<Comment> comments4 = new ArrayList<Comment>();
 
         ArrayList<Comment> comments5 = new ArrayList<Comment>();
-        comments1.add(new Comment("commit comment 7", coll2, "commit",
+        comments5.add(new Comment("commit comment 7", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(14)),
             AnalysisDemo.convert(LocalDate.now().minusDays(14))));
-	    comments1.add(new Comment("commit comment 8", coll2, "commit",
+	    comments5.add(new Comment("commit comment 8", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(3)),
             AnalysisDemo.convert(LocalDate.now().minusDays(3))));
-	    comments1.add(new Comment("commit comment 9", coll2, "commit",
+	    comments5.add(new Comment("commit comment 9", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(2)),
             AnalysisDemo.convert(LocalDate.now().minusDays(2))));
-	    comments1.add(new Comment("commit comment 10", coll1, "commit",
+	    comments5.add(new Comment("commit comment 10", coll1, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(8)),
             AnalysisDemo.convert(LocalDate.now().minusDays(8))));
-	    comments1.add(new Comment("commit comment 11", coll1, "commit",
+	    comments5.add(new Comment("commit comment 11", coll1, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(11)),
             AnalysisDemo.convert(LocalDate.now().minusDays(11))));
-	    comments1.add(new Comment("commit comment 12", coll2, "commit",
+	    comments5.add(new Comment("commit comment 12", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(4)),
             AnalysisDemo.convert(LocalDate.now().minusDays(4))));
-	    comments1.add(new Comment("commit comment 13", coll1, "commit",
+	    comments5.add(new Comment("commit comment 13", coll1, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(4)),
             AnalysisDemo.convert(LocalDate.now().minusDays(4))));
 
         ArrayList<Comment> comments6 = new ArrayList<Comment>();
-        comments1.add(new Comment("commit comment 14", coll1, "commit",
+        comments6.add(new Comment("commit comment 14", coll1, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(3)),
             AnalysisDemo.convert(LocalDate.now().minusDays(3))));
-	    comments1.add(new Comment("commit comment 15", coll2, "commit",
+	    comments6.add(new Comment("commit comment 15", coll2, "commit",
             AnalysisDemo.convert(LocalDate.now().minusDays(1)),
             AnalysisDemo.convert(LocalDate.now().minusDays(1))));
 
         ArrayList<Comment> comments7 = new ArrayList<Comment>();
-        comments1.add(new Comment("issue comment 1", coll1, "issue",
+        comments7.add(new Comment("issue comment 1", coll1, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(4)),
             AnalysisDemo.convert(LocalDate.now().minusDays(4))));
 
         ArrayList<Comment> comments8 = new ArrayList<Comment>();
-        comments1.add(new Comment("issue comment 2", coll2, "issue",
+        comments8.add(new Comment("issue comment 2", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(19)),
             AnalysisDemo.convert(LocalDate.now().minusDays(19))));
-	    comments1.add(new Comment("issue comment 3", coll2, "issue",
+	    comments8.add(new Comment("issue comment 3", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(25)),
             AnalysisDemo.convert(LocalDate.now().minusDays(25))));
-	    comments1.add(new Comment("issue comment 4", coll1, "issue",
+	    comments8.add(new Comment("issue comment 4", coll1, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(1)),
             AnalysisDemo.convert(LocalDate.now().minusDays(1))));
 
         ArrayList<Comment> comments9 = new ArrayList<Comment>();
 
         ArrayList<Comment> comments10 = new ArrayList<Comment>();
-        comments1.add(new Comment("issue comment 5", coll1, "issue",
+        comments10.add(new Comment("issue comment 5", coll1, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(17)),
             AnalysisDemo.convert(LocalDate.now().minusDays(17))));
-	    comments1.add(new Comment("issue comment 6", coll2, "issue",
+	    comments10.add(new Comment("issue comment 6", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(2)),
             AnalysisDemo.convert(LocalDate.now().minusDays(2))));
-	    comments1.add(new Comment("issue comment 7", coll1, "issue",
+	    comments10.add(new Comment("issue comment 7", coll1, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(3)),
             AnalysisDemo.convert(LocalDate.now().minusDays(3))));
-	    comments1.add(new Comment("issue comment 8", coll2, "issue",
+	    comments10.add(new Comment("issue comment 8", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(6)),
             AnalysisDemo.convert(LocalDate.now().minusDays(6))));
-	    comments1.add(new Comment("issue comment 9", coll2, "issue",
+	    comments10.add(new Comment("issue comment 9", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(9)),
             AnalysisDemo.convert(LocalDate.now().minusDays(9))));
 
         ArrayList<Comment> comments11 = new ArrayList<Comment>();
-        comments1.add(new Comment("issue comment 10", coll2, "issue",
+        comments11.add(new Comment("issue comment 10", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(1)),
             AnalysisDemo.convert(LocalDate.now().minusDays(1))));
-	    comments1.add(new Comment("issue comment 11", coll2, "issue",
+	    comments11.add(new Comment("issue comment 11", coll2, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(8)),
             AnalysisDemo.convert(LocalDate.now().minusDays(8))));
-	    comments1.add(new Comment("issue comment 12", coll1, "issue",
+	    comments11.add(new Comment("issue comment 12", coll1, "issue",
             AnalysisDemo.convert(LocalDate.now().minusDays(9)),
             AnalysisDemo.convert(LocalDate.now().minusDays(9))));
 
