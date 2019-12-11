@@ -683,22 +683,22 @@ public class Analysis
         Date current = new Date();
         Date end = ((Date) start.clone());
         end.setDate(start.getDate() + 7);
-        
+
         DecimalFormat df = new DecimalFormat("###.00");
-        
+
         String data = "";
 
         do {
 
             data = df.format(
-                        ((double) (this.countContributionsByCollaborator(
-                                username, start, end))
-                         / (double) (this.countContributions()))
-                        * FRACTIONTOPERCENT, new StringBuffer(),
-                        new FieldPosition(0)).toString();
+                    ((double) (this.countContributionsByCollaborator(
+                            username, start, end))
+                     / (double) (this.countContributions()))
+                    * FRACTIONTOPERCENT, new StringBuffer(),
+                    new FieldPosition(0)).toString();
 
             contributions.add(start.toString() + " to " + end.toString() 
-                     + " - " + data);
+                    + " - " + data);
 
             start.setDate(start.getDate() + 7);
 
@@ -713,6 +713,72 @@ public class Analysis
         for (String s : contributions)
         {
             message += s + "\n";
+        }
+
+        return message;
+    }
+
+    /**
+     * contributionBreakdownByCollaborator(...)
+     *
+     * A method that returns a breakdown (string)
+     * of what percentage of contributions for a
+     * certain collaborator were done between each
+     * 7 day period from the specified start date
+     * to the specified end date.
+     *
+     * @return info
+     *             sentence containing contributions
+     *             by collaborator through a set of
+     *             7 day periods
+     * @param username 
+     *             the collaborator's username
+     * @param s 
+     *             the start date
+     * @param e
+     *             the end date
+     */
+    public String contributionBreakdownByCollaborator(String username,
+            Date s, Date e)
+    {
+        Date start = (Date) s.clone();
+        Date absoluteStart = (Date) start.clone();
+
+        ArrayList<String> contributions = new ArrayList<>();
+
+        Date current = (Date) e.clone();
+        Date end = ((Date) start.clone());
+        end.setDate(start.getDate() + 7);
+
+        DecimalFormat df = new DecimalFormat("###.00");
+
+        String data = "";
+
+        do {
+
+            data = df.format(
+                    ((double) (this.countContributionsByCollaborator(
+                            username, start, end))
+                     / (double) (this.countContributions()))
+                    * FRACTIONTOPERCENT, new StringBuffer(),
+                    new FieldPosition(0)).toString();
+
+            contributions.add(start.toString() + " to " + end.toString() 
+                    + " - " + data);
+
+            start.setDate(start.getDate() + 7);
+
+            end.setDate(start.getDate() + 7);
+
+        } while (end.before(current));
+
+        String message = "\nAll-time Contributions by " + username 
+            + "\nFrom: " + absoluteStart.toString() + " To: " + start.toString()
+            + "\nin weekly increments:\n\n";
+
+        for (String str : contributions)
+        {
+            message += str + "\n";
         }
 
         return message;
@@ -752,40 +818,40 @@ public class Analysis
      * collaborator
      */
     public String contributionBreakdown() {
-	ArrayList<Collaborator> collabs = repo.getCollaborators();
-	String result = "";
-	Date begin = getRepoBeginDate();
-	Date start = getRepoBeginDate();
-	Date end = (Date) start.clone();
-	end.setDate(start.getDate() + 7);
-	Date stop = new Date();
+        ArrayList<Collaborator> collabs = repo.getCollaborators();
+        String result = "";
+        Date begin = getRepoBeginDate();
+        Date start = getRepoBeginDate();
+        Date end = (Date) start.clone();
+        end.setDate(start.getDate() + 7);
+        Date stop = new Date();
 
-	String beginString = (begin.getYear() + 1900) + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
-	String stopString = (stop.getYear() + 1900) + "-" + (stop.getMonth() + 1) + "-" + stop.getDate();
+        String beginString = (begin.getYear() + 1900) + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
+        String stopString = (stop.getYear() + 1900) + "-" + (stop.getMonth() + 1) + "-" + stop.getDate();
 
-	
-	for (Collaborator c: collabs) {
-	    result += "\nContributions by " + c.getUserName() 
-		+ "\nFrom: " + beginString + " To: " + stopString
-		+ " in weekly increments:\n\n";
-	    while (stop.after(start)) {
-		String startString = (start.getYear() + 1900) + "-" + (start.getMonth() + 1) + "-" + start.getDate();
-		String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
 
-		result += startString + " to " + endString + ": ";
-		result += ((double) countContributionsByCollaborator(c.getUserName(), start, end)
-			/ (double) countContributionsBetweenDates(start, end)) * 100 + "%\n";
-		start = end;
-		end = (Date) start.clone();
-		end.setDate(start.getDate() + 7);
-	    }
-	    start = getRepoBeginDate();
-	    end = (Date) start.clone();
-	    end.setDate(start.getDate() + 7);
-	}
-	return result;
+        for (Collaborator c: collabs) {
+            result += "\nContributions by " + c.getUserName() 
+                + "\nFrom: " + beginString + " To: " + stopString
+                + " in weekly increments:\n\n";
+            while (stop.after(start)) {
+                String startString = (start.getYear() + 1900) + "-" + (start.getMonth() + 1) + "-" + start.getDate();
+                String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
+
+                result += startString + " to " + endString + ": ";
+                result += ((double) countContributionsByCollaborator(c.getUserName(), start, end)
+                        / (double) countContributionsBetweenDates(start, end)) * 100 + "%\n";
+                start = end;
+                end = (Date) start.clone();
+                end.setDate(start.getDate() + 7);
+            }
+            start = getRepoBeginDate();
+            end = (Date) start.clone();
+            end.setDate(start.getDate() + 7);
+        }
+        return result;
     }    
-    
+
     /**
      * contributionBreakdownByCollaborator
      *
@@ -801,37 +867,37 @@ public class Analysis
      */
     public String contributionBreakdown(Date starting, Date ending) {
         ArrayList<Collaborator> collabs = repo.getCollaborators();
-	String result = "";
-	Date begin = starting;
-	Date start = starting;
-	Date end = (Date) start.clone();
-	end.setDate(start.getDate() + 7);
-	Date stop = ending;
+        String result = "";
+        Date begin = starting;
+        Date start = starting;
+        Date end = (Date) start.clone();
+        end.setDate(start.getDate() + 7);
+        Date stop = ending;
 
-	String beginString = (begin.getYear() + 1900) + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
-	String stopString = (stop.getYear() + 1900) + "-" + (stop.getMonth() + 1) + "-" + stop.getDate();
+        String beginString = (begin.getYear() + 1900) + "-" + (begin.getMonth() + 1) + "-" + begin.getDate();
+        String stopString = (stop.getYear() + 1900) + "-" + (stop.getMonth() + 1) + "-" + stop.getDate();
 
-	
-	for (Collaborator c: collabs) {
-	    result += "\nContributions by " + c.getUserName() 
-		+ "\nFrom: " + beginString + " To: " + stopString
-		+ " in weekly increments:\n\n";
-	    while (stop.after(start)) {
-		String startString = (start.getYear() + 1900) + "-" + (start.getMonth() + 1) + "-" + start.getDate();
-		String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
 
-		result += startString + " to " + endString + ": ";
-		result += ((double) countContributionsByCollaborator(c.getUserName(), start, end)
-			/ (double) countContributionsBetweenDates(start, end)) * 100 + "%\n";
-		start = end;
-		end = (Date) start.clone();
-		end.setDate(start.getDate() + 7);
-	    }
-	    start = starting;
-	    end = (Date) start.clone();
-	    end.setDate(start.getDate() + 7);
-	}
-	return result;
+        for (Collaborator c: collabs) {
+            result += "\nContributions by " + c.getUserName() 
+                + "\nFrom: " + beginString + " To: " + stopString
+                + " in weekly increments:\n\n";
+            while (stop.after(start)) {
+                String startString = (start.getYear() + 1900) + "-" + (start.getMonth() + 1) + "-" + start.getDate();
+                String endString = (end.getYear() + 1900) + "-" + (end.getMonth() + 1) + "-" + end.getDate();
+
+                result += startString + " to " + endString + ": ";
+                result += ((double) countContributionsByCollaborator(c.getUserName(), start, end)
+                        / (double) countContributionsBetweenDates(start, end)) * 100 + "%\n";
+                start = end;
+                end = (Date) start.clone();
+                end.setDate(start.getDate() + 7);
+            }
+            start = starting;
+            end = (Date) start.clone();
+            end.setDate(start.getDate() + 7);
+        }
+        return result;
     }
 
     /** 
@@ -879,10 +945,10 @@ public class Analysis
     public String toString(String username)
     {
         String i = String.format("Collaborator %s made %d commits, %d issues, and %d comments.\n",
-                                username,
-                                countCollaboratorCommits(username),
-                                countIssuesByCollaborator(username),
-                                countCommentsByCollaborator(username));
+                username,
+                countCollaboratorCommits(username),
+                countIssuesByCollaborator(username),
+                countCommentsByCollaborator(username));
         return i;
     }
 
@@ -895,11 +961,11 @@ public class Analysis
     public String toString(String username, Date start, Date end)
     {
         String d = String.format("Collaborator %s made %d commits, %d issues, and %d comments between %s and %s.\n", 
-                                username,
-                                countCollaboratorCommits(username,start,end),
-                                countIssuesByCollaborator(username,start,end),
-                                countCommentsByCollaborator(username,start,end),
-                                start.toString(),end.toString());
+                username,
+                countCollaboratorCommits(username,start,end),
+                countIssuesByCollaborator(username,start,end),
+                countCommentsByCollaborator(username,start,end),
+                start.toString(),end.toString());
         return d;
     }
 }
