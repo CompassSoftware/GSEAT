@@ -1,4 +1,4 @@
-`package extraction;
+package extraction;
 
 import github.Repository;
 import github.Commit;
